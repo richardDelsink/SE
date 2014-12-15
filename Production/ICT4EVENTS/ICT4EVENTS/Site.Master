@@ -46,7 +46,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">Application name</a>
+                    <a class="navbar-brand" runat="server" >ICT4EVENTS</a>
+                    <a class="navbar-brand" runat="server" href="#"><img src="img/logo.png" title="PROFILE" alt="PROFILE"/></a>
+                    
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
