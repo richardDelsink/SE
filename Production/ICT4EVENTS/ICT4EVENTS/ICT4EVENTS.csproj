@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Oracle.DataAccess, Version=4.121.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -261,6 +262,7 @@
     <Compile Include="Controle.aspx.designer.cs">
       <DependentUpon>Controle.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Events_admin.aspx.cs">
       <DependentUpon>Events_admin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
