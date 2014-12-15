@@ -74,6 +74,7 @@ h5, h6          { font-weight: bolder }
 
     header .logo{
         margin-top: 20px;
+        margin-left:40px;
     }
 
     header nav ul{
