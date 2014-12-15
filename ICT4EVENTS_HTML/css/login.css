@@ -3,6 +3,7 @@ body{
 	width:960;
 	background: #222; 
 	margin:auto;
+	position: relative;
 }
 
 h1{
@@ -194,4 +195,7 @@ h1{
     background: -o-linear-gradient(#444, #222); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(#444, #222); /* For Firefox 3.6 to 15 */
     background: linear-gradient(#444, #222); /* Standard syntax */
+}
+#center{
+	margin-left:150px;
 }
