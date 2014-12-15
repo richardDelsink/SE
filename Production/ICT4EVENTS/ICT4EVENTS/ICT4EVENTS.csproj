@@ -39,7 +39,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Oracle.DataAccess, Version=4.121.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -146,8 +145,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\login.css" />
+    <Content Include="Content\reset.css" />
     <Content Include="Controle.aspx" />
     <Content Include="Events_admin.aspx" />
+    <Content Include="Login.aspx" />
     <Content Include="Material.aspx" />
     <Content Include="Material_Admin.aspx" />
     <Content Include="Mediasharing.aspx" />
@@ -169,6 +171,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <Content Include="Events.aspx" />
+    <Content Include="WebForm2.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Profile.aspx" />
     <Content Include="Reservation.aspx" />
@@ -262,13 +265,19 @@
     <Compile Include="Controle.aspx.designer.cs">
       <DependentUpon>Controle.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Events_admin.aspx.cs">
       <DependentUpon>Events_admin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Events_admin.aspx.designer.cs">
       <DependentUpon>Events_admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Material.aspx.cs">
       <DependentUpon>Material.aspx</DependentUpon>
@@ -361,6 +370,13 @@
     </Compile>
     <Compile Include="Events.aspx.designer.cs">
       <DependentUpon>Events.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm2.aspx.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm2.aspx.designer.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

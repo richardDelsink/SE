@@ -10,6 +10,6 @@
 namespace ICT4EVENTS {
     
     
-    public partial class _Default {
+    public partial class Login {
     }
 }
