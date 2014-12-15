@@ -1,0 +1,327 @@
+
+
+/*  Fonts  */
+@font-face {
+    font-family: "Trebuchet MS",arial;
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+/*  General CSS*/
+body{
+    background: #fff;
+}
+
+.wrapper{
+    width: 92.72727272727273%;
+    margin: 0 auto;
+}
+
+header ul.social li a,
+.main .work a .caption,
+header nav ul li a{
+    transition:all .1s linear;
+    -webkit-transition:all .1s linear;
+    -moz-transition:all .1s linear;
+    -o-transition:all .1s linear;
+}
+
+h1, h2, h3, h4, h5 ,h6{
+    color: #4b4848;
+    font-family: arial;
+    letter-spacing: 1px;
+}
+
+h1              { font-size: 2em; margin: .67em 0; color: #888;}
+h2              { font-size: 1.5em; margin: .75em 0 }
+h3              { font-size: 1.17em; margin: .83em 0 }
+h5              { font-size: .83em; margin: 1.5em 0 }
+h6              { font-size: .75em; margin: 1.67em 0 }
+h1, h2, h3, h4,
+h5, h6          { font-weight: bolder }
+
+.clearfix:before,  
+.clearfix:after {  
+    content: " ";  
+    display: table;  
+}  
+.clearfix:after {  
+    clear: both;  
+}  
+ 
+.clearfix {  
+    *zoom: 1;  
+}
+
+
+
+/*  Header  */
+@media (min-width:500px){
+    header{
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        min-height: 100%;
+        padding: 0 0 0 50px;
+        background: #222; 
+        float: left;
+        overflow: hidden;
+        z-index: 9999;
+    }
+
+    header .logo{
+        margin-top: 100px;
+    }
+
+    header nav ul{
+        display: block;
+        overflow: hidden;
+        margin-top: 50px;
+        list-style: none;
+    }
+
+    header nav ul li{
+        display: block;
+        margin-bottom: 30px;
+    }
+
+    header nav ul li a{
+        color: #454545;
+        font-family: "raleway-regular", arial;
+        font-size: 14px;
+        text-decoration: none;
+        letter-spacing: 1px;
+    }
+
+    header nav ul li a:hover,
+    header nav ul li a.selected{
+        color: #969595;
+    }
+
+    header .footer{
+        position: absolute;
+        bottom: 50px;
+    }
+
+
+    header .rights p{
+        color: #454545;
+        font-family: "raleway-regular", arial;
+        font-size: 11px;
+        letter-spacing: 1px;
+        line-height: 18px;
+    }
+
+    header .rights a{
+        font-family: "raleway-bold", arial;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+
+/*  Main  */
+.main{
+    width: 100%;
+    height: 100%;
+    padding-left: 300px;
+    -moz-box-sizing: border-box;
+
+
+
+/*  Inner Page  */
+.top{
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    background: url('../img/hero_image.jpg') no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-position: 50% 50%;
+}
+
+.work_nav{
+    display: block;
+    width: 100%;
+}
+
+.work_nav .btn{
+    float: right;
+}
+
+.work_nav ul{
+    list-style: none;
+}
+
+.work_nav ul li{
+    display: block;
+    float: left;
+    margin: 0 0 1px 1px;
+    position: relative;
+}
+
+.work_nav a{
+    display: block;
+    width: 40px;
+    height: 40px;
+    background: url('../img/p_navigation.png') no-repeat;
+    background-position: 0 0;
+}
+
+.work_nav a.previous{
+    background-position: 0 0;
+}
+
+.work_nav a.grid{
+    background-position: -41px 0;
+}
+
+.work_nav a.next{
+    background-position: -82px 0;
+}
+
+.top .title{
+    display: block;
+    width: 100%;color: #4b4848;
+    font-family: "raleway-bold", arial;
+    font-size: 26px;
+    font-weight: bold;
+    background: rgba(255, 255, 255, .7);
+    padding: 20px;
+    text-transform: uppercase;
+    line-height: 30px;
+    margin: 0!important;
+    overflow: hidden;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+
+}
+
+.content_header{
+    position: absolute;
+    bottom: 0;
+    margin: 0 auto;
+    left: 50%;
+    margin-left: -46.36363636363637%;
+}
+
+.content{
+    color: #4b4848;
+    font-family: "raleway-regular", arial;
+    font-size: 15px;
+    line-height: 22px;
+    padding: 60px 30px;
+    background: #fff;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.content p{
+    color: #4b4848;
+    font-family: "raleway-regular", arial;
+    font-size: 15px;
+    line-height: 24px;
+    margin-bottom: 60px;
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6{
+    color: #4b4848;
+    font-family: "raleway-semibold", arial;
+    font-weight: bold;
+    line-height: 28px;
+    margin-bottom: 30px;
+
+}
+
+
+
+/*  Responsive code  */
+@media (max-width:1100px){
+
+    header{
+        display: block;
+        width: 100%;
+        min-height: 50px;
+        padding: 0;
+        position: relative;
+    }
+    header .logo{
+        margin: 40px 0 0 30px;
+        display: inline-block;
+    }
+    header .footer{
+        display: none;
+    }
+    header #menu_icon,
+    header .close_menu{
+        float: right;
+        margin: 30px 30px 0 0;
+        background-color: #000;
+    }
+    header nav ul{
+        list-style: none;
+        display: none;
+        margin-top: 35px;
+        position: relative;
+    }
+    header nav ul li a{
+        display: block;
+        width: 100%;
+        padding: 30px 0;
+        text-align: center;
+        color: #454545;
+        font-family: "raleway-regular", arial;
+        font-size: 14px;
+        text-decoration: none;
+        border-top: 1px solid #f7f5f5;
+        background: #fff;
+    }
+    header nav ul li a:active{
+        background: #f7f5f5;
+    }
+    #menu_icon,
+    .close_menu,
+    .show_menu{
+        display: block;
+
+    }
+    .show_menu{
+        display: block;
+    }
+
+    .main .work{
+        width: 50%;
+    }
+    .main{
+        width: 100%;
+        position: relative;
+        padding-left: 0;
+    }
+   
+}
+
+@media (max-width:550px){
+     .main .work{
+        width: 100%;
+    }
+}
+
