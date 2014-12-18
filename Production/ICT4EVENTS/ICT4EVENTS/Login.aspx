@@ -12,8 +12,7 @@
 </head>
 <body>
     
-       
-  
+      
 	     <form id="signin">
     	    <h1>Login</h1>
     	    <input type="email" placeholder="hahhahaha@email.com" required="">
