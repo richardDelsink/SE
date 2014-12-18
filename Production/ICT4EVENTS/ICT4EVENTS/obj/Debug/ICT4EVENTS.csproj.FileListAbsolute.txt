@@ -100,3 +100,4 @@ C:\Users\rich\Desktop\SE\Production\ICT4EVENTS\ICT4EVENTS\bin\Microsoft.Owin.Sec
 C:\Users\rich\Desktop\SE\Production\ICT4EVENTS\ICT4EVENTS\obj\Debug\ICT4EVENTS.csprojResolveAssemblyReference.cache
 C:\Users\rich\Desktop\SE\Production\ICT4EVENTS\ICT4EVENTS\obj\Debug\ICT4EVENTS.dll
 C:\Users\rich\Desktop\SE\Production\ICT4EVENTS\ICT4EVENTS\obj\Debug\ICT4EVENTS.pdb
+C:\Users\rich\Desktop\SE\Production\ICT4EVENTS\ICT4EVENTS\bin\Oracle.DataAccess.dll
