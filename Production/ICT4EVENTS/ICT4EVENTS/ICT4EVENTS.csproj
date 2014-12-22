@@ -146,8 +146,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\login.css" />
-    <Content Include="Content\reset.css" />
+    <Content Include="Content\login_PT.css" />
+    <Content Include="Content\normalizer.css" />
+    <Content Include="Content\Reservering.css" />
     <Content Include="Control.aspx" />
     <Content Include="Events_admin.aspx" />
     <Content Include="Login.aspx" />

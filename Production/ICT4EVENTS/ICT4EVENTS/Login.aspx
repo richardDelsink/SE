@@ -2,32 +2,40 @@
 
 <!DOCTYPE html>
 
-    <webopt:bundlereference runat="server" path="~/Content/reset.css" />
-    <webopt:bundlereference runat="server" path="~/Content/login.css" />
+    
+
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     
-    <title>Login</title>
-</head>
-<body>
     
-      
-	     <form id="signin">
+    <title>Login</title>
+    
+     <link href="~/Content/normalizer.css" rel="stylesheet"/>
+    <link href="~/Content/login_PT.css" rel="stylesheet"/>
+
+</head>
+
+<body>     
+	     <form id="sign" class="signin" runat="server">
     	    <h1>Login</h1>
-    	    <input type="email" placeholder="hahhahaha@email.com" required="">
-    	    <input type="password" placeholder="Choose your password" required="">                 
-    	    <button type="submit">Login</button>    
-	    </form>
-	<div id="block"></div>
-	<div id="block1"></div>
-	<form id="signup">
-    	<h1>Register</h1>
-    	<input type="email" placeholder="hahhahaha@email.com" required="">
-    	<input type="username" placeholder="Username" required="">
-    	<input type="password" placeholder="Choose your password" required="">
-    	<input type="password" placeholder="Confirm password" required="">                  
-    	<button type="submit">Register</button>    
+	         <input type="email" placeholder="hahhahaha@email.com" required=""/>
+	         <input type="password" placeholder="Choose your password" required=""/>                 
+    	    <asp:button id="b1" CssClass="button" Text="Submit" runat="server"></asp:button>
+           </form>
+
+	<div id="block" class="block"></div>
+	<div id="block1" class="block1"></div>
+
+    <form id="Form1" class="signup">
+             
+    	        <h1>Register</h1>
+	            <input type="email" placeholder="hahhahaha@email.com" required=""/>
+	            <input type="username" placeholder="Username" required=""/>
+	            <input type="password" placeholder="Choose your password" required=""/>
+	            <input type="password" placeholder="Confirm password" required=""/>   
+                <button type="button" class="button">Register</button>   
+                          
 	</form>	
 
     

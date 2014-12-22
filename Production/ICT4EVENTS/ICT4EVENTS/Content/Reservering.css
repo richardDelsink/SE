@@ -1,0 +1,41 @@
+﻿body
+{
+    background-image: url("/img/Plattegrond.png");
+    background-repeat: no-repeat;
+    width: 1188 px;
+    height: 940 px;
+    position: absolute;
+}
+#S201{
+    background-Color: #7fff00;
+    margin-left: 200px; 
+}
+#button {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#Spots {
+    display: table;
+    width: 20px;
+    height: 15px;
+    position: absolute;
+}
+.Spots:hover {
+    cursor: pointer;
+}
+.buttons {
+    background-color: green;
+    position: absolute;
+}
+.btn201 {
+    top: 180px;
+    left: 575px;
+}
+.btn202 {    top: 158px;
+    left: 575px;
+}
+.btn203 {
+        top: 136px;
+    left: 575px;
+}
