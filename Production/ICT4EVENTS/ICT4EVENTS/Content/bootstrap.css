@@ -6872,3 +6872,50 @@ td.visible-print {
 
     margin-top: 10px;
 }
+
+
+.control-top h2{
+
+
+    font-family:'Adobe Fan Heiti Std';
+    font-weight:bold;
+
+}
+
+.control-bottom{
+
+    width:auto;
+    overflow:auto;
+}
+
+.Infolabels{
+
+    margin-right:25px;
+    width:200px;
+    float:left;
+    font-weight:bold;
+   
+
+}
+
+.content-labels{
+
+  
+    float:left;
+    overflow:hidden;
+
+}
+
+.ControlGrid{
+
+    font-family:'Adobe Fan Heiti Std';
+    font-variant-caps:normal;
+    font-size:  14px;
+}
+
+.ControlGrid h3{
+
+    font-family:'Adobe Fan Heiti Std';
+    font-weight:bold;
+
+}
