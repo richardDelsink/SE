@@ -20,7 +20,8 @@
 <body>
     <form id="sign" runat="server">
         <div>
-            <div class="signin">Login</h1>
+            <div class="signin">
+                <h1>Login</h1>
                 <asp:TextBox ID="tbUsername" runat="server" Class="input" placeholder="Username"></asp:TextBox>
                 <asp:TextBox ID="tbPassword" runat="server" Class="input" placeholder="Password"></asp:TextBox>
                 <asp:Button ID="btnLogin" CssClass="button" Text="Submit" runat="server" OnClick="btnLogin_Click"></asp:Button>

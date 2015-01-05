@@ -31,7 +31,6 @@ namespace ICT4EVENTS
                 Response.Write("succes");
             }*/
             
-
             //Basic replacement for login mechanism while programm is not running on the server
             Session["Username"] = tbUsername.Text;
             Response.Redirect("Home.aspx", true);
