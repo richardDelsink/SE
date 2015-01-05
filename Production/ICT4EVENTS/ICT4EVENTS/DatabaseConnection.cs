@@ -113,12 +113,12 @@ namespace ICT4EVENTS
             string result = " ";
 
 
-        
+
             OracleCommand cmd = new OracleCommand("CheckRFIDS", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-      
+
                 cmd.Parameters.Add("v_Result", OracleDbType.Varchar2, 255).Direction = ParameterDirection.ReturnValue;
                 cmd.Parameters.Add("barcode_id", OracleDbType.NVarchar2).Value = barcodevalue;
 
@@ -148,10 +148,7 @@ namespace ICT4EVENTS
             }
 
             return result;
-
-<<<<<<< HEAD
-
-=======
+        }
         ///Methods of the Log-in page
         ///
         public string getUserGroup(string username)
@@ -173,10 +170,7 @@ namespace ICT4EVENTS
             {
                 this.conn.Close();
             }
->>>>>>> 3410358eef8e7a596926c61ac3c304db701794a4
-
-
-
+            return result;
         }
       
     }
