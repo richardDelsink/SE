@@ -1,0 +1,32 @@
+﻿body {
+}
+
+#signin {
+    width: 260px;
+    height: 330px;
+    margin: 100px;
+    padding: 20px;
+    position: absolute;
+    background-color: red; 
+ 
+}
+
+.calenders
+{
+          position: relative;
+          background-color : black;
+
+}
+.calender1
+{
+          position: relative;
+          float : left;
+
+}
+
+.calender2
+{
+          position: relative;
+          float : right;
+
+}
