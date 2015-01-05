@@ -24,7 +24,7 @@
                 <h1>Login</h1>
                 <asp:TextBox ID="tbUsername" runat="server" Class="input" placeholder="Username"></asp:TextBox>
                 <asp:TextBox ID="tbPassword" runat="server" Class="input" placeholder="Password"></asp:TextBox>
-                <asp:Button ID="btnLogin" CssClass="button" Text="Submit" runat="server"></asp:Button>
+                <asp:Button ID="btnLogin" CssClass="button" Text="Submit" runat="server" OnClick="btnLogin_Click"></asp:Button>
             </div>
             <div class="signup">
                 <h1>Register</h1>
