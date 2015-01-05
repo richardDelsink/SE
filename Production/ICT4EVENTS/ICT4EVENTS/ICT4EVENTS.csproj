@@ -222,6 +222,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="accountmedia.cs" />
     <Compile Include="Account\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
