@@ -1,97 +1,113 @@
-﻿using System;
+﻿namespace ICT4EVENTS
+{
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace ICT4EVENTS
-{
+    /// <summary>
+    /// ASP class for access control. 
+    /// </summary>
     public partial class Controle : System.Web.UI.Page
     {
-        DatabaseConnection DB = new DatabaseConnection();
+        /// <summary>
+        /// Needed to initialize information from the database.
+        /// </summary>
+        private DatabaseConnection db = new DatabaseConnection();
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            FillAccInfoOnBar();
-            LoadGrid();
-        }
-
-
-
+        /// <summary>
+        /// Loads the GridViews to be used. 
+        /// </summary>
         public void LoadGrid()
         {
-            DB.FillDataGrid(gridview);
+            this.db.FillDataGrid(this.gridview);
         }
 
+        /// <summary>
+        /// Fills the correct labels with information from the database query.
+        /// </summary>
         public void FillAccInfoOnBar()
         {
+            string subbedString = this.db.GetAccountInfo(BarcodeTB.Text);
+            int index;
+            int endIndex;
+            string finalSubString;
 
-            string SubbedString = DB.GetAccountInfo(barcodetb.Text);
-            int Index;
-            int EndIndex;
-            string FinalSubString;
-
-            if (SubbedString != " ")
+            if (subbedString != " ")
             {
-                Index = SubbedString.IndexOf('@') + 1;
-                EndIndex = SubbedString.IndexOf('#');
-                FinalSubString = SubbedString.Substring(Index, EndIndex - Index);
-                userlabel.Text = FinalSubString;
+                index = subbedString.IndexOf('@') + 1;
+                endIndex = subbedString.IndexOf('#');
+                finalSubString = subbedString.Substring(index, endIndex - index);
+                this.userlabel.Text = finalSubString;
 
-                Index = SubbedString.IndexOf('#') + 1;
-                EndIndex = SubbedString.IndexOf('$');
-                FinalSubString = SubbedString.Substring(Index, EndIndex - Index);
-                mailLabel.Text = FinalSubString;
+                index = subbedString.IndexOf('#') + 1;
+                endIndex = subbedString.IndexOf('$');
+                finalSubString = subbedString.Substring(index, endIndex - index);
+                this.mailLabel.Text = finalSubString;
 
-                Index = SubbedString.IndexOf('$') + 1;
-                EndIndex = SubbedString.IndexOf('%');
-                FinalSubString = SubbedString.Substring(Index, EndIndex - Index);
+                index = subbedString.IndexOf('$') + 1;
+                endIndex = subbedString.IndexOf('%');
+                finalSubString = subbedString.Substring(index, endIndex - index);
 
-                if (Convert.ToInt32(FinalSubString) == 1)
+                if (Convert.ToInt32(finalSubString) == 1)
                 {
-                    activLabel.Text = "Account is geactiveerd!";
+                    this.activLabel.Text = "Account is geactiveerd!";
                 }
-                else if (Convert.ToInt32(FinalSubString) == 0)
+                else if (Convert.ToInt32(finalSubString) == 0)
                 {
-                    activLabel.Text = "Account is nog niet geactiveerd!";
-                }
-
-                Index = SubbedString.IndexOf('%') + 1;
-                EndIndex = SubbedString.IndexOf('>');
-                FinalSubString = SubbedString.Substring(Index, EndIndex - Index);
-                BarcoLabel.Text = FinalSubString;
-
-                Index = SubbedString.IndexOf('>') + 1;
-                EndIndex = SubbedString.IndexOf('<');
-                FinalSubString = SubbedString.Substring(Index, EndIndex - Index);
-                if (Convert.ToInt32(FinalSubString) == 1)
-                {
-                    PaidLabel.Text = "Bezoeker heeft de reservering al betaald!";
-                }
-                else if (Convert.ToInt32(FinalSubString) == 0)
-                {
-
-                    PaidLabel.Text = "Bezoeker heeft de reservering nog niet betaald!";
+                    this.activLabel.Text = "Account is nog niet geactiveerd!";
                 }
 
-                Index = SubbedString.IndexOf('<') + 1;
-                EndIndex = SubbedString.IndexOf('!');
-                FinalSubString = SubbedString.Substring(Index, EndIndex - Index);
+                index = subbedString.IndexOf('%') + 1;
+                endIndex = subbedString.IndexOf('>');
+                finalSubString = subbedString.Substring(index, endIndex - index);
+                this.BarcoLabel.Text = finalSubString;
 
-                if (Convert.ToInt32(FinalSubString) == 1)
+                index = subbedString.IndexOf('>') + 1;
+                endIndex = subbedString.IndexOf('<');
+                finalSubString = subbedString.Substring(index, endIndex - index);
+                if (Convert.ToInt32(finalSubString) == 1)
                 {
-                    Presencelbl.Text = "Ingecheckt!";
+                    this.PaidLabel.Text = "Bezoeker heeft de reservering al betaald!";
                 }
-                else if (Convert.ToInt32(FinalSubString) == 0)
+                else if (Convert.ToInt32(finalSubString) == 0)
                 {
-                    Presencelbl.Text = "Uitgecheckt!";
+                    this.PaidLabel.Text = "Bezoeker heeft de reservering nog niet betaald!";
                 }
 
+                index = subbedString.IndexOf('<') + 1;
+                endIndex = subbedString.IndexOf('!');
+                finalSubString = subbedString.Substring(index, endIndex - index);
+
+                if (Convert.ToInt32(finalSubString) == 1)
+                {
+                    this.Presencelbl.Text = "Ingecheckt!";
+                }
+                else if (Convert.ToInt32(finalSubString) == 0)
+                {
+                    this.Presencelbl.Text = "Uitgecheckt!";
+                }
             }
         }
 
-        protected void barcodetb_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Occurs when the page is loads or refreshes
+        /// </summary>
+        /// <param name="sender">Mandatory for references.</param>
+        /// <param name="e">To hold event data.</param>
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.LoadGrid();
+        }
+
+        /// <summary>
+        /// Occurs when the text has changed
+        /// </summary>
+        /// <param name="sender">Mandatory for references.</param>
+        /// <param name="e">To hold event data.</param>
+        protected void BarcodeTB_TextChanged(object sender, EventArgs e)
         {
             Presencelbl.Text = string.Empty;
             PaidLabel.Text = string.Empty;
@@ -100,16 +116,15 @@ namespace ICT4EVENTS
             BarcoLabel.Text = string.Empty;
             activLabel.Text = string.Empty;
 
-
-
-            if (DB.CheckBarcode(barcodetb.Text).Contains("RFID_FOUND!"))
+            if (this.db.CheckBarcode(BarcodeTB.Text).Contains("RFID_Found!"))
             {
                 rfidworth.Text = string.Empty;
 
-                if (barcodetb.Text.Length > 4)
+                if (BarcodeTB.Text.Length > 4)
                 {
-                    FillAccInfoOnBar();
-                    LoadGrid();
+                    this.FillAccInfoOnBar();
+                    this.LoadGrid();
+                    BarcodeTB.Text = string.Empty;
                 }
             }
             else
@@ -122,10 +137,6 @@ namespace ICT4EVENTS
                 BarcoLabel.Text = string.Empty;
                 activLabel.Text = string.Empty;
             }
-
-
-
         }
-
     }
 }

@@ -10,7 +10,7 @@
             <img src="img/barcodeimg.png" width="200px"/>
             <asp:Image ID="Barcodeimg" src="barcodeimg.png" runat="server" />
             <br />
-            <asp:TextBox ID="barcodetb" runat="server" OnTextChanged="barcodetb_TextChanged"></asp:TextBox>
+            <asp:TextBox ID="BarcodeTB" runat="server" OnTextChanged="BarcodeTB_TextChanged"></asp:TextBox>
               <asp:Label ID="rfidworth" runat="server" Text="Incheckstatus:"></asp:Label>
              </div>
             <br />

@@ -127,7 +127,7 @@ namespace ICT4EVENTS
 
                 result = Convert.ToString(cmd.Parameters["v_Result"].Value);
 
-                if (result.Contains("RFID_FOUND!"))
+                if (result.Contains("RFID_Found!"))
                 {
                     UpdatePresence(barcodevalue);
                 }
