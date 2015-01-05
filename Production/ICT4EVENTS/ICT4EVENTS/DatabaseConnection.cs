@@ -154,14 +154,13 @@ namespace ICT4EVENTS
         public string getUserGroup(string username)
         {
             OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "SELECT GEBRUIKERSGROEP_ID FROM ACCOUNT WHERE GEBRUIKERSNAAM = :SELUSERNAME";
-            cmd.Parameters.Add(":SELUSERNAME", username);
+            cmd.CommandText = "SELECT \"gebruikersgroep_id\" FROM ACCOUNT WHERE \"gebruikersnaam\" = :SELUSERNAME";
+            cmd.Parameters.Add("SELUSERNAME", username);
             string result = "";
-
             try
             {
                 this.conn.Open();
-                result = (string)cmd.ExecuteScalar();
+                result = Convert.ToString(cmd.ExecuteScalar());
             }
             catch (OracleException exc)
             {

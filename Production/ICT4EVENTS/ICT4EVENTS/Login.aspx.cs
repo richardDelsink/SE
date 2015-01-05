@@ -10,9 +10,11 @@ namespace ICT4EVENTS
     public partial class Login : System.Web.UI.Page
     {
         LoginAD loginAD;
+        DatabaseConnection dbconn;
         protected void Page_Load(object sender, EventArgs e)
         {
             loginAD = new LoginAD();
+            dbconn = new DatabaseConnection();
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -33,11 +35,14 @@ namespace ICT4EVENTS
             
 
             //Check if user is Admin or regular user
-
+            if(dbconn.getUserGroup(tbUsername.Text) == "1")
+            {
+                Response.Redirect("Home.aspx", true);
+            }
 
             //Basic replacement for login mechanism while programm is not running on the server
             Session["Username"] = tbUsername.Text;
-            Response.Redirect("Home.aspx", true);
+           // Response.Redirect("Home.aspx", true);
         }
     }
 }
