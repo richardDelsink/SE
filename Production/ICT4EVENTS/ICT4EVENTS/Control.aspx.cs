@@ -9,13 +9,12 @@ namespace ICT4EVENTS
 {
     public partial class Controle : System.Web.UI.Page
     {
-
-        DatabaseConnection DB = new DatabaseConnection();
         protected void Page_Load(object sender, EventArgs e)
         {
             FillAccInfoOnBar();
             LoadGrid();
         }
+
 
 
         public void LoadGrid()

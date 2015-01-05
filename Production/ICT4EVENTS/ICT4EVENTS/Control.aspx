@@ -3,7 +3,7 @@
 <asp:Content ID="controlContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="home_container">
        < <div class="jumbotron">
-    
+        
         <div align="center" class="control-top">
               <h2>Toegangscontrole</h2>
             <br />
@@ -55,6 +55,8 @@
                <h3>Aanwezigen</h3>
                       <asp:GridView ID="gridview" runat="server"  ></asp:GridView>
         </div> 
+           
+        </div>      
     </div>
     </div>
 </asp:Content>
