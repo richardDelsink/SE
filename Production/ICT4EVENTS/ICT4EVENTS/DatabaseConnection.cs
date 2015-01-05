@@ -18,7 +18,7 @@ namespace ICT4EVENTS
         public DatabaseConnection()
         {
             this.conn = new OracleConnection();
-            this.conn.ConnectionString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
+            this.conn.ConnectionString = ConfigurationManager.ConnectionStrings["OracleDBString"].ConnectionString;
             this.conn.Open();
             this.conn.Close();
         }
@@ -113,15 +113,16 @@ namespace ICT4EVENTS
             string result = " ";
 
 
-
+        
             OracleCommand cmd = new OracleCommand("CheckRFIDS", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
+      
                 cmd.Parameters.Add("v_Result", OracleDbType.Varchar2, 255).Direction = ParameterDirection.ReturnValue;
                 cmd.Parameters.Add("barcode_id", OracleDbType.NVarchar2).Value = barcodevalue;
 
-                conn.Open();
+                cmd.Connection.Open();
                 cmd.ExecuteNonQuery();
 
                 result = Convert.ToString(cmd.Parameters["v_Result"].Value);
@@ -153,5 +154,6 @@ namespace ICT4EVENTS
 
 
         }
+      
     }
 }
