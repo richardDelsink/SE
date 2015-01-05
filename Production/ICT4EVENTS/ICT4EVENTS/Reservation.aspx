@@ -1,11 +1,9 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Reservation.aspx.cs" Inherits="ICT4EVENTS.Reservation" %>
+
 <!DOCTYPE html>
 
 <webopt:bundlereference runat="server" path="~/Content/Reservering.css" />
 
-<asp:SqlDataSource ID="SqlDataSource1" Runat="server" 
-  SelectCommand="Select * from Customers"
-  ConnectionString="<%$ ConnectionStrings:NorthwindConnectionString %>" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Camping</title>

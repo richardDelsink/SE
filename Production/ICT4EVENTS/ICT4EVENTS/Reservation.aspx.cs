@@ -10,7 +10,6 @@ namespace ICT4EVENTS
 {
     public partial class Reservation : System.Web.UI.Page
     {
-        
         protected void Page_Load(object sender, EventArgs e)
         {
 
