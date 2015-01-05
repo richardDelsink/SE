@@ -147,11 +147,32 @@ namespace ICT4EVENTS
             }
 
             return result;
+        }
 
+        ///Methods of the Log-in page
+        ///
+        public string getUserGroup(string username)
+        {
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "SELECT GEBRUIKERSGROEP_ID FROM ACCOUNT WHERE GEBRUIKERSNAAM = :SELUSERNAME";
+            cmd.Parameters.Add(":SELUSERNAME", username);
+            string result = "";
 
+            try
+            {
+                this.conn.Open();
+                result = (string)cmd.ExecuteScalar();
+            }
+            catch (OracleException exc)
+            {
+                Console.Write(exc);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
 
-
-
+            return result;
         }
     }
 }
