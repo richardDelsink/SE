@@ -11,13 +11,7 @@ namespace ICT4EVENTS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-        
-        }
 
-
-        protected void ownmedialist_OnSelectedIndexChanged(object sender, EventArgs e)
-        {
-        
         }
     }
 }
