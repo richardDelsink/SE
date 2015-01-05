@@ -13,7 +13,8 @@ namespace ICT4EVENTS
         DatabaseConnection DB = new DatabaseConnection();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            FillAccInfoOnBar();
+            LoadGrid();
         }
 
 
@@ -97,6 +98,8 @@ namespace ICT4EVENTS
             mailLabel.Text = string.Empty;
             BarcoLabel.Text = string.Empty;
             activLabel.Text = string.Empty;
+
+
 
             if (DB.CheckBarcode(barcodetb.Text).Contains("RFID_FOUND!"))
             {
