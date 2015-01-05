@@ -18,7 +18,7 @@ namespace ICT4EVENTS
         public DatabaseConnection()
         {
             this.conn = new OracleConnection();
-            this.conn.ConnectionString = ConfigurationManager.ConnectionStrings["OracleDBString"].ConnectionString;
+            this.conn.ConnectionString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
             this.conn.Open();
             this.conn.Close();
         }
@@ -118,16 +118,15 @@ namespace ICT4EVENTS
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
-
                 cmd.Parameters.Add("v_Result", OracleDbType.Varchar2, 255).Direction = ParameterDirection.ReturnValue;
                 cmd.Parameters.Add("barcode_id", OracleDbType.NVarchar2).Value = barcodevalue;
 
-                cmd.Connection.Open();
+                conn.Open();
                 cmd.ExecuteNonQuery();
 
                 result = Convert.ToString(cmd.Parameters["v_Result"].Value);
 
-                if (result.Contains("RFID_Found!"))
+                if (result.Contains("RFID_FOUND!"))
                 {
                     UpdatePresence(barcodevalue);
                 }
@@ -149,6 +148,7 @@ namespace ICT4EVENTS
 
             return result;
         }
+
         ///Methods of the Log-in page
         ///
         public string getUserGroup(string username)
@@ -170,8 +170,100 @@ namespace ICT4EVENTS
             {
                 this.conn.Close();
             }
+
             return result;
         }
-      
+
+        /////EVENTS
+
+
+        public List<string> Locations()
+        {
+            List<string> Locations = new List<string>();
+            try
+            {
+                string queryString = "select \"naam\" from locatie";
+
+
+
+                OracleCommand cmd = new OracleCommand(queryString, this.conn);
+
+
+                this.conn.Open();
+
+                using (OracleDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Locations.Add(reader.GetString(0));
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return Locations;
+        }
+
+        public void CreateEvent(string naam, DateTime start, DateTime eind, int max)
+        {
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO EVENT(\"locatie_id\",\"naam\", \"datumstart\", \"datumEinde\", \"maxBezoekers\") VALUES (1,:naam, :startd, :eindd, :bezoek)";
+                cmd.Parameters.Add("naam", naam);
+                cmd.Parameters.Add("startd", start);
+                cmd.Parameters.Add("eindd", eind);
+                cmd.Parameters.Add("bezoek", max);
+
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException e)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
+        }
+
+        public DataSet GetEvents()
+        {
+            string queryString = "Select l.\"naam\" as Locatie, e.\"naam\" as Naam, e.\"datumstart\" As BeginDatum, e.\"datumEinde\" as EindDatum, e.\"maxBezoekers\" as MaxBezoekers From Event e, Locatie l";
+            OracleCommand cmd = new OracleCommand(queryString, this.conn);
+            OracleDataAdapter adapter = new OracleDataAdapter(cmd);
+
+
+            this.conn.Open();
+
+            DataSet ds = new DataSet();
+
+            try
+            {
+                // Fill the DataSet.
+                adapter.Fill(ds);
+
+            }
+            catch (OracleException e)
+            {
+                // The connection failed. Display an error message            
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ds;
+        }
+
+
+
     }
 }
