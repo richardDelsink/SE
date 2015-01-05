@@ -13,5 +13,14 @@ namespace ICT4EVENTS
         {
 
         }
+        protected void categoriecb_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void btnUpload_OnClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
