@@ -15,11 +15,13 @@
 
 <div class="col-md-4"><asp:DataGrid CssClass="list-group" id="ownmedialist" OnSelectedIndexChanged="ownmedialist_OnSelectedIndexChanged" runat="server"></asp:DataGrid></div>        
 <div class="col-md-4">
-    <asp:Label runat="server" Text="Filename: "></asp:Label>
-    <asp:Label runat="server" Text="Filesize: "></asp:Label>
-    <asp:Label runat="server" Text="Category"></asp:Label>
-    <asp:ImageButton runat="server" ImageUrl=""/>
-    <asp:TextBox CssClass="input" runat="server"></asp:TextBox> 
+    <asp:Label runat="server" Text="Filename: "></asp:Label><br/>
+    <asp:Label runat="server" Text="Filesize: "></asp:Label><br/>
+    <asp:Label runat="server" Text="Category"></asp:Label><br/>
+    <asp:ImageButton ID="likebtn" runat="server" ImageUrl="http://i758.photobucket.com/albums/xx221/Mark_MJB15/thumb-up-facebook-emoticon-like-symbol_zps5cca22e1.png"> </asp:ImageButton>
+    <asp:ImageButton ID="dislikebtn" runat="server" ImageUrl="http://i758.photobucket.com/albums/xx221/Mark_MJB15/facebook-emoticon-of--dislike-symbol_zpsf59dfd62.png">  </asp:ImageButton>
+    <asp:ImageButton ID="reportbtn" runat="server" ImageUrl="http://i758.photobucket.com/albums/xx221/Mark_MJB15/report_zpsd968ebcf.png"> </asp:ImageButton>
+
 
 </div>
 <div class="col-md-4">

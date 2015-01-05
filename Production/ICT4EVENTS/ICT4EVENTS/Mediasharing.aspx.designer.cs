@@ -22,6 +22,33 @@ namespace ICT4EVENTS {
         protected global::System.Web.UI.WebControls.DataGrid ownmedialist;
         
         /// <summary>
+        /// likebtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton likebtn;
+        
+        /// <summary>
+        /// dislikebtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton dislikebtn;
+        
+        /// <summary>
+        /// reportbtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton reportbtn;
+        
+        /// <summary>
         /// categoriecb control.
         /// </summary>
         /// <remarks>
