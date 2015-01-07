@@ -4,8 +4,8 @@ using System.Data;
 using System.Linq;
 using Oracle.DataAccess;
 using Oracle.DataAccess.Client;
-
 using System.Text;
+using System.Web;
 using System.Threading.Tasks;
 
 namespace Datalayer
@@ -17,10 +17,31 @@ namespace Datalayer
 
         public DatabaseConnection()
         {
+            //Oude proftaak connection
+            //conn = new OracleConnection();
+            //string user = "SYSTEM";
+            //string pw = "proftaak";
+            //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.21.142:1521/" + ";";
+            
+            //vdi.fhict connection van iemand
             this.conn = new OracleConnection();
-            this.conn.ConnectionString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
-            this.conn.Open();
-            this.conn.Close();
+            string user = "dbi306956"; // zie email voor logingegevens
+            string pw = "kyqSZFxe7N";
+            this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
+
+            //Locale connectie hieronder
+            //conn = new OracleConnection();
+            //String user = "SYSTEMs
+            //String pw = "";
+            //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
+            //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
+            
+
+            //dafuq is this shit
+            //this.conn = new OracleConnection();
+            //this.conn.ConnectionString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
+            //this.conn.Open();
+            //this.conn.Close();
         }
 
         public void UpdatePresence(string barcode)
