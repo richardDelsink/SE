@@ -5,15 +5,18 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using Businesslayer;
+
 namespace ICT4EVENTS
 {
     public partial class Events_admin : System.Web.UI.Page
     {
-        DatabaseConnection db = new DatabaseConnection();
+
+        Events Event = new Events();
         DataSet ds = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
-            GridView1.DataSource = db.GetEvents();
+            GridView1.DataSource = Event.GetEvents();
             GridView1.DataBind();
             
             
