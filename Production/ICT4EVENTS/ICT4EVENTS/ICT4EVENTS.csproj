@@ -290,7 +290,6 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="LoginAD.cs" />
     <Compile Include="Material.aspx.cs">
       <DependentUpon>Material.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

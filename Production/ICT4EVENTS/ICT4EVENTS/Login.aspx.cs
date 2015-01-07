@@ -10,11 +10,9 @@ namespace ICT4EVENTS
     public partial class Login : System.Web.UI.Page
     {
         LoginAD loginAD;
-        DatabaseConnection dbconn;
         protected void Page_Load(object sender, EventArgs e)
         {
             loginAD = new LoginAD();
-            dbconn = new DatabaseConnection();
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -32,17 +30,26 @@ namespace ICT4EVENTS
                 ///To-do after programm is on server - make and show error message
                 Response.Write("succes");
             }*/
-            
+
 
             //Check if user is Admin or regular user
-            if(dbconn.getUserGroup(tbUsername.Text) == "1")
+
+            if (loginAD.getUserGroupDB(tbUsername.Text) == "1")
             {
                 Response.Redirect("Home.aspx", true);
+            }
+            else if (loginAD.getUserGroupDB(tbUsername.Text) == "2")
+            {
+                Response.Redirect("Home.aspx", true);
+            }
+            else
+            {
+                //No user group, should not be possible
             }
 
             //Basic replacement for login mechanism while programm is not running on the server
             Session["Username"] = tbUsername.Text;
-           // Response.Redirect("Home.aspx", true);
+            // Response.Redirect("Home.aspx", true);
         }
     }
 }
