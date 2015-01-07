@@ -13,25 +13,26 @@ using System.Web.UI.WebControls;
     /// </summary>
     public partial class Controle : System.Web.UI.Page
     {
+        Business B = new Business();
+
         /// <summary>
         /// Needed to initialize information from the database.
         /// </summary>
-        private DatabaseConnection db = new DatabaseConnection();
-
+        
         /// <summary>
         /// Loads the GridViews to be used. 
         /// </summary>
         public void LoadGrid()
         {
-            this.db.FillDataGrid(this.gridview);
+            this.B.Datagrid(this.gridview);  
         }
 
-        /// <summary>
+        /// <summary>011
         /// Fills the correct labels with information from the database query.
         /// </summary>
         public void FillAccInfoOnBar()
         {
-            string subbedString = this.db.GetAccountInfo(BarcodeTB.Text);
+            string subbedString = this.B.GetAccountInfoFromBC(BarcodeTB.Text);
             int index;
             int endIndex;
             string finalSubString;
@@ -117,7 +118,7 @@ using System.Web.UI.WebControls;
             BarcoLabel.Text = string.Empty;
             activLabel.Text = string.Empty;
 
-            if (this.db.CheckBarcode(BarcodeTB.Text).Contains("RFID_Found!"))
+            if (this.B.DBCheckBarcode(BarcodeTB.Text).Contains("RFID_Found!"))
             {
                 rfidworth.Text = string.Empty;
 

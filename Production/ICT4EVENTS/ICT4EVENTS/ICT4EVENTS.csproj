@@ -386,6 +386,10 @@
       <Project>{5c91b92e-8e76-4f12-a767-c21bb86dcbc2}</Project>
       <Name>Businesslayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Datalayer\Datalayer.csproj">
+      <Project>{abe00eb2-589c-4f07-9573-d6155572cd88}</Project>
+      <Name>Datalayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

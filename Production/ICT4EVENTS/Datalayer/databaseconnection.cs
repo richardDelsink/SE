@@ -32,8 +32,8 @@ namespace Datalayer
 
             //Locale connectie hieronder
             //conn = new OracleConnection();
-            //String user = "SYSTEMs
-            //String pw = "";
+            //String user = "SYSTEM";
+            //String pw = "2438747";
             //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
             
@@ -148,7 +148,7 @@ namespace Datalayer
 
                 result = Convert.ToString(cmd.Parameters["v_Result"].Value);
 
-                if (result.Contains("RFID_FOUND!"))
+                if (result.Contains("RFID_Found!"))
                 {
                     UpdatePresence(barcodevalue);
                 }
