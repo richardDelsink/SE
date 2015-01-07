@@ -269,7 +269,6 @@
     <Compile Include="Control.aspx.designer.cs">
       <DependentUpon>Control.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Events_admin.aspx.cs">
       <DependentUpon>Events_admin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -1,0 +1,8 @@
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Datalayer\bin\Debug\Datalayer.dll.config
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Datalayer\bin\Debug\Datalayer.dll
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Datalayer\bin\Debug\Datalayer.pdb
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Datalayer\bin\Debug\Oracle.DataAccess.dll
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Datalayer\obj\Debug\Datalayer.Properties.Resources.resources
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Datalayer\obj\Debug\Datalayer.csproj.GenerateResource.Cache
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Datalayer\obj\Debug\Datalayer.dll
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Datalayer\obj\Debug\Datalayer.pdb

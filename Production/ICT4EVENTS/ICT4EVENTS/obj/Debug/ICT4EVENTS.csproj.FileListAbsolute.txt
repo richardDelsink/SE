@@ -201,3 +201,8 @@ C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\ICT4EVENTS\bin\Microsoft
 C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\ICT4EVENTS\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\ICT4EVENTS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\ICT4EVENTS\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\ICT4EVENTS\bin\Businesslayer.dll
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\ICT4EVENTS\bin\Datalayer.dll
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\ICT4EVENTS\bin\Businesslayer.pdb
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\ICT4EVENTS\bin\Datalayer.pdb
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\ICT4EVENTS\obj\Debug\ICT4EVENTS.csprojResolveAssemblyReference.cache

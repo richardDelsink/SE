@@ -1,0 +1,11 @@
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Businesslayer\bin\Debug\Businesslayer.dll.config
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Businesslayer\bin\Debug\Businesslayer.dll
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Businesslayer\bin\Debug\Businesslayer.pdb
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Businesslayer\bin\Debug\Datalayer.dll
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Businesslayer\bin\Debug\Oracle.DataAccess.dll
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Businesslayer\bin\Debug\Datalayer.pdb
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Businesslayer\obj\Debug\Businesslayer.csprojResolveAssemblyReference.cache
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Businesslayer\obj\Debug\Businesslayer.Properties.Resources.resources
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Businesslayer\obj\Debug\Businesslayer.csproj.GenerateResource.Cache
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Businesslayer\obj\Debug\Businesslayer.dll
+C:\Users\Mark\Documents\GitHub\SE\Production\ICT4EVENTS\Businesslayer\obj\Debug\Businesslayer.pdb
