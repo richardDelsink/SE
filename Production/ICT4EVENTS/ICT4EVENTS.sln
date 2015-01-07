@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICT4EVENTS", "ICT4EVENTS\ICT4EVENTS.csproj", "{6B779888-D234-4CD2-AEBF-A0DA49397B47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Businesslayer", "Businesslayer\Businesslayer.csproj", "{5C91B92E-8E76-4F12-A767-C21BB86DCBC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datalayer", "Datalayer\Datalayer.csproj", "{ABE00EB2-589C-4F07-9573-D6155572CD88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,6 +18,14 @@ Global
 		{6B779888-D234-4CD2-AEBF-A0DA49397B47}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{6B779888-D234-4CD2-AEBF-A0DA49397B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B779888-D234-4CD2-AEBF-A0DA49397B47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C91B92E-8E76-4F12-A767-C21BB86DCBC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C91B92E-8E76-4F12-A767-C21BB86DCBC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C91B92E-8E76-4F12-A767-C21BB86DCBC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C91B92E-8E76-4F12-A767-C21BB86DCBC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABE00EB2-589C-4F07-9573-D6155572CD88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABE00EB2-589C-4F07-9573-D6155572CD88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABE00EB2-589C-4F07-9573-D6155572CD88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABE00EB2-589C-4F07-9573-D6155572CD88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
