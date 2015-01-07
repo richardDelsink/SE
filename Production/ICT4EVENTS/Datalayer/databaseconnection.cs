@@ -25,16 +25,16 @@ namespace Datalayer
             //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.21.142:1521/" + ";";
             
             //vdi.fhict connection van iemand
-            this.conn = new OracleConnection();
-            string user = "dbi306956"; // zie email voor logingegevens
-            string pw = "kyqSZFxe7N";
-            this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
+            //this.conn = new OracleConnection();
+            //string user = "dbi306956"; // zie email voor logingegevens
+            //string pw = "kyqSZFxe7N";
+            //this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
 
             //Locale connectie hieronder
-            //conn = new OracleConnection();
-            //String user = "SYSTEM";
-            //String pw = "2438747";
-            //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
+            conn = new OracleConnection();
+            String user = "SYSTEM";
+            String pw = "infra-s38";
+            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
             
 
@@ -232,13 +232,13 @@ namespace Datalayer
             return Locations;
         }
 
-        public void CreateEvent(string naam, DateTime start, DateTime eind, int max)
+        public void CreateEvent(string naam, DateTime start, DateTime eind, int max, string locatie)
         {
             try
             {
                 OracleCommand cmd = this.conn.CreateCommand();
-                cmd.CommandText =
-                    "INSERT INTO EVENT(\"locatie_id\",\"naam\", \"datumstart\", \"datumEinde\", \"maxBezoekers\") VALUES (1,:naam, :startd, :eindd, :bezoek)";
+                cmd.CommandText ="INSERT INTO EVENT(\"locatie_id\",\"naam\", \"datumstart\", \"datumEinde\", \"maxBezoekers\") VALUES (:loc ,:naam, :startd, :eindd, :bezoek)";
+                cmd.Parameters.Add("loc", locatieID(locatie));
                 cmd.Parameters.Add("naam", naam);
                 cmd.Parameters.Add("startd", start);
                 cmd.Parameters.Add("eindd", eind);
@@ -255,7 +255,29 @@ namespace Datalayer
             {
                 this.conn.Close();
             }
+        }
 
+        public int locatieID(string naam)
+        {
+            int locatieid = 0;
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText ="Select \"ID\" From locatie where \"naam\"= :naam";
+                cmd.Parameters.Add("naam", naam);
+
+                this.conn.Open();
+                locatieid = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch (OracleException e)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return locatieid;
         }
 
         public DataSet GetEvents()

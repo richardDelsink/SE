@@ -10,7 +10,7 @@
 namespace ICT4EVENTS {
     
     
-    public partial class Events_AdminCreate {
+    public partial class Event_AdminCreate {
         
         /// <summary>
         /// TextBox1 control.

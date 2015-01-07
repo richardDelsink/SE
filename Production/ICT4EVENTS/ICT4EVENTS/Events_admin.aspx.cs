@@ -16,7 +16,7 @@ namespace ICT4EVENTS
         DataSet ds = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
-            GridView1.DataSource = Event.GetEvents();
+            GridView1.DataSource = Event.GetAllEvents();
             GridView1.DataBind();
             
             
@@ -31,6 +31,11 @@ namespace ICT4EVENTS
         protected void Button1_Click(object sender, EventArgs e)
         {
             
+        }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

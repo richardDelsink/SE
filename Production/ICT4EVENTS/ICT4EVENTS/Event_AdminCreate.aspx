@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Event_AdminCreate.aspx.cs" Inherits="ICT4EVENTS.Event_AdminCreate" %>
 
-<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Events_AdminCreate.aspx.cs" Inherits="ICT4EVENTS.Events_AdminCreate" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
@@ -22,7 +21,7 @@
   <ul class="dropdown-menu" role="menu">
     <li><a href="Events_admin">View Events</a></li>
     <li class="divider"></li>
-    <li><a href="Events_AdminCreate">Create Event</a></li>
+    <li><a href="Event_AdminCreate">Create Event</a></li>
   </ul>
 </div>
 

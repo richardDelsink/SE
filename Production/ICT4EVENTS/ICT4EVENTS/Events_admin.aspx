@@ -20,7 +20,7 @@
   <ul class="dropdown-menu" role="menu">
     <li><a href="Events_admin">View Events</a></li>
     <li class="divider"></li>
-    <li><a href="Events_AdminCreate">Create Event</a></li>
+    <li><a href="Event_AdminCreate">Create Event</a></li>
   </ul>
 </div>
                <br />
