@@ -469,5 +469,94 @@ namespace Datalayer
                 this.conn.Close();
             }
         }
+
+        public string Getcategory(int id)
+        {
+            string category = string.Empty;
+            OracleCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select naam from Categorie where Categorie_ID='" + id + "';";
+            try
+            {
+                this.conn.Open();
+                category = Convert.ToString(cmd.ExecuteScalar());
+            }
+            catch (OracleException exception)
+            {
+                Console.WriteLine(exception);
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return category;
+        }
+
+        public void addbericht(int accountid, string titel, string inhoud)
+        {
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "INSERT INTO BERICHT VALUES(TITEL,INHOUD)";
+            cmd.Parameters.Add("TITEL", titel);
+            cmd.Parameters.Add("INHOUD", inhoud);
+        }
+
+        public void addbijdrage(int accountid, DateTime now, string bijdragesoort)
+        {
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "INSERT INTO BIJDRAGE VALUES(ACCOUNTID,DATUM,SOORT);";
+            cmd.Parameters.Add("ACCOUNTID", accountid);
+            cmd.Parameters.Add("DATUM", now);
+            cmd.Parameters.Add("SOORT", bijdragesoort);
+            try
+            {
+                this.conn.Open();
+                cmd.ExecuteScalar();
+            }
+            catch (OracleException exc)
+            {
+                Console.WriteLine(exc);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+        }
+
+        public int getaccountID(string username)
+        {
+            int idnumber = 0;
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "SELECT \"ID\" from ACCOUNT  WHERE  GEBRUIKERSNAAM='" + username + "';";
+            try
+            {
+                this.conn.Open();
+                idnumber = Convert.ToInt32(cmd.ExecuteReader());
+            }
+            catch (OracleException e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return idnumber;
+        }
+
+        public void addcategory(int idneeded, string naam)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getbijdrageID(int accountid, DateTime thistime, string bijdragesoort)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public List<string> GetUserInfo(string user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -35,7 +35,15 @@ namespace Businesslayer
         {
             return _databaseConnection.CheckBarcode(barcode);
         }
+        public string Getcategory(int id)
+        {
+            return this._databaseConnection.Getcategory(id);
+        }
 
+        public List<string> UserInfo(string user)
+        {
+            return _databaseConnection.GetUserInfo(user);
+        } 
 
 
 

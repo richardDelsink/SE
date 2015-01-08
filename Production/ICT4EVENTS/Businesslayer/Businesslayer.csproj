@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accountbijdrage.cs" />
     <Compile Include="business.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="LoginAD.cs" />
