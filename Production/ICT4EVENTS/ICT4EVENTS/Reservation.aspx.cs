@@ -5,13 +5,14 @@ using System.Drawing;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Businesslayer;
 using ICT4EVENTS.Models;
 
 namespace ICT4EVENTS
 {
     public partial class Reservation : System.Web.UI.Page
     {
-        DatabaseConnection db = new DatabaseConnection();
+        Reservering db = new Reservering();
         ReservationRegister ResReg = new ReservationRegister();
 
         private int selected = 0;

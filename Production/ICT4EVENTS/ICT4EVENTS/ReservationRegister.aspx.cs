@@ -4,12 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Businesslayer;
 
 namespace ICT4EVENTS
 {
     public partial class ReservationRegister : System.Web.UI.Page
     {
-        DatabaseConnection db = new DatabaseConnection();
+       Reservering db = new Reservering();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["ToRegister"] != null)
