@@ -47,7 +47,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" runat="server" >ICT4EVENTS</a>
-                       <a class="navbar-brand" runat="server" href="Profile.aspx"><img src="img/logo.png" title="PROFILE" alt="PROFILE"/></a>
+                       <a class="navbar-brand" runat="server" href="Profile.aspx"><img src="img/logo.png" href="/Profile.aspx" title="PROFILE" alt="PROFILE"/></a>
                     
                 </div>
                 <div class="navbar-collapse collapse">

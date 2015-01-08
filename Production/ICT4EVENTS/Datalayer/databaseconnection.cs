@@ -34,7 +34,7 @@ namespace Datalayer
             //Locale connectie hieronder
             conn = new OracleConnection();
             String user = "SYSTEM";
-            String pw = "qwe123";
+            String pw = "2438747";
             conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
             
@@ -337,6 +337,52 @@ namespace Datalayer
                 conn.Close();
             }
             return ds;
+        }
+
+        public List<string> GetUserInfo(string username)
+        {
+            List<string> UserInfo = new List<string>(); 
+            OracleCommand cmd = this.conn.CreateCommand();
+            OracleDataReader reader;
+            cmd.CommandText = "SELECT \"gebruikersnaam\", \"wachtwoord\", \"email\" FROM ACCOUNT WHERE \"gebruikersnaam\" = :USERNAME";
+            cmd.Parameters.Add("USERNAME", username);
+            
+
+            try
+            {
+                this.conn.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        UserInfo.Add(reader.GetString(0));
+                    }
+
+                    if (!reader.IsDBNull(1))
+                    {
+                        UserInfo.Add(reader.GetString(1));
+                    }
+
+                    if (!reader.IsDBNull(2))
+                    {
+                        UserInfo.Add(reader.GetString(2));
+                    }
+                }
+                
+              
+            }
+            catch (OracleException exc)
+            {
+                Console.Write(exc);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
+            return UserInfo;
         }
     }
 }
