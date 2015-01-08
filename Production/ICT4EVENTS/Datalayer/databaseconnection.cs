@@ -302,7 +302,7 @@ namespace Datalayer
                 OracleCommand cmd = this.conn.CreateCommand();
                 cmd.CommandText = "INSERT INTO BIJDRAGE VALUES(ACCOUNTID,DATUM,SOORT);";
                 cmd.Parameters.Add("ACCOUNTID", accountid);
-                cmd.Parameters.Add("DATUM", now);
+                cmd.Parameters.Add("DATUM", thistime);
                 cmd.Parameters.Add("SOORT", bijdragesoort);
                 try
                 {
