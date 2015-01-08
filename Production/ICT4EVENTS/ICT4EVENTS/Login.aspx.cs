@@ -55,10 +55,13 @@ namespace ICT4EVENTS
             //Check if password and confirm password match
             if(loginAD.confirmPassword(tbPassword1.Text, tbPassword2.Text))
             {
+                //Add account to database
                 loginAD.addAccount(tbEmail.Text, tbUsernameSU.Text, tbPassword1.Text);
+
                 //Create Useraccount, returns a bool. true if it worked, false if something went wrong
                // if (loginAD.CreateUserAccount(tbUsernameSU.Text, tbPassword1.Text))
                // {
+
                     //Check if the person has made a reservation, for redirecting purposes
                     if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
                     {
