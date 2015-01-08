@@ -702,39 +702,43 @@ namespace Datalayer
 
             return reservationList;
         }
-        public List<int> CampReservatiList(string username)
-        {
+        public List<int> CampReservationList(string username)
+{
             List<int> CampNumbers = new List<int>();
             OracleCommand cmd = this.conn.CreateCommand();
             OracleDataReader reader;
             cmd.CommandText = "SELECT PR.\"plek_id\"  FROM PLEK_RESERVERING PR, RESERVERING R, RESERVERING_POLSBANDJE RP, ACCOUNT AC  WHERE PR.\"reservering_id\" = R.ID and R.ID = RP.ID AND RP.\"account_id\" = AC.ID AND AC.\"gebruikersnaam\" = :USERNAME'";
+            cmd.CommandText = "SELECT PR.\"plek_id\"  FROM PLEK_RESERVERING PR, RESERVERING R, RESERVERING_POLSBANDJE RP, ACCOUNT AC  WHERE PR.\"reservering_id\" = R.ID and R.ID = RP.ID AND RP.\"account_id\" = AC.ID AND AC.\"gebruikersnaam\" = :USERNAME";
             cmd.Parameters.Add("USERNAME", username);
 
             try
             {
+                this.conn.Open();
+                reader = cmd.ExecuteReader();
+
                 while (reader.Read())
                 {
 
+                    CampNumbers.Add(reader.GetInt16(0));
                 }
             }
-            catch
-            {
 
+            catch(OracleException exc)
+            {
+                Console.Write(exc);
             }
             finally
             {
-                
+                conn.Close();
             }
 
-
-
-
-
-
+            return CampNumbers;
         }
-
-
-
-
+        //public List<string> ReservedItemsList(string username)
+        //{
+          //  SELECT v.ID, v."productexemplaar_id", v."res_pb_id", v."datumIn", v."datumUit", p."merk", v."prijs", pc."naam" FROM VERHUUR v, productexemplaar pe, product p, productcat pc, reservering_polsbandje rp, account ac WHERE v."productexemplaar_id" = pe.Id AND p.ID = pe."product_id" AND pc.id = p."productcat_id" AND rp."account_id" = ac.ID AND ac."gebruikersnaam" = 'admin';
+        //}
+            }
     }
-}
+
+
