@@ -23,7 +23,8 @@ using Businesslayer;
         /// </summary>
         public void FillTextBoxes()
         {
-            List<string> inhoud = this.b.UserInfo(Session["Username"].ToString());
+            string user = Session["Username"].ToString();
+            List<string> inhoud = this.b.UserInfo(user);
             this.UserLB.Text = inhoud.ElementAt(0);
             this.PassLB.Text = inhoud.ElementAt(1);
 
