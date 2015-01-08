@@ -28,6 +28,8 @@
             </div>
             <div class="signup">
                 <h1>Register</h1>
+                <asp:TextBox ID="tbFirstName" runat="server" Class="input" placeholder="Firstname"></asp:TextBox>
+                <asp:TextBox ID="tbLastName" runat="server" Class="input" placeholder="Lastname"></asp:TextBox>
                 <asp:TextBox ID="tbEmail" runat="server" Class="input" placeholder="Email"></asp:TextBox>
                 <asp:TextBox ID="tbUsernameSU" runat="server" Class="input" placeholder="Username"></asp:TextBox>
                 <asp:TextBox ID="tbPassword1" runat="server" Class="input" placeholder="Password"></asp:TextBox>
