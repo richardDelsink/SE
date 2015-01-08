@@ -32,24 +32,48 @@ namespace ICT4EVENTS
             }*/
 
 
-            //Check if user is Admin or regular user
 
-            if (loginAD.getUserGroupDB(tbUsername.Text) == "1")
-            {
-                Response.Redirect("Home.aspx", true);
-            }
-            else if (loginAD.getUserGroupDB(tbUsername.Text) == "2")
-            {
-                Response.Redirect("Home.aspx", true);
-            }
-            else
-            {
-                //No user group, should not be possible
-            }
+
+
+            string username;
+            string usergroup;
 
             //Basic replacement for login mechanism while programm is not running on the server
             Session["Username"] = tbUsername.Text;
-            // Response.Redirect("Home.aspx", true);
+            //Check if user is Admin or regular user
+            Session["Usergroup"] = loginAD.getUserGroupDB(tbUsername.Text);
+
+            //Debugging, check values of the sessions
+            username = Session["Username"].ToString();
+            usergroup = Session["Usergroup"].ToString();
+
+            Response.Redirect("Home.aspx", true);
+        }
+
+        protected void btnSignup_Click(object sender, EventArgs e)
+        {
+            //Check if password and confirm password match
+            if(loginAD.confirmPassword(tbPassword1.Text, tbPassword2.Text))
+            {
+                loginAD.addAccount(tbEmail.Text, tbUsernameSU.Text, tbPassword1.Text);
+                //Create Useraccount, returns a bool. true if it worked, false if something went wrong
+               // if (loginAD.CreateUserAccount(tbUsernameSU.Text, tbPassword1.Text))
+               // {
+                    //Check if the person has made a reservation, for redirecting purposes
+                    if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
+                    {
+                        Response.Redirect("Home.aspx", true);
+                    }
+                    else
+                    {
+                        Response.Redirect("Reservation.aspx?firstname="+tbFirstName.Text+"&lastname="+tbLastName.Text, true);
+                    }
+            //    }
+            //    else
+            //    {
+                    //Username doesn't exist
+            //    }
+            }
         }
     }
 }

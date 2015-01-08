@@ -9,6 +9,7 @@ using System.Text;
 using System.Web;
 using System.Threading.Tasks;
 
+
 namespace Datalayer
 {
     public class DatabaseConnection
@@ -25,16 +26,16 @@ namespace Datalayer
             //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.21.142:1521/" + ";";
             
             //vdi.fhict connection van iemand
-            //this.conn = new OracleConnection();
-            //string user = "dbi306956"; // zie email voor logingegevens
-            //string pw = "kyqSZFxe7N";
-            //this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
+            this.conn = new OracleConnection();
+            string user = "dbi306956"; // zie email voor logingegevens
+            string pw = "kyqSZFxe7N";
+            this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
 
             //Locale connectie hieronder
-            conn = new OracleConnection();
+            /*conn = new OracleConnection();
             String user = "SYSTEM";
-            String pw = "infra-s38";
-            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
+            String pw = "qwe123";
+            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; */
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
             
 
@@ -53,6 +54,35 @@ namespace Datalayer
             cmd.Parameters.Add("rfiduser", "nvarchar2").Value = barcode;
             cmd.ExecuteNonQuery();
 
+        }
+
+        public void MaterialGrid(GridView gv)
+        {
+            try
+            {
+                conn.Open();
+                OracleCommand cmd = new OracleCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SELECT p.id,\"merk\", \"serie\",\"naam\", \"prijs\" FROM productexemplaar pe, product p, productcat pc WHERE pe.\"product_id\" = p.\"productcat_id\" AND p.ID = pc.ID";
+                OracleDataAdapter adapter = new OracleDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable ds = new DataTable();
+                adapter.Fill(ds);
+                gv.DataSource = ds;
+                gv.DataBind();
+                
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.ReadLine();
+
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         public void FillDataGrid(GridView d)
@@ -171,7 +201,7 @@ namespace Datalayer
             return result;
         }
 
-        ///Methods of the Log-in page
+        ///Methods of the Log-in/Registration page
         ///
         public string getUserGroup(string username)
         {
@@ -194,6 +224,60 @@ namespace Datalayer
             }
 
             return result;
+        }
+
+        public bool checkForReservation(string firstname, string lastname)
+        {
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "SELECT \"voornaam\" FROM persoon WHERE \"voornaam\" = :SELFIRSTNAME AND \"achternaam\" = :SELLASTNAME";
+            cmd.Parameters.Add("SELFIRSTNAME", firstname);
+            cmd.Parameters.Add("SELLASTNAME", lastname);
+            string result = "";
+            try
+            {
+                this.conn.Open();
+                result = Convert.ToString(cmd.ExecuteScalar());
+            }
+            catch (OracleException exc)
+            {
+                Console.Write(exc);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
+            if(result != "")
+            {
+                return true;
+            }
+            return false;
+        }
+        public void addAccount(string email, string username, string wachtwoord)
+        {
+            try
+            {
+                Random rnd =new Random();
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO ACCOUNT(\"gebruikersgroep_id\", \"gebruikersnaam\", \"wachtwoord\", \"email\", \"activatiehash\", \"geactiveerd\") VALUES (:gebrgroep, :gebruikersnaam, :wachtwoord, :email, :activatiehash, :geactiveerd)";
+                cmd.Parameters.Add("gebrgroep", "2");
+                cmd.Parameters.Add("gebruikersnaam", username);
+                cmd.Parameters.Add("wachtwoord", wachtwoord);
+                cmd.Parameters.Add("email", email);
+                cmd.Parameters.Add("activatiehash", rnd.Next(1, 9999999).ToString());
+                cmd.Parameters.Add("geactiveerd", "1");
+
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException e)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
         }
 
         /////EVENTS

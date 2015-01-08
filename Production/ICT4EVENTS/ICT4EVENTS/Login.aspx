@@ -26,13 +26,14 @@
                 <asp:TextBox ID="tbPassword" runat="server" Class="input" placeholder="Password"></asp:TextBox>
                 <asp:Button ID="btnLogin" CssClass="button" Text="Submit" runat="server" OnClick="btnLogin_Click"></asp:Button>
             </div>
-            <div class="signup">
-                <h1>Register</h1>
+            <div class="signup"><h1>Register</h1>
+                <asp:TextBox ID="tbFirstName" runat="server" Class="input" placeholder="Firstname"></asp:TextBox>
+                <asp:TextBox ID="tbLastName" runat="server" Class="input" placeholder="Lastname"></asp:TextBox>
                 <asp:TextBox ID="tbEmail" runat="server" Class="input" placeholder="Email"></asp:TextBox>
                 <asp:TextBox ID="tbUsernameSU" runat="server" Class="input" placeholder="Username"></asp:TextBox>
                 <asp:TextBox ID="tbPassword1" runat="server" Class="input" placeholder="Password"></asp:TextBox>
                 <asp:TextBox ID="tbPassword2" runat="server" Class="input" placeholder="Confirm Password"></asp:TextBox>
-                <asp:Button ID="btnSignup" runat="server" Class="button" Text="Sign up" />
+                <asp:Button ID="btnSignup" runat="server" Class="button" Text="Sign up" OnClick="btnSignup_Click" />
             </div>
         </div>
 
