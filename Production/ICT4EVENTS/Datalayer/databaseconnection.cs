@@ -26,16 +26,16 @@ namespace Datalayer
             //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.21.142:1521/" + ";";
             
             //vdi.fhict connection van iemand
-            this.conn = new OracleConnection();
-            string user = "dbi306956"; // zie email voor logingegevens
-            string pw = "kyqSZFxe7N";
-            this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
+            //this.conn = new OracleConnection();
+            ///string user = "dbi306956"; // zie email voor logingegevens
+            //string pw = "kyqSZFxe7N";
+            //this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
 
             //Locale connectie hieronder
-            /*conn = new OracleConnection();
+            conn = new OracleConnection();
             String user = "SYSTEM";
-            String pw = "qwe123";
-            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; */
+            String pw = "2438747";
+            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
             
 
@@ -279,7 +279,36 @@ namespace Datalayer
                 this.conn.Close();
             }
         }
+        public bool usernameExistsCheck(string username)
+        {
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "SELECT \"gebruikersnaam\" FROM account WHERE \"gebruikersnaam\" = :SELFIRSTNAME";
+            cmd.Parameters.Add("SELUSERNAME", username);
+            string result = "";
+            try
+            {
+                this.conn.Open();
+                result = Convert.ToString(cmd.ExecuteScalar());
+            }
+            catch (OracleException exc)
+            {
+                Console.Write(exc);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
+            if (result != "")
+            {
+                return true;
+            }
+            return false;
+        }
+
         /////EVENTS
+
+
         public List<string> Locations()
         {
             List<string> Locations = new List<string>();
@@ -489,7 +518,7 @@ namespace Datalayer
             return category;
         }
 
-        public void Addbericht(int accountid, string titel, string inhoud)
+        public void addbericht(int accountid, string titel, string inhoud)
         {
             OracleCommand cmd = this.conn.CreateCommand();
             cmd.CommandText = "INSERT INTO BERICHT VALUES(TITEL,INHOUD)";
@@ -497,7 +526,7 @@ namespace Datalayer
             cmd.Parameters.Add("INHOUD", inhoud);
         }
 
-        public void Addbijdrage(int accountid, DateTime now, string bijdragesoort)
+        public void addbijdrage(int accountid, DateTime now, string bijdragesoort)
         {
             OracleCommand cmd = this.conn.CreateCommand();
             cmd.CommandText = "INSERT INTO BIJDRAGE VALUES(ACCOUNTID,DATUM,SOORT);";
@@ -542,7 +571,7 @@ namespace Datalayer
 
         public void addcategory(int idneeded, string naam)
         {
-        
+            throw new NotImplementedException();
         }
 
         public int getbijdrageID(int accountid, DateTime thistime, string bijdragesoort)
@@ -550,19 +579,100 @@ namespace Datalayer
             throw new NotImplementedException();
         }
 
+
         public List<string> GetUserInfo(string user)
         {
             throw new NotImplementedException();
         }
 
-        public int Getcategoryid(string categorie)
+        public List<string> GetReservationInfo(string username)
         {
-        
+            List<string> reservationList = new List<string>();
+            OracleCommand cmd = this.conn.CreateCommand();
+            OracleDataReader reader;
+            cmd.CommandText = "SELECT R.* FROM RESERVERING R, RESERVERING_POLSBANDJE RP, ACCOUNT AC, Persoon PE WHERE AC.ID = RP.\"account_id\" AND RP.\"reservering_id\" = R.ID AND AC.\"gebruikersnaam\" = :USERNAME";
+            cmd.Parameters.Add("USERNAME", username);
+
+
+            try
+            {
+                this.conn.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        reservationList.Add(Convert.ToString(reader.GetValue(0)));
+                    }
+
+                    if (!reader.IsDBNull(1))
+                    {
+                        reservationList.Add(Convert.ToString(reader.GetValue(1)));
+                    }
+
+                    if (!reader.IsDBNull(2))
+                    {
+                        reservationList.Add(Convert.ToString(reader.GetDateTime(2).ToShortDateString()));
+                    }
+
+                    if (!reader.IsDBNull(3))
+                    {
+                        reservationList.Add(Convert.ToString(reader.GetDateTime(3).ToShortDateString()));
+                    }
+
+                    if (!reader.IsDBNull(4))
+                    {
+                        if (reader.GetInt32(4) == 1)
+                        {
+                            reservationList.Add("De reservering is betaald!");
+                        }
+                        else
+                        {
+                            reservationList.Add("De reservering is nog niet betaald!");
+                        }
+                     
+                    }
+                }
+
+
+            }
+            catch (OracleException exc)
+            {
+                Console.Write(exc);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
+            return reservationList;
         }
 
-        public void addFile(int dcategory, string bestandslocatie, int grootte)
+        public List<int> CampReservatiList(string username)
         {
-        
+            List<int> CampNumbers = new List<int>();
+            OracleCommand cmd = this.conn.CreateCommand();
+            OracleDataReader reader;
+            cmd.CommandText = "SELECT PR.\"plek_id\"  FROM PLEK_RESERVERING PR, RESERVERING R, RESERVERING_POLSBANDJE RP, ACCOUNT AC  WHERE PR.\"reservering_id\" = R.ID and R.ID = RP.ID AND RP.\"account_id\" = AC.ID AND AC.\"gebruikersnaam\" = :USERNAME'";
+            cmd.Parameters.Add("USERNAME", username);
+
+            try
+            {
+                while (reader.Read())
+                {
+
+                }
+            }
+
+
+
+
+
+
+
+
         }
+        
     }
 }
