@@ -177,6 +177,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Profile.aspx" />
     <Content Include="Reservation.aspx" />
+    <Content Include="ReservationRegister.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -345,6 +346,13 @@
     </Compile>
     <Compile Include="Reservation.aspx.designer.cs">
       <DependentUpon>Reservation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReservationRegister.aspx.cs">
+      <DependentUpon>ReservationRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReservationRegister.aspx.designer.cs">
+      <DependentUpon>ReservationRegister.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
