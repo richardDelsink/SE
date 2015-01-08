@@ -9,6 +9,7 @@ using System.Text;
 using System.Web;
 using System.Threading.Tasks;
 
+
 namespace Datalayer
 {
     public class DatabaseConnection
@@ -33,7 +34,7 @@ namespace Datalayer
             //Locale connectie hieronder
             conn = new OracleConnection();
             String user = "SYSTEM";
-            String pw = "infra-s38";
+            String pw = "qwe123";
             conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
             
@@ -53,6 +54,35 @@ namespace Datalayer
             cmd.Parameters.Add("rfiduser", "nvarchar2").Value = barcode;
             cmd.ExecuteNonQuery();
 
+        }
+
+        public void MaterialGrid(GridView gv)
+        {
+            try
+            {
+                conn.Open();
+                OracleCommand cmd = new OracleCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SELECT p.id,\"merk\", \"serie\",\"naam\", \"prijs\" FROM productexemplaar pe, product p, productcat pc WHERE pe.\"product_id\" = p.\"productcat_id\" AND p.ID = pc.ID";
+                OracleDataAdapter adapter = new OracleDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataTable ds = new DataTable();
+                adapter.Fill(ds);
+                gv.DataSource = ds;
+                gv.DataBind();
+                
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.ReadLine();
+
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         public void FillDataGrid(GridView d)

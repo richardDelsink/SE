@@ -22,6 +22,10 @@ namespace Businesslayer
             _databaseConnection.FillDataGrid(d);
         }
 
+        public void Materialgrid(GridView gv)
+        {
+            _databaseConnection.MaterialGrid(gv);
+        }
         public string GetAccountInfoFromBC(string barcode)
         {
            return _databaseConnection.GetAccountInfo(barcode);
