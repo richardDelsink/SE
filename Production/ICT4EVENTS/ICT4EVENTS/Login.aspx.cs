@@ -13,6 +13,17 @@ namespace ICT4EVENTS
         protected void Page_Load(object sender, EventArgs e)
         {
             loginAD = new LoginAD();
+
+            if (!IsPostBack)
+            {
+
+                if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
+                {
+                    tbUsername.Text = Request.Cookies["UserName"].Value;
+                    tbPassword.Attributes["value"] = Request.Cookies["Password"].Value;
+                    chkBox.Checked = true;
+                }
+            }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -47,6 +58,16 @@ namespace ICT4EVENTS
             //Debugging, check values of the sessions
             username = Session["Username"].ToString();
             usergroup = Session["Usergroup"].ToString();
+
+            //Create cookies for remember me
+            if(chkBox.Checked == true)
+            {
+                Response.Cookies["UserName"].Expires = DateTime.Now.AddDays(30);
+                Response.Cookies["Password"].Expires = DateTime.Now.AddDays(30);
+            }
+            Response.Cookies["UserName"].Value = tbUsername.Text.Trim();
+            Response.Cookies["Password"].Value = tbPassword.Text.Trim();
+
 
             Response.Redirect("Home.aspx", true);
         }
@@ -83,7 +104,7 @@ namespace ICT4EVENTS
             }
             else
             {
-
+                //Username already exists
             }
         }
     }
