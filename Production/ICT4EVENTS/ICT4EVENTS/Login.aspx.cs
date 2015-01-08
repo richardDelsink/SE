@@ -48,5 +48,30 @@ namespace ICT4EVENTS
 
             Response.Redirect("Home.aspx", true);
         }
+
+        protected void btnSignup_Click(object sender, EventArgs e)
+        {
+            //Check if password and confirm password match
+            if(loginAD.confirmPassword(tbPassword1.Text, tbPassword2.Text))
+            {
+                //Create Useraccount, returns a bool. true if it worked, false if something went wrong
+                if (loginAD.CreateUserAccount(tbUsernameSU.Text, tbPassword1.Text))
+                {
+                    //Check if the person has made a reservation, for redirecting purposes
+                    if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
+                    {
+                        Response.Redirect("Home.aspx", true);
+                    }
+                    else
+                    {
+                        Response.Redirect("Reservation.aspx", true);
+                    }
+                }
+                else
+                {
+                    //Username doesn't exist
+                }
+            }
+        }
     }
 }

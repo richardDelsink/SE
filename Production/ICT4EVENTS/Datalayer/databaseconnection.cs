@@ -26,16 +26,16 @@ namespace Datalayer
             //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.21.142:1521/" + ";";
             
             //vdi.fhict connection van iemand
-            //this.conn = new OracleConnection();
-            //string user = "dbi306956"; // zie email voor logingegevens
-            //string pw = "kyqSZFxe7N";
-            //this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
+            this.conn = new OracleConnection();
+            string user = "dbi306956"; // zie email voor logingegevens
+            string pw = "kyqSZFxe7N";
+            this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
 
             //Locale connectie hieronder
-            conn = new OracleConnection();
+            /*conn = new OracleConnection();
             String user = "SYSTEM";
             String pw = "qwe123";
-            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
+            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; */
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
             
 
@@ -224,6 +224,11 @@ namespace Datalayer
             }
 
             return result;
+        }
+
+        public bool checkForReservation(string firstname, string lastname)
+        {
+
         }
 
         /////EVENTS
