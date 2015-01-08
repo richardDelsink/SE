@@ -14,7 +14,7 @@ namespace Businesslayer
     public class Accountbijdrage
     {
         private DatabaseConnection _databaseConnection;
-        public string bijdragesoort = string.Empty;
+        public string Bijdragesoort = string.Empty;
         public Accountbijdrage()
         {
             this._databaseConnection = new Datalayer.DatabaseConnection();
@@ -24,27 +24,34 @@ namespace Businesslayer
 
         public void Addbericht(int accountid, string titel, string inhoud)
         {
-            bijdragesoort = "bericht";
+            this.Bijdragesoort = "bericht";
             int idneeded = 0;
             DateTime thistime = DateTime.Now;
-            this._databaseConnection.addbijdrage(accountid, thistime, bijdragesoort);
-            idneeded = this._databaseConnection.getbijdrageID(accountid, thistime, bijdragesoort);
+            this._databaseConnection.addbijdrage(accountid, thistime, this.Bijdragesoort);
+            idneeded = this._databaseConnection.getbijdrageID(accountid, thistime, this.Bijdragesoort);
             this._databaseConnection.addbericht(idneeded, titel, inhoud);
         }
 
         public void Addcategory(int accountid, string naam)
         {
-            bijdragesoort = "categorie";
+            this.Bijdragesoort = "categorie";
             int idneeded = 0;
             DateTime thistime = DateTime.Now;
-            this._databaseConnection.addbijdrage(accountid, thistime, bijdragesoort);
-            idneeded = this._databaseConnection.getbijdrageID(accountid, thistime, bijdragesoort);
+            this._databaseConnection.addbijdrage(accountid, thistime, this.Bijdragesoort);
+            idneeded = this._databaseConnection.getbijdrageID(accountid, thistime, this.Bijdragesoort);
             this._databaseConnection.addcategory(idneeded, naam);
         }
 
-        public void Addbestand()
+        public void Addbestand(int accountid, string bestandslocatie, string categorie, int grootte)
         {
-            throw new NotImplementedException();
+            this.Bijdragesoort = "bestand";
+            int IDbijdrage = 0;
+            int IDcategory = 0;
+            DateTime thisTime = DateTime.Now;
+            this._databaseConnection.addbijdrage(accountid, thisTime, this.Bijdragesoort);
+            IDbijdrage = this._databaseConnection.getbijdrageID(accountid, thisTime, this.Bijdragesoort);
+            IDcategory = this._databaseConnection.getcategoryid(categorie);
+            this._databaseConnection.addFile(IDcategory, bestandslocatie, grootte);
         }
 
         public int Getaccountid(string username)
