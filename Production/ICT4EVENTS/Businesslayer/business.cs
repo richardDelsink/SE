@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,10 @@ namespace Businesslayer
             return _databaseConnection.GetUserInfo(user);
         } 
 
+       public List<string> ReservationInfo(string user)
+       {
+           return _databaseConnection.GetReservationInfo(user);
+       } 
 
 
 

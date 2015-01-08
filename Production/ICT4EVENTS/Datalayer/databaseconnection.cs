@@ -550,7 +550,6 @@ namespace Datalayer
             throw new NotImplementedException();
         }
 
-
         public List<string> GetUserInfo(string user)
         {
             throw new NotImplementedException();

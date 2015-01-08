@@ -16,8 +16,20 @@ namespace ICT4EVENTS
         DataSet ds = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
-            GridView1.DataSource = Event.GetAllEvents();
-            GridView1.DataBind();
+           if (Session["Usergroup"] == null)
+            {
+              if ((int)(Session["Usergroup"]) == 1)
+              {
+                  actionmenu.Visible = true;
+              }
+              else
+              {
+
+              }
+              GridView1.DataSource = Event.GetAllEvents();
+              GridView1.DataBind();
+
+            }
             
             
         }
@@ -35,6 +47,19 @@ namespace ICT4EVENTS
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
+        }
+
+        protected void chk_CheckedChanged(object sender, EventArgs e)
+        {
+            int intRow = GridView1.SelectedRow.RowIndex;
+
+            string strDescription = GridView1.Rows[intRow].Cells[2].Text;
+            string strPrice = GridView1.Rows[intRow].Cells[3].Text;
+        }
+
+        protected void BtnDelete_Click(object sender, EventArgs e)
+        {
+            
 
         }
     }

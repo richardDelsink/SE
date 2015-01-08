@@ -53,15 +53,17 @@ namespace ICT4EVENTS
 
         protected void btnSignup_Click(object sender, EventArgs e)
         {
-            //Check if password and confirm password match
-            if(loginAD.confirmPassword(tbPassword1.Text, tbPassword2.Text))
+            if (loginAD.checkUsernameExist(tbUsernameSU.Text) == false)
             {
-                //Add account to database
-                loginAD.addAccount(tbEmail.Text, tbUsernameSU.Text, tbPassword1.Text);
+                //Check if password and confirm password match
+                if (loginAD.confirmPassword(tbPassword1.Text, tbPassword2.Text))
+                {
+                    //Add account to database
+                    loginAD.addAccount(tbEmail.Text, tbUsernameSU.Text, tbPassword1.Text);
 
-                //Create Useraccount, returns a bool. true if it worked, false if something went wrong
-               // if (loginAD.CreateUserAccount(tbUsernameSU.Text, tbPassword1.Text))
-               // {
+                    //Create Useraccount, returns a bool. true if it worked, false if something went wrong
+                    // if (loginAD.CreateUserAccount(tbUsernameSU.Text, tbPassword1.Text))
+                    // {
 
                     //Check if the person has made a reservation, for redirecting purposes
                     if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
@@ -70,13 +72,14 @@ namespace ICT4EVENTS
                     }
                     else
                     {
-                        Response.Redirect("Reservation.aspx?firstname="+tbFirstName.Text+"&lastname="+tbLastName.Text, true);
+                        Response.Redirect("Reservation.aspx?firstname=" + tbFirstName.Text + "&lastname=" + tbLastName.Text, true);
                     }
-            //    }
-            //    else
-            //    {
+                    //    }
+                    //    else
+                    //    {
                     //Username doesn't exist
-            //    }
+                    //    }
+                }
             }
         }
     }
