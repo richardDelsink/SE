@@ -228,7 +228,30 @@ namespace Datalayer
 
         public bool checkForReservation(string firstname, string lastname)
         {
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "SELECT \"voornaam\" FROM persoon WHERE \"voornaam\" = :SELFIRSTNAME AND \"achternaam\" = :SELLASTNAME";
+            cmd.Parameters.Add("SELFIRSTNAME", firstname);
+            cmd.Parameters.Add("SELLASTNAME", lastname);
+            string result = "";
+            try
+            {
+                this.conn.Open();
+                result = Convert.ToString(cmd.ExecuteScalar());
+            }
+            catch (OracleException exc)
+            {
+                Console.Write(exc);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
 
+            if(result != "")
+            {
+                return true;
+            }
+            return false;
         }
 
         /////EVENTS
