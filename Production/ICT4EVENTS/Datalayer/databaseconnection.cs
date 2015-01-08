@@ -392,5 +392,82 @@ namespace Datalayer
             }
             return ds;
         }
+
+        public List<string> Getplaces()
+        {
+            List<string> places = new List<string>();
+            try
+            {
+
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "SELECT \"plek_id\" FROM PLEK_RESERVERING";
+                this.conn.Open();
+                var dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    places.Add(dr.GetInt16(0).ToString());
+                }
+            }
+            catch (OracleException exc)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return places;
+        }
+
+        public void AddPerson(string voornaam, string tussenvoegsel, string achternaam, string straat, string huisnr, string woonplaats, string banknr)
+        {
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+
+                cmd.CommandText = "INSERT INTO PERSOON(\"voornaam\",\"tussenvoegsel\",\"achternaam\",\"straat\",\"huisnr\",\"woonplaats\",\"banknr\") VALUES(:voornaam,:tussenvoegsel,:achternaam,:straat,:huisnr,:woonplaats,:banknr)";
+                cmd.Parameters.Add("voornaam", voornaam);
+                cmd.Parameters.Add("tussenvoegsel", tussenvoegsel);
+                cmd.Parameters.Add("achternaam", achternaam);
+                cmd.Parameters.Add("straat", straat);
+                cmd.Parameters.Add("huisnr", huisnr);
+                cmd.Parameters.Add("woonplaats", woonplaats);
+                cmd.Parameters.Add("banknr", banknr);
+
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException exc)
+            {
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+        }
+
+        public void AddReservering(int persoon, DateTime startdate, DateTime enddate, int betaald)
+        {
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+
+                cmd.CommandText = "INSERT INTO RESERVERING(persoon_id,datumStart, datumEinde, betaald) VALUES(:persoon_id,:datumStart, :datumEinde, :betaald)";
+                cmd.Parameters.Add("voornaam", persoon);
+                cmd.Parameters.Add("tussenvoegsel", startdate);
+                cmd.Parameters.Add("achternaam", enddate);
+                cmd.Parameters.Add("straat", betaald);
+
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException exc)
+            {
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+        }
     }
 }
