@@ -19,17 +19,14 @@ namespace Businesslayer
         {
             this._databaseConnection = new Datalayer.DatabaseConnection();
         }
-
-
-
         public void Addbericht(int accountid, string titel, string inhoud)
         {
             bijdragesoort = "bericht";
             int idneeded = 0;
             DateTime thistime = DateTime.Now;
-            this._databaseConnection.addbijdrage(accountid, thistime, bijdragesoort);
+            this._databaseConnection.Addbijdrage(accountid, thistime, bijdragesoort);
             idneeded = this._databaseConnection.getbijdrageID(accountid, thistime, bijdragesoort);
-            this._databaseConnection.addbericht(idneeded, titel, inhoud);
+            this._databaseConnection.Addbericht(idneeded, titel, inhoud);
         }
 
         public void Addcategory(int accountid, string naam)
@@ -37,14 +34,21 @@ namespace Businesslayer
             bijdragesoort = "categorie";
             int idneeded = 0;
             DateTime thistime = DateTime.Now;
-            this._databaseConnection.addbijdrage(accountid, thistime, bijdragesoort);
+            this._databaseConnection.Addbijdrage(accountid, thistime, bijdragesoort);
             idneeded = this._databaseConnection.getbijdrageID(accountid, thistime, bijdragesoort);
             this._databaseConnection.addcategory(idneeded, naam);
         }
 
-        public void Addbestand()
+        public void Addbestand(int accountid,string bestandslocatie,string categorie,int grootte)
         {
-            throw new NotImplementedException();
+            bijdragesoort = "bestand";
+            int IDbijdrage = 0;
+            int IDcategory = 0;
+            DateTime thisTime = DateTime.Now;
+            this._databaseConnection.Addbijdrage(accountid, thisTime, bijdragesoort);
+            IDbijdrage = this._databaseConnection.getbijdrageID(accountid, thisTime, bijdragesoort);
+            IDcategory = this._databaseConnection.Getcategoryid(categorie);
+            this._databaseConnection.addFile(IDcategory, bestandslocatie, grootte);
         }
 
         public int Getaccountid(string username)
