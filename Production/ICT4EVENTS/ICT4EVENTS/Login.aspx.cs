@@ -81,6 +81,10 @@ namespace ICT4EVENTS
                     //    }
                 }
             }
+            else
+            {
+
+            }
         }
     }
 }

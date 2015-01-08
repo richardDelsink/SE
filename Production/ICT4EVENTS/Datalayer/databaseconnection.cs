@@ -648,6 +648,8 @@ namespace Datalayer
 
             return reservationList;
         }
+<<<<<<< HEAD
+=======
 
         public List<int> CampReservatiList(string username)
         {
@@ -674,5 +676,6 @@ namespace Datalayer
 
         }
         
+>>>>>>> 94549c2f9408518ddefd8b77ab6bc8a2800d47d6
     }
 }

@@ -75,6 +75,11 @@ namespace ICT4EVENTS
         {
             Context.GetOwinContext().Authentication.SignOut();
         }
+        protected void onclick_logout(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Response.Redirect("~/Login.aspx");
+        }
     }
 
 }
