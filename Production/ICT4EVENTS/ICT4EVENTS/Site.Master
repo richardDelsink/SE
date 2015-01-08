@@ -57,7 +57,6 @@
                         <li><a runat="server" href="Mediasharing.aspx">Mediasharing</a></li>
                         <li><a runat="server" href="Events.aspx">Events</a></li>
                         <li><a runat="server" href="Material.aspx">Materiaal</a></li>
-                        <li><a runat="server" href="Login.aspx">Logout</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
