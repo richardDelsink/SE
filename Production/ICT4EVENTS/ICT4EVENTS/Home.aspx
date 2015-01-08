@@ -8,7 +8,7 @@
         
         
         <div id ="homepagecontent">
-            <asp:ListBox ID="ReserverationInfoListBox" runat="server" Height="94px" Width="174px"></asp:ListBox>
+            <asp:ListBox ID="ReserverationInfoListBox" runat="server" Height="157px" Width="991px"></asp:ListBox>
 
         </div>
         <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>

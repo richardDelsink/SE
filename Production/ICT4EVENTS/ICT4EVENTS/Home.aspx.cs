@@ -13,15 +13,38 @@ namespace ICT4EVENTS
          Business B = new Business();
         protected void Page_Load(object sender, EventArgs e)
         {
-            FillListBoxes();
+            /*
+            if (Session["Usergroup"].ToString() == "1")
+            {
+
+            }
+            else
+            {*/
+                FillListBoxes();
+           // }
+       
         }
 
         public void FillListBoxes()
         {
-            foreach (string s in B.ReservationInfo("admin"))
-            {
-                ReserverationInfoListBox.Items.Add(s);
-            }
+            ReserverationInfoListBox.Items.Clear();
+
+            List<string> reservationList = new List<string>();
+            reservationList = B.ReservationInfo("admin");
+         
+                string ResID = "ReserveringsID:      " + reservationList.ElementAt(0);
+                string Personen = "AccountID:       " +  reservationList.ElementAt(1);
+                string start = "Aankomstdatum reservering:        " + reservationList.ElementAt(2);
+                string stop = "Einddatum reservering:        " + reservationList.ElementAt(3);
+                string bestaald = reservationList.ElementAt(4); 
+
+                ReserverationInfoListBox.Items.Add(ResID);
+                ReserverationInfoListBox.Items.Add(Personen);
+                ReserverationInfoListBox.Items.Add(start);
+                ReserverationInfoListBox.Items.Add(stop);
+                ReserverationInfoListBox.Items.Add(bestaald);
+
+            
            
         }
     }

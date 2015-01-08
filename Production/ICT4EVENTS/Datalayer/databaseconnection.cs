@@ -26,16 +26,16 @@ namespace Datalayer
             //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.21.142:1521/" + ";";
             
             //vdi.fhict connection van iemand
-            this.conn = new OracleConnection();
-            string user = "dbi306956"; // zie email voor logingegevens
-            string pw = "kyqSZFxe7N";
-            this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
+            //this.conn = new OracleConnection();
+            ///string user = "dbi306956"; // zie email voor logingegevens
+            //string pw = "kyqSZFxe7N";
+            //this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
 
             //Locale connectie hieronder
-            /*conn = new OracleConnection();
+            conn = new OracleConnection();
             String user = "SYSTEM";
-            String pw = "qwe123";
-            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; */
+            String pw = "2438747";
+            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
             
 
@@ -590,7 +590,7 @@ namespace Datalayer
             List<string> reservationList = new List<string>();
             OracleCommand cmd = this.conn.CreateCommand();
             OracleDataReader reader;
-            cmd.CommandText = "SELECT R.ID, COUNT(R.\"persoon_id\") as Aantal_Personen, R.\"datumStart\", R.\"datumEinde\", R.\"betaald\" FROM RESERVERING R, RESERVERING_POLSBANDJE RP, ACCOUNT AC, Persoon PE WHERE AC.ID = RP.\"account_id\" AND RP.\"reservering_id\" = R.ID AND AC.\"gebruikersnaam\" = 'admin' GROUP BY R.ID,  R.\"datumStart\",  R.\"datumEinde\",  R.\"betaald\"";
+            cmd.CommandText = "SELECT R.* FROM RESERVERING R, RESERVERING_POLSBANDJE RP, ACCOUNT AC, Persoon PE WHERE AC.ID = RP.\"account_id\" AND RP.\"reservering_id\" = R.ID AND AC.\"gebruikersnaam\" = :USERNAME";
             cmd.Parameters.Add("USERNAME", username);
 
 
@@ -603,27 +603,35 @@ namespace Datalayer
                 {
                     if (!reader.IsDBNull(0))
                     {
-                        reservationList.Add(reader.GetString(0));
+                        reservationList.Add(Convert.ToString(reader.GetValue(0)));
                     }
 
                     if (!reader.IsDBNull(1))
                     {
-                        reservationList.Add(reader.GetString(1));
+                        reservationList.Add(Convert.ToString(reader.GetValue(1)));
                     }
 
                     if (!reader.IsDBNull(2))
                     {
-                        reservationList.Add(reader.GetString(2));
+                        reservationList.Add(Convert.ToString(reader.GetDateTime(2).ToShortDateString()));
                     }
 
                     if (!reader.IsDBNull(3))
                     {
-                        reservationList.Add(reader.GetString(3));
+                        reservationList.Add(Convert.ToString(reader.GetDateTime(3).ToShortDateString()));
                     }
 
                     if (!reader.IsDBNull(4))
                     {
-                        reservationList.Add(reader.GetString(4));
+                        if (reader.GetInt32(4) == 1)
+                        {
+                            reservationList.Add("De reservering is betaald!");
+                        }
+                        else
+                        {
+                            reservationList.Add("De reservering is nog niet betaald!");
+                        }
+                     
                     }
                 }
 
@@ -640,5 +648,34 @@ namespace Datalayer
 
             return reservationList;
         }
+<<<<<<< HEAD
+=======
+
+        public List<int> CampReservatiList(string username)
+        {
+            List<int> CampNumbers = new List<int>();
+            OracleCommand cmd = this.conn.CreateCommand();
+            OracleDataReader reader;
+            cmd.CommandText = "SELECT PR.\"plek_id\"  FROM PLEK_RESERVERING PR, RESERVERING R, RESERVERING_POLSBANDJE RP, ACCOUNT AC  WHERE PR.\"reservering_id\" = R.ID and R.ID = RP.ID AND RP.\"account_id\" = AC.ID AND AC.\"gebruikersnaam\" = :USERNAME'";
+            cmd.Parameters.Add("USERNAME", username);
+
+            try
+            {
+                while (reader.Read())
+                {
+
+                }
+            }
+
+
+
+
+
+
+
+
+        }
+        
+>>>>>>> 94549c2f9408518ddefd8b77ab6bc8a2800d47d6
     }
 }
