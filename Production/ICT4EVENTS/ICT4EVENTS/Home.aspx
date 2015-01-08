@@ -8,6 +8,7 @@
         
         
         <div id ="homepagecontent">
+            <h3>Informatie Reservering</h3>
             <asp:ListBox ID="ReserverationInfoListBox" runat="server" Height="157px" Width="991px"></asp:ListBox>
 
         </div>

@@ -27,10 +27,13 @@ namespace ICT4EVENTS
 
         public void FillListBoxes()
         {
+            string username = "admin";
+            
             ReserverationInfoListBox.Items.Clear();
 
             List<string> reservationList = new List<string>();
-            reservationList = B.ReservationInfo("admin");
+
+            reservationList = B.ReservationInfo(username);
          
                 string ResID = "ReserveringsID:      " + reservationList.ElementAt(0);
                 string Personen = "AccountID:       " +  reservationList.ElementAt(1);
@@ -44,8 +47,14 @@ namespace ICT4EVENTS
                 ReserverationInfoListBox.Items.Add(stop);
                 ReserverationInfoListBox.Items.Add(bestaald);
 
-            
-           
+            string Kampeer = "Kampeerplaatsen:  ";
+            for (int i = 0; i < B.CampNumbersInfo(username).Count; i++)
+            {
+                Kampeer += B.CampNumbersInfo(username).ElementAt(i) + ",";
+            }
+
+            ReserverationInfoListBox.Items.Add(Kampeer);
+
         }
     }
 }
