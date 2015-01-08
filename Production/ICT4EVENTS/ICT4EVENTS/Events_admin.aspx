@@ -13,7 +13,7 @@
 
 
 
-               <div class="btn-group" style="float : right">
+               <div class="btn-group" runat="server" Visible="false" ID="actionmenu" style="float : right">
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
     Action <span class="caret"></span>
   </button>
@@ -33,7 +33,8 @@
                <br />
                <br />
                <asp:GridView ID="GridView1" runat="server" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
-               </asp:GridView>
+            </asp:GridView>
+               <br />
            </div>
         </div>
 </asp:Content>
