@@ -17,10 +17,10 @@ namespace ICT4EVENTS
             string result = dbconn.getUserGroup(username);
             return result;
         }
-        public string CreateUserAccount(string ldapPath, string userName, string passWord)
+        public bool CreateUserAccount(string userName, string passWord)
         {
             string oGUID = "";
-
+            string ldapPath = "DC=INFRA-S42, DC=local";
             try
             {
                 string userPassword = passWord;
@@ -48,9 +48,10 @@ namespace ICT4EVENTS
             {
                 //DoSomethingwith --> E.Message.ToString();
                 //MessageBox.Show(E.ToString());
+                return false;
             }
-
-            return oGUID;
+            return true;
+           // return oGUID;
         }
         public void AddToGroup(string userDn, string groupDn)
         {
@@ -116,6 +117,25 @@ namespace ICT4EVENTS
             }
             catch (DirectoryServicesCOMException) { }
             return authentic;
+        }
+        public bool confirmPassword(string password, string confirmPassword)
+        {
+            if(password == confirmPassword)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool accountReservationCheck(string firstname, string lastname)
+        {
+            return dbconn.checkForReservation(firstname, lastname);
+        }
+        public void addAccount(string email, string username, string password)
+        {
+            dbconn.addAccount(email, username, password);
         }
     }
 }
