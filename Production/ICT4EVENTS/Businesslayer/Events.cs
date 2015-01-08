@@ -22,9 +22,9 @@ namespace Businesslayer
             return _databaseConnection.Locations();
         }
 
-        public void CreateEvent(string naam, DateTime start, DateTime eind, int max)
+        public void CreateEvent(string naam, DateTime start, DateTime eind, int max, string locatie)
         {
-            _databaseConnection.CreateEvent(naam, start, eind, max);
+            _databaseConnection.CreateEvent(naam, start, eind, max, locatie);
         }
 
         public DataSet GetAllEvents()
