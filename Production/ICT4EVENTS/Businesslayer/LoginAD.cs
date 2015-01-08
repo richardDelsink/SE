@@ -133,5 +133,9 @@ namespace ICT4EVENTS
         {
             return dbconn.checkForReservation(firstname, lastname);
         }
+        public void addAccount(string email, string username, string password)
+        {
+            dbconn.addAccount(email, username, password);
+        }
     }
 }

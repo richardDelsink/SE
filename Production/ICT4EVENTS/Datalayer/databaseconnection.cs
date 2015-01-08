@@ -36,10 +36,10 @@ namespace Datalayer
             //this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
 
             //Locale connectie hieronder
-            /*conn = new OracleConnection();
+            conn = new OracleConnection();
             String user = "SYSTEM";
-            String pw = "qwe123";
-            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; */
+            String pw = "2438747";
+            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
             
 
@@ -230,34 +230,6 @@ namespace Datalayer
             return result;
         }
 
-        public bool checkForReservation(string firstname, string lastname)
-        {
-            OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "SELECT \"voornaam\" FROM persoon WHERE \"voornaam\" = :SELFIRSTNAME AND \"achternaam\" = :SELLASTNAME";
-            cmd.Parameters.Add("SELFIRSTNAME", firstname);
-            cmd.Parameters.Add("SELLASTNAME", lastname);
-            string result = "";
-            try
-            {
-                this.conn.Open();
-                result = Convert.ToString(cmd.ExecuteScalar());
-            }
-            catch (OracleException exc)
-            {
-                Console.Write(exc);
-            }
-            finally
-            {
-                this.conn.Close();
-            }
-
-            if(result != "")
-            {
-                return true;
-            }
-            return false;
-        }
-
         /////EVENTS
 
 
@@ -371,6 +343,7 @@ namespace Datalayer
             return ds;
         }
 
+<<<<<<< HEAD
         public string Getcategory(int id)
         {
             string category = string.Empty;
@@ -436,11 +409,51 @@ namespace Datalayer
             catch (OracleException e)
             {
                 Console.WriteLine(e);
+=======
+        public List<string> GetUserInfo(string username)
+        {
+            List<string> UserInfo = new List<string>(); 
+            OracleCommand cmd = this.conn.CreateCommand();
+            OracleDataReader reader;
+            cmd.CommandText = "SELECT \"gebruikersnaam\", \"wachtwoord\", \"email\" FROM ACCOUNT WHERE \"gebruikersnaam\" = :USERNAME";
+            cmd.Parameters.Add("USERNAME", username);
+            
+
+            try
+            {
+                this.conn.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        UserInfo.Add(reader.GetString(0));
+                    }
+
+                    if (!reader.IsDBNull(1))
+                    {
+                        UserInfo.Add(reader.GetString(1));
+                    }
+
+                    if (!reader.IsDBNull(2))
+                    {
+                        UserInfo.Add(reader.GetString(2));
+                    }
+                }
+                
+              
+            }
+            catch (OracleException exc)
+            {
+                Console.Write(exc);
+>>>>>>> origin/master
             }
             finally
             {
                 this.conn.Close();
             }
+<<<<<<< HEAD
             return idnumber;
         }
 
@@ -452,6 +465,10 @@ namespace Datalayer
         public int getbijdrageID(int accountid, DateTime thistime, string bijdragesoort)
         {
             throw new NotImplementedException();
+=======
+
+            return UserInfo;
+>>>>>>> origin/master
         }
     }
 }
