@@ -53,6 +53,7 @@
     <Compile Include="Events.cs" />
     <Compile Include="LoginAD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reservering.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
