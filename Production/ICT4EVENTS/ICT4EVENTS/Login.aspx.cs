@@ -29,6 +29,7 @@ namespace ICT4EVENTS
                 ///Show error message
                 ///To-do after programm is on server - make and show error message
                 Response.Write("succes");
+                lblLogin.Visible = true;
             }*/
 
 
