@@ -137,5 +137,9 @@ namespace ICT4EVENTS
         {
             dbconn.addAccount(email, username, password);
         }
+        public bool checkUsernameExist(string username)
+        {
+            return dbconn.usernameExistsCheck(username);
+        }
     }
 }

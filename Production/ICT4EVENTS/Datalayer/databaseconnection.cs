@@ -279,6 +279,32 @@ namespace Datalayer
                 this.conn.Close();
             }
         }
+        public bool usernameExistsCheck(string username)
+        {
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "SELECT \"gebruikersnaam\" FROM account WHERE \"gebruikersnaam\" = :SELFIRSTNAME";
+            cmd.Parameters.Add("SELUSERNAME", username);
+            string result = "";
+            try
+            {
+                this.conn.Open();
+                result = Convert.ToString(cmd.ExecuteScalar());
+            }
+            catch (OracleException exc)
+            {
+                Console.Write(exc);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
+            if (result != "")
+            {
+                return true;
+            }
+            return false;
+        }
 
         /////EVENTS
 
