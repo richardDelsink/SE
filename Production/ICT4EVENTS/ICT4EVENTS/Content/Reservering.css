@@ -2,7 +2,8 @@
 {
     background-image: url("/img/Plattegrond.png");
     background-repeat: no-repeat;
-    margin-left: 20px;
+    width: 1188 px;
+    height: 940 px;
     position: absolute;
 }
 #S201{
@@ -14,17 +15,6 @@
     vertical-align: middle;
 }
 
-b {
-    margin-top: 50;
-    margin-left: 40%;
-    font-size: 20px;
-}
-.text-danger {
-  color: #b94a48;
-    margin-left: 1100px;
-}
-
-
 #Spots {
     display: table;
     width: 20px;
@@ -34,35 +24,18 @@ b {
 .Spots:hover {
     cursor: pointer;
 }
-.Reserveren {
-    width: 250px;
-    margin-left: 1100px;
-    margin-top: 2%;
-}
-.map {
-    width: 650px;
-    margin-left: 44%;
-}
 .buttons {
     background-color: green;
     position: absolute;
 }
 .btn201 {
-    margin-top: 225px;
+    top: 180px;
+    left: 575px;
 }
-.btn202 {    
-    margin-top: 200px;
+.btn202 {    top: 158px;
+    left: 575px;
 }
 .btn203 {
-    margin-top: 175px;
-}
-.btnreserveer {
-    position: absolute;
-    background-color: #5DBC1D;
-    margin-top: 7%; 
-    margin-left: 1100px;
-}
-.btnreserveer:hover {
-       background-color: #6FD72A;
-       border-color: #6FD72A;
+        top: 136px;
+    left: 575px;
 }

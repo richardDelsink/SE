@@ -149,12 +149,10 @@
   <ItemGroup>
     <Content Include="Content\login_PT.css" />
     <Content Include="Content\normalizer.css" />
-    <Content Include="Content\Register.css" />
     <Content Include="Content\Reservering.css" />
     <Content Include="Control.aspx" />
     <Content Include="Events_admin.aspx" />
     <Content Include="Event_AdminCreate.aspx" />
-    <Content Include="img\Plattegrond.png" />
     <Content Include="Login.aspx" />
     <Content Include="Material.aspx" />
     <Content Include="Material_Admin.aspx" />
@@ -179,7 +177,6 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Profile.aspx" />
     <Content Include="Reservation.aspx" />
-    <Content Include="ReservationRegister.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -348,13 +345,6 @@
     </Compile>
     <Compile Include="Reservation.aspx.designer.cs">
       <DependentUpon>Reservation.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ReservationRegister.aspx.cs">
-      <DependentUpon>ReservationRegister.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ReservationRegister.aspx.designer.cs">
-      <DependentUpon>ReservationRegister.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

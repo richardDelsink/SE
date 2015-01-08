@@ -1,8 +1,0 @@
-C:\Users\Heartless275\Documents\FHICT\P4\Proftaak\SE\Production\ICT4EVENTS\Datalayer\bin\Debug\Datalayer.dll.config
-C:\Users\Heartless275\Documents\FHICT\P4\Proftaak\SE\Production\ICT4EVENTS\Datalayer\bin\Debug\Datalayer.dll
-C:\Users\Heartless275\Documents\FHICT\P4\Proftaak\SE\Production\ICT4EVENTS\Datalayer\bin\Debug\Datalayer.pdb
-C:\Users\Heartless275\Documents\FHICT\P4\Proftaak\SE\Production\ICT4EVENTS\Datalayer\obj\Debug\Datalayer.csprojResolveAssemblyReference.cache
-C:\Users\Heartless275\Documents\FHICT\P4\Proftaak\SE\Production\ICT4EVENTS\Datalayer\obj\Debug\Datalayer.Properties.Resources.resources
-C:\Users\Heartless275\Documents\FHICT\P4\Proftaak\SE\Production\ICT4EVENTS\Datalayer\obj\Debug\Datalayer.csproj.GenerateResource.Cache
-C:\Users\Heartless275\Documents\FHICT\P4\Proftaak\SE\Production\ICT4EVENTS\Datalayer\obj\Debug\Datalayer.dll
-C:\Users\Heartless275\Documents\FHICT\P4\Proftaak\SE\Production\ICT4EVENTS\Datalayer\obj\Debug\Datalayer.pdb
