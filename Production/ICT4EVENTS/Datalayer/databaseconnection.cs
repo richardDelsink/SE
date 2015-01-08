@@ -279,10 +279,7 @@ namespace Datalayer
                 this.conn.Close();
             }
         }
-
         /////EVENTS
-
-
         public List<string> Locations()
         {
             List<string> Locations = new List<string>();
@@ -492,7 +489,7 @@ namespace Datalayer
             return category;
         }
 
-        public void addbericht(int accountid, string titel, string inhoud)
+        public void Addbericht(int accountid, string titel, string inhoud)
         {
             OracleCommand cmd = this.conn.CreateCommand();
             cmd.CommandText = "INSERT INTO BERICHT VALUES(TITEL,INHOUD)";
@@ -500,7 +497,7 @@ namespace Datalayer
             cmd.Parameters.Add("INHOUD", inhoud);
         }
 
-        public void addbijdrage(int accountid, DateTime now, string bijdragesoort)
+        public void Addbijdrage(int accountid, DateTime now, string bijdragesoort)
         {
             OracleCommand cmd = this.conn.CreateCommand();
             cmd.CommandText = "INSERT INTO BIJDRAGE VALUES(ACCOUNTID,DATUM,SOORT);";
@@ -545,7 +542,7 @@ namespace Datalayer
 
         public void addcategory(int idneeded, string naam)
         {
-            throw new NotImplementedException();
+        
         }
 
         public int getbijdrageID(int accountid, DateTime thistime, string bijdragesoort)
@@ -557,6 +554,16 @@ namespace Datalayer
         public List<string> GetUserInfo(string user)
         {
             throw new NotImplementedException();
+        }
+
+        public int Getcategoryid(string categorie)
+        {
+        
+        }
+
+        public void addFile(int dcategory, string bestandslocatie, int grootte)
+        {
+        
         }
     }
 }
