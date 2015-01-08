@@ -28,6 +28,7 @@
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" CssClass="validator" ForeColor="Red" runat="server" ValidationGroup="LoginGroup" ControlToValidate="tbPassword" ErrorMessage="Please fill in password" InitialValue="">
                 </asp:RequiredFieldValidator>
                 <asp:Label ID="lblLogin" runat="server" Visible="false" Text="Wrong Username/Password" ForeColor="Red"></asp:Label>
+                <asp:CheckBox ID="chkBox" runat="server" Text="Remember me?" />
                 <asp:Button ID="btnLogin" CssClass="button" Text="Submit" ValidationGroup="LoginGroup" runat="server" OnClick="btnLogin_Click"></asp:Button>
             </div>
             <div class="signup">
