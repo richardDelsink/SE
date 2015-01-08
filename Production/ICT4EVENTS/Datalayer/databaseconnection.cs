@@ -584,5 +584,66 @@ namespace Datalayer
         {
             throw new NotImplementedException();
         }
+
+        public List<string> GetReservationInfo(string username)
+        {
+            List<string> reservationList = new List<string>();
+            OracleCommand cmd = this.conn.CreateCommand();
+            OracleDataReader reader;
+            cmd.CommandText = "SELECT R.ID, COUNT(R.\"persoon_id\") as Aantal_Personen, R.\"datumStart\", R.\"datumEinde\", R.\"betaald\" FROM RESERVERING R, RESERVERING_POLSBANDJE RP, ACCOUNT AC, Persoon PE WHERE AC.ID = RP.\"account_id\" AND RP.\"reservering_id\" = R.ID AND AC.\"gebruikersnaam\" = 'admin' GROUP BY R.ID,  R.\"datumStart\",  R.\"datumEinde\",  R.\"betaald\"";
+            cmd.Parameters.Add("USERNAME", username);
+
+
+            try
+            {
+                this.conn.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        reservationList.Add(reader.GetString(0));
+                    }
+
+                    if (!reader.IsDBNull(1))
+                    {
+                        reservationList.Add(reader.GetString(1));
+                    }
+
+                    if (!reader.IsDBNull(2))
+                    {
+                        reservationList.Add(reader.GetString(2));
+                    }
+
+                    if (!reader.IsDBNull(3))
+                    {
+                        reservationList.Add(reader.GetString(3));
+                    }
+
+                    if (!reader.IsDBNull(4))
+                    {
+                        reservationList.Add(reader.GetString(4));
+                    }
+                }
+
+
+            }
+            catch (OracleException exc)
+            {
+                Console.Write(exc);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
+            return reservationList;
+        }
+
+        public void addAccount(string email, string username, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
