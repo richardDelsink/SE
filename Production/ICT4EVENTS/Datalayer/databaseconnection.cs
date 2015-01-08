@@ -472,94 +472,20 @@ namespace Datalayer
             }
         }
 
-        public void AddReservering(string voornaam, string achternaam,DateTime startdate, DateTime enddate, int betaald, int plek)
+        public void AddReservering(int persoon, DateTime startdate, DateTime enddate, int betaald)
         {
             try
             {
                 OracleCommand cmd = this.conn.CreateCommand();
 
                 cmd.CommandText = "INSERT INTO RESERVERING(persoon_id,datumStart, datumEinde, betaald) VALUES(:persoon_id,:datumStart, :datumEinde, :betaald)";
-                cmd.Parameters.Add("persoon_id", GetpersonId(voornaam,achternaam, plek));
-                cmd.Parameters.Add("datumStart", startdate);
-                cmd.Parameters.Add("datumEinde", enddate);
-                cmd.Parameters.Add("betaald", betaald);
+                cmd.Parameters.Add("voornaam", persoon);
+                cmd.Parameters.Add("tussenvoegsel", startdate);
+                cmd.Parameters.Add("achternaam", enddate);
+                cmd.Parameters.Add("straat", betaald);
 
                 this.conn.Open();
                 cmd.ExecuteReader();
-            }
-            catch (OracleException exc)
-            {
-            }
-            finally
-            {
-                this.conn.Close();
-            }
-        }
-
-                public int GetpersonId(string voornaam, string achternaam, int plek)
-        {
-            int personid = 0;
-            try
-            {
-                OracleCommand cmd = this.conn.CreateCommand();
-
-                cmd.CommandText = "SELECT \"id\" FROM PERSOON WHERE upper(voornaam)=upper(:voornaam )and upper(achternaam)=upper(:achternaam)";
-                cmd.Parameters.Add("voornaam", voornaam);
-                cmd.Parameters.Add("achternaam", achternaam);
-
-                this.conn.Open();
-                personid = Convert.ToInt32(cmd.ExecuteReader());
-                Getreservationid(personid, voornaam, achternaam, plek);
-
-            }
-            catch (OracleException exc)
-            {
-            }
-            finally
-            {
-                this.conn.Close();
-            }
-            return personid;
-        }
-
-        public int Getreservationid(int persoonid, string voornaam, string achternaam, int plek )
-        {
-            int reservationid = 0;
-            try{
-                OracleCommand cmd = this.conn.CreateCommand();
-
-                cmd.CommandText = "SELECT \"id\" FROM RESERVERING WHERE persoon_id=:persoonid";
-                cmd.Parameters.Add("voornaam", voornaam);
-                cmd.Parameters.Add("achternaam", achternaam);
-
-                this.conn.Open();
-                reservationid= Convert.ToInt32(cmd.ExecuteReader());
-                InsertplekReservation(plek,reservationid);
-
-            }
-            catch (OracleException exc)
-            {
-            }
-            finally
-            {
-                this.conn.Close();
-            }
-            return reservationid;
-        }
-
-        public void InsertplekReservation(int plek, int reservation)
-        {
-            try
-            {
-                OracleCommand cmd = this.conn.CreateCommand();
-
-                cmd.CommandText = "INSERT INTO PLEK_RESERVERING(\"plek_id\",\"Reservering_id\") VALUES(:plek_id,:Reservering_id)";
-                cmd.Parameters.Add("plek_id", plek);
-                cmd.Parameters.Add("Reservering_id", reservation);
-
-                this.conn.Open();
-                cmd.ExecuteReader();
-
             }
             catch (OracleException exc)
             {
