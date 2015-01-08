@@ -201,7 +201,7 @@ namespace Datalayer
             return result;
         }
 
-        ///Methods of the Log-in page
+        ///Methods of the Log-in/Registration page
         ///
         public string getUserGroup(string username)
         {
@@ -252,6 +252,32 @@ namespace Datalayer
                 return true;
             }
             return false;
+        }
+        public void addAccount(string email, string username, string wachtwoord)
+        {
+            try
+            {
+                Random rnd =new Random();
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO ACCOUNT(\"gebruikersgroep_id\", \"gebruikersnaam\", \"wachtwoord\", \"email\", \"activatiehash\", \"geactiveerd\") VALUES (:gebrgroep, :gebruikersnaam, :wachtwoord, :email, :activatiehash, :geactiveerd)";
+                cmd.Parameters.Add("gebrgroep", "2");
+                cmd.Parameters.Add("gebruikersnaam", username);
+                cmd.Parameters.Add("wachtwoord", wachtwoord);
+                cmd.Parameters.Add("email", email);
+                cmd.Parameters.Add("activatiehash", rnd.Next(1, 9999999).ToString());
+                cmd.Parameters.Add("geactiveerd", "1");
+
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException e)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
         }
 
         /////EVENTS
