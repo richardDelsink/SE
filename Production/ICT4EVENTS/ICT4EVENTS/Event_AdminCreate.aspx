@@ -49,9 +49,15 @@
            <p>&nbsp;</p>
                <p>MaxBezoekers : 
                <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                  <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="TextBox2" runat="server" ErrorMessage="Only Numbers allowed" ValidationExpression="\d+"></asp:RegularExpressionValidator>
            </p>
            <p>
-               <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Create" />
+               <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Create" /> <br />
+
+                           <asp:CustomValidator CssClass="text-danger" id="CustomValidator2" runat="server" Display="Dynamic" ErrorMessage="please fill in all the fields !"  OnServerValidate="CustomValidator2_ServerValidate"></asp:CustomValidator>
+           </p>
+               <p>
+            <asp:CustomValidator CssClass="text-danger" id="CustomValidator1" runat="server" Display="Dynamic" ErrorMessage="please select a start and enddate"  OnServerValidate="CustomValidator1_ServerValidate"></asp:CustomValidator>
            </p>
 
 
