@@ -49,8 +49,12 @@ namespace Businesslayer
        public List<string> ReservationInfo(string user)
        {
            return _databaseConnection.GetReservationInfo(user);
-       } 
+       }
 
+       public List<int> CampNumbersInfo(string user)
+       {
+           return _databaseConnection.CampReservationList(user);
+       } 
 
 
 
