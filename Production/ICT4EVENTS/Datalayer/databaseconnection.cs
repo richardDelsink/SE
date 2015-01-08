@@ -640,10 +640,5 @@ namespace Datalayer
 
             return reservationList;
         }
-
-        public void addAccount(string email, string username, string password)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
