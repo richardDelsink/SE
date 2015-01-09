@@ -12,8 +12,6 @@ using System.Threading.Tasks;
 
 namespace Datalayer
 {
-    using System.Xml.Linq;
-
     public class DatabaseConnection
     {
         private OracleConnection conn;
@@ -297,41 +295,6 @@ namespace Datalayer
             }
             return false;
         }
-        ///Eventueel voor het checken wanneer persoon inlogt maar geen reservatie heeft. (Alleen mogelijk wanneer iemand register->logout->login
-       /* public bool userResExists(int persoonid, string voornaam, string achternaam, int plek)
-        {
-            int reservationid = 0;
-            bool userReservationExists = false;
-            try
-            {
-                OracleCommand cmd = this.conn.CreateCommand();
-
-                cmd.CommandText = "SELECT \"id\" FROM RESERVERING WHERE persoon_id=:persoonid";
-                cmd.Parameters.Add("voornaam", voornaam);
-                cmd.Parameters.Add("achternaam", achternaam);
-
-                this.conn.Open();
-                reservationid = Convert.ToInt32(cmd.ExecuteReader());
-                
-                if(reservationid > 0)
-                {
-                    userReservationExists = true;
-                }
-                else
-                {
-                    userReservationExists = false;
-                }
-
-            }
-            catch (OracleException exc)
-            {
-            }
-            finally
-            {
-                this.conn.Close();
-            }
-            return userReservationExists;
-        }*/
         ///FILESHARING///
         public void addbijdrage(int accountid, DateTime thistime, string bijdragesoort)
         {
@@ -356,23 +319,15 @@ namespace Datalayer
                 }
             }
         }
-        public List<string> Getcategory()
+        public string Getcategory(int id)
         {
-            List<string> categorie = new List<string>();
+            string category = string.Empty;
             OracleCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select naam from Categorie;";
+            cmd.CommandText = "select naam from Categorie where Categorie_ID='" + id + "';";
             try
             {
                 this.conn.Open();
-                cmd.ExecuteReader();
-                using (OracleDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        categorie.Add(reader.GetString(0));
-                    }
-
-                }
+                category = Convert.ToString(cmd.ExecuteScalar());
             }
             catch (OracleException exception)
             {
@@ -383,7 +338,7 @@ namespace Datalayer
             {
                 this.conn.Close();
             }
-            return categorie;
+            return category;
         }
         public void addbericht(int accountid, string titel, string inhoud)
         {

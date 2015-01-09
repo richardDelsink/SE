@@ -19,17 +19,19 @@ namespace ICT4EVENTS
 
         List<string> place = new List<string>();
         private string color;
+        private string voornaam;
+        private string achternaam;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["selected"] != null)
             {
-                selected = (int)Session["selected"];
+                selected = (int) (Session["selected"]);
             }
             if (!this.IsPostBack)
             {
                 selected = 0;
-                Session["Achternaam"] = Request.QueryString["lastname"];
-                Session["Voornaam"] = Request.QueryString["firstname"];
+                achternaam = Request.QueryString["lastname"];
+                voornaam = Request.QueryString["firstname"];
             }
         }
 
@@ -68,7 +70,7 @@ namespace ICT4EVENTS
                     break;
                 case "Green":
                     btn.BackColor = Color.Blue;
-                    Session["selected"] = Convert.ToInt32(btn.Text);
+                    Session["selected"] = btn.Text;
                     color = "Test";
                     break;
             }
@@ -79,7 +81,7 @@ namespace ICT4EVENTS
             if (Page.IsValid)
             {
                 ResReg.GetPersons(Convert.ToInt16(DropDownList1.SelectedValue));
-                ResReg.GetReservation((int)Session["selected"], Calendar1.SelectedDate, Calendar2.SelectedDate);
+                ResReg.GetReservation((int)Session["selected"], Calendar1.SelectedDate, Calendar2.SelectedDate, voornaam, achternaam);
                 Response.Redirect("ReservationRegister.aspx");
             }
         }
@@ -91,20 +93,6 @@ namespace ICT4EVENTS
                 Calendar2.SelectedDate == null || Calendar2.SelectedDate == new DateTime(0001, 1, 1, 0, 0, 0))
             
                 // not click any date
-            {
-                args.IsValid = false;
-            }
-            else
-                args.IsValid = true;
-
-        }
-
-        protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-
-            if (Calendar1.SelectedDate >= Calendar2.SelectedDate)
-
-            // not click any date
             {
                 args.IsValid = false;
             }

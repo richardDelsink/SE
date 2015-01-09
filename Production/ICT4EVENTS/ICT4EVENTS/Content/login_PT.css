@@ -17,15 +17,7 @@ h1{
     font-size: 12px;
     color: red !important;
 }
-.checkbox {
-    display:block;
-  min-height: 20px;
-  padding-left: 0px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  vertical-align:auto;
-  float:left;
-}
+
 
 
 .signin {
@@ -100,9 +92,6 @@ h1{
     border: 1px solid #ccc;
     border-radius: 1px; 
 }
-.signin input[type="text"] {
-}
-
 
 .signin input:focus{
         outline: 0;

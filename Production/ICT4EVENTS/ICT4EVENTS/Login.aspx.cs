@@ -28,6 +28,7 @@ namespace ICT4EVENTS
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             //  on server enable
             //  activeDirectoryLogin();
 
@@ -68,41 +69,36 @@ namespace ICT4EVENTS
         }
         private void activeDirectoryLogin()
         {
+=======
+>>>>>>> origin/master
             ///Basic Active directory login (if on server)
+            /*
             if (loginAD.Authenticate(tbUsername.Text, tbPassword.Text, "DC=INFRA-S42,DC=local"))
             {
                 ///Succes
-                ///Create sessions to enable the rest of the pages to check who is logged in, and what his/hers usertype is
-                Session["Username"] = tbUsername.Text;
-                Session["Usergroup"] = loginAD.getUserGroupDB(tbUsername.Text);
-
-                ///Check if remember me is checked, if so create cookies if not delete cookies
-                if (chkBox.Checked == true)
-                {
-                    Response.Cookies["UserName"].Expires = DateTime.Now.AddDays(30);
-                    Response.Cookies["Password"].Expires = DateTime.Now.AddDays(30);
-                    Response.Cookies["UserName"].Value = tbUsername.Text.Trim();
-                    Response.Cookies["Password"].Value = tbPassword.Text.Trim();
-                }
-                else
-                {
-                    if (Request.Cookies["UserName"] != null || Request.Cookies["Password"] != null)
-                    {
-                        Response.Cookies.Remove("Username");
-                        Response.Cookies.Remove("Password");
-                    }
-                }
-
-                Response.Redirect("Home.aspx");
+                ///To-do after programm is on server - Redirect to new page + Add session in Authenticate method
             }
             else
             {
+<<<<<<< HEAD
                 ///Show error message because we couldn't authenticate the account
                 lblLoginError.Visible = true;
             }
         }
         private void localLogin()
         {
+=======
+                ///Show error message
+                ///To-do after programm is on server - make and show error message
+                Response.Write("succes");
+                lblLogin.Visible = true;
+            }*/
+
+
+
+
+
+>>>>>>> origin/master
             string username;
             string usergroup;
 
@@ -116,55 +112,46 @@ namespace ICT4EVENTS
             usergroup = Session["Usergroup"].ToString();
 
             //Create cookies for remember me
-            if (chkBox.Checked == true)
+            if(chkBox.Checked == true)
             {
                 Response.Cookies["UserName"].Expires = DateTime.Now.AddDays(30);
                 Response.Cookies["Password"].Expires = DateTime.Now.AddDays(30);
-                Response.Cookies["UserName"].Value = tbUsername.Text.Trim();
-                Response.Cookies["Password"].Value = tbPassword.Text.Trim();
             }
-            else
-            {
-                if (Request.Cookies["UserName"] != null || Request.Cookies["Password"] != null)
-                {
-                    Response.Cookies.Remove("Username");
-                    Response.Cookies.Remove("Password");
-                }
-            }
-
+            Response.Cookies["UserName"].Value = tbUsername.Text.Trim();
+            Response.Cookies["Password"].Value = tbPassword.Text.Trim();
 
 
             Response.Redirect("Home.aspx", true);
         }
-        private void activeDirectorySignUp()
+
+        protected void btnSignup_Click(object sender, EventArgs e)
         {
-            //Check if username already exists
             if (loginAD.checkUsernameExist(tbUsernameSU.Text) == false)
             {
                 //Check if password and confirm password match
                 if (loginAD.confirmPassword(tbPassword1.Text, tbPassword2.Text))
                 {
-                    //Create Useraccount, returns a bool. true if it worked, false if something went wrong
-                    if (loginAD.CreateUserAccount(tbUsernameSU.Text, tbPassword1.Text))
-                    {
-                        //Add account to database
-                        loginAD.addAccount(tbEmail.Text, tbUsernameSU.Text, tbPassword1.Text);
+                    //Add account to database
+                    loginAD.addAccount(tbEmail.Text, tbUsernameSU.Text, tbPassword1.Text);
 
-                        //Check if the person has made a reservation, for redirecting purposes
-                        if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
-                        {
-                            Response.Redirect("Home.aspx", true);
-                        }
-                        else
-                        {
-                            //redirect with querystring, for use in the reservationpage
-                            Response.Redirect("Reservation.aspx?firstname=" + tbFirstName.Text + "&lastname=" + tbLastName.Text, true);
-                        }
+                    //Create Useraccount, returns a bool. true if it worked, false if something went wrong
+                    // if (loginAD.CreateUserAccount(tbUsernameSU.Text, tbPassword1.Text))
+                    // {
+
+                    //Check if the person has made a reservation, for redirecting purposes
+                    if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
+                    {
+                        Response.Redirect("Home.aspx", true);
                     }
                     else
                     {
-                        //Account creation failed, probably invalid information (example: Admin as username)
+                        Response.Redirect("Reservation.aspx?firstname=" + tbFirstName.Text + "&lastname=" + tbLastName.Text, true);
                     }
+                    //    }
+                    //    else
+                    //    {
+                    //Username doesn't exist
+                    //    }
                 }
             }
             else

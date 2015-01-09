@@ -149,12 +149,10 @@
   <ItemGroup>
     <Content Include="Content\login_PT.css" />
     <Content Include="Content\normalizer.css" />
-    <Content Include="Content\Register.css" />
     <Content Include="Content\Reservering.css" />
     <Content Include="Control.aspx" />
     <Content Include="Events_admin.aspx" />
     <Content Include="Event_AdminCreate.aspx" />
-    <Content Include="img\Plattegrond.png" />
     <Content Include="Login.aspx" />
     <Content Include="Material.aspx" />
     <Content Include="Material_Admin.aspx" />
@@ -318,7 +316,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>

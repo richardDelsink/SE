@@ -37,7 +37,7 @@ namespace ICT4EVENTS
         {
             if (Page.IsValid)
             {
-                if ((int)Session["ToRegister"] != 1)
+                if ((int)Session["ToRegister"] != 0)
                 {
                     Session["ToRegister"] = (int) (Session["ToRegister"]) - 1;
                     db.AddPerson(tbVoornaam.Text, tbtussenvoegsel.Text, tbachternaam.Text, tbstraat.Text, tbhuisnr.Text, tbwoonplaats.Text, tbbanknr.Text);
@@ -45,9 +45,7 @@ namespace ICT4EVENTS
                 }
                 else
                 {
-                    db.AddPerson(tbVoornaam.Text, tbtussenvoegsel.Text, tbachternaam.Text, tbstraat.Text, tbhuisnr.Text, tbwoonplaats.Text, tbbanknr.Text);
-                    db.AddReservering(Session["Voornaam"].ToString(), Session["Achternaam"].ToString(),(DateTime)Session["starttime"],(DateTime)Session["endtime"],1,(int)Session["places"]);
-                    Response.Redirect("Home.aspx", true);
+                    db.AddReservering((string)Session["voornaam"], (string)Session["achternaam"],(DateTime)Session["starttime"],(DateTime)Session["endtime"],1,(int)Session["Getplaces"]);
                 }
             }
         }
@@ -88,11 +86,13 @@ namespace ICT4EVENTS
             }
         }
 
-        public void GetReservation(int places, DateTime start, DateTime end)
+        public void GetReservation(int places, DateTime start, DateTime end, string voornaam, string achternaam)
         {
             Session["places"] = places;
             Session["starttime"] = start;
             Session["endtime"] = end;
+            Session["voornaam"] = voornaam;
+            Session["achternaam"] = achternaam;
         }
     }
 }

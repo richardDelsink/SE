@@ -27,10 +27,15 @@
                 <asp:TextBox ID="tbPassword" runat="server" Class="input" placeholder="Password"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" CssClass="validator" ForeColor="Red" runat="server" ValidationGroup="LoginGroup" ControlToValidate="tbPassword" ErrorMessage="Please fill in password" InitialValue="">
                 </asp:RequiredFieldValidator>
+<<<<<<< HEAD
                 <asp:Label ID="lblLoginError" runat="server" Visible="false" CssClass="validator" Text="Wrong Username/Password" ForeColor="Red"></asp:Label>
                 <div class="alibaba" style="float: left">
                     <asp:CheckBox ID="chkBox" runat="server" CssClass="checkbox" Width="20%" Text="Remember me?" ForeColor="Gray" />
                 </div>
+=======
+                <asp:Label ID="lblLogin" runat="server" Visible="false" Text="Wrong Username/Password" ForeColor="Red"></asp:Label>
+                <asp:CheckBox ID="chkBox" runat="server" Text="Remember me?" />
+>>>>>>> origin/master
                 <asp:Button ID="btnLogin" CssClass="button" Text="Submit" ValidationGroup="LoginGroup" runat="server" OnClick="btnLogin_Click"></asp:Button>
             </div>
             <div class="signup">
