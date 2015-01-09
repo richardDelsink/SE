@@ -308,6 +308,33 @@ namespace Datalayer
             return false;
         }
         ///FILESHARING///
+       public List<string> Getfiles()
+        {
+           List<string> files = new List<string>();
+            OracleCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select \"bestandslocatie\" from Bestand";
+            try
+            {
+                this.conn.Open();
+                using (OracleDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                       files.Add(reader.GetString(0));
+                    }
+                }
+            }
+            catch (OracleException exception)
+            {
+                Console.WriteLine(exception);
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return files;
+        }
         public void addbijdrage(int accountid, DateTime thistime, string bijdragesoort)
         {
             {
@@ -829,33 +856,7 @@ namespace Datalayer
             return verhuurList;
         }
 
-        public List<string> Getfiles()
-        {
-           List<string> files = new List<string>();
-            OracleCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select \"bestandslocatie\" from Bestand";
-            try
-            {
-                this.conn.Open();
-                using (OracleDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                       files.Add(reader.GetString(0));
-                    }
-                }
-            }
-            catch (OracleException exception)
-            {
-                Console.WriteLine(exception);
-
-            }
-            finally
-            {
-                this.conn.Close();
-            }
-            return files;
-        }
+        
         }
     }
 }
