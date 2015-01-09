@@ -14,6 +14,7 @@ namespace ICT4EVENTS
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
+        private string usergroup;
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -79,6 +80,34 @@ namespace ICT4EVENTS
         {
             Session.Abandon();
             Response.Redirect("~/Login.aspx");
+        }
+        protected void onclick_home(object sender, EventArgs e)
+        {      
+            Response.Redirect("~/Home.aspx");
+        }
+        protected void onclick_mediasharing(object sender, EventArgs e)
+        {
+            if(Session["Usergroup"].ToString() == "1")
+            {
+                Response.Redirect("~/Mediasharing_Admin.aspx");
+            }
+            else
+            {
+                Response.Redirect("~/Mediasharing.aspx");
+
+            }
+        }
+        protected void onclick_materiaal(object sender, EventArgs e)
+        {
+            if (Session["Usergroup"].ToString() == "1")
+            {
+                Response.Redirect("~/Material_Admin.aspx");
+            }
+            else
+            {
+                Response.Redirect("~/Material.aspx");
+
+            }
         }
     }
 
