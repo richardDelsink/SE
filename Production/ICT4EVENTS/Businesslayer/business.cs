@@ -135,6 +135,17 @@ namespace Businesslayer
            return DT;
        }
 
+       public void CompletedLease(int huur_id)
+       {
+           _databaseConnection.CompleteLease(huur_id);
+       }
+
+       public void CompleteReservation(int  huur_id, DateTime datum)
+       {
+           _databaseConnection.AddEndDateLease(huur_id, datum);
+         
+          
+       }
 
 
     }

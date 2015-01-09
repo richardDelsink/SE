@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
@@ -30,18 +31,18 @@ namespace Datalayer
             //this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
 
             //Locale connectie hieronder
-            //conn = new OracleConnection();
-           // String user = "SYSTEM";
-            //String pw = "2438747";
-            //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
+            conn = new OracleConnection();
+            String user = "SYSTEM";
+            String pw = "2438747";
+            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
 
 
             //Mark z'n connectie afblijven pls
-            conn = new OracleConnection();
-            String user = "dbi304910";
-            String pw = "Y3cqxa8GS6";
-            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //fhictora01.fhict.local:1521/fhictora" + ";"; 
+            //conn = new OracleConnection();
+           // String user = "dbi304910";
+            //String pw = "Y3cqxa8GS6";
+          //  conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //fhictora01.fhict.local:1521/fhictora" + ";"; 
 
         }
         ///METHODS OF ACCESS CONTROL///
@@ -785,6 +786,7 @@ namespace Datalayer
         {
 
             List<string> verhuurList = new List<string>();
+            string[] testarray = new string[8];
             OracleCommand cmd = this.conn.CreateCommand();
             OracleDataReader reader;
             cmd.CommandText = "SELECT V.*, AC.\"gebruikersnaam\" FROM VERHUUR V, ACCOUNT AC, RESERVERING_POLSBANDJE RP WHERE V.\"res_pb_id\" = RP.ID AND RP.\"account_id\" = AC.ID";
@@ -796,11 +798,76 @@ namespace Datalayer
 
                 while (reader.Read())
                 {
-                    if (!reader.IsDBNull(0) && !reader.IsDBNull(1) && !reader.IsDBNull(2) && !reader.IsDBNull(3) && !reader.IsDBNull(4) && !reader.IsDBNull(5) && !reader.IsDBNull(6) && !reader.IsDBNull(7))
+                    if (!reader.IsDBNull(0))
                     {
-                        verhuurList.Add("@" + Convert.ToString(reader.GetValue(0)) + "#" + Convert.ToString(reader.GetValue(1)) + "$" + Convert.ToString(reader.GetValue(2)) + "%" + reader.GetDateTime(3).ToShortDateString() + "^" +  reader.GetDateTime(4).ToShortDateString() + "&" + Convert.ToString(reader.GetValue(5)) + "*" + Convert.ToString(reader.GetValue(6)) + "~" + reader.GetString(7) + '€');
-
+                        testarray[0] = "@" + Convert.ToString(reader.GetValue(0));
                     }
+                     
+                    if (!reader.IsDBNull(1))
+                    {
+                        testarray[1] = "#" + Convert.ToString(reader.GetValue(1));
+                    }
+                    else
+                    {
+                        testarray[1] = "#" + string.Empty;
+                    }
+
+                    if (!reader.IsDBNull(2))
+                    {
+                        testarray[2] = "$" + Convert.ToString(reader.GetValue(2));
+                    }
+                    else
+                    {
+                          testarray[2] = "$" + string.Empty;
+                    }
+
+
+                    if (!reader.IsDBNull(3))
+                    {
+                        testarray[3] = "%" + reader.GetDateTime(3).ToShortDateString();
+                    }
+                    else
+                    {
+                          testarray[3] = "%"+ string.Empty;
+                    }
+
+                    if (!reader.IsDBNull(4))
+                    {
+                        testarray[4] = "^" + reader.GetDateTime(4).ToShortDateString();
+                    }
+                    else
+                    {
+                        testarray[4] = "^"  + string.Empty;
+                    }
+
+
+                    if (!reader.IsDBNull(5))
+                    {
+                        testarray[5] = "&" + Convert.ToString(reader.GetValue(5));
+                    }
+                    else
+                    {
+                         testarray[5] = "&"  + string.Empty;
+                    }
+
+                    if (!reader.IsDBNull(6))
+                    {
+                        testarray[6] = "*" + Convert.ToString(reader.GetValue(6));
+                    }
+                    else
+                    {
+                        testarray[6] = "*" + string.Empty;
+                    }
+
+                    if (!reader.IsDBNull(7))
+                    {
+                        testarray[7] = "~" + reader.GetString(7) + "€";
+                    }
+              
+
+                    verhuurList.Add(testarray[0] + testarray[1] + testarray[2] + testarray[3] + testarray[4] +
+                                    testarray[5] + testarray[6] + testarray[7]);
+
                 }
 
 
@@ -816,6 +883,62 @@ namespace Datalayer
             }
 
             return verhuurList;
+        }
+
+        public void CompleteLease(int verhuurID)
+        {
+
+            OracleCommand cmd = this.conn.CreateCommand();
+            OracleDataReader reader;
+            cmd.CommandText = " DELETE FROM VERHUUR WHERE ID = :VERHUURID";
+            cmd.Parameters.Add("VERHUURID", verhuurID);
+
+
+            try
+            {
+                conn.Open();
+                reader = cmd.ExecuteReader();
+
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+        }
+
+        public void AddEndDateLease(int verhuurID, DateTime datum)
+        {
+
+            OracleCommand cmd = this.conn.CreateCommand();
+            OracleDataReader reader;
+            cmd.CommandText = " UPDATE VERHUUR SET \"datumUit\" = :DATUM WHERE ID = :VERHUURID";
+            cmd.Parameters.Add("DATUM", datum);
+            cmd.Parameters.Add("VERHUURID", verhuurID);
+
+
+            try
+            {
+                conn.Open();
+                reader = cmd.ExecuteReader();
+
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+          
+           
+          
         }
     }
 }
