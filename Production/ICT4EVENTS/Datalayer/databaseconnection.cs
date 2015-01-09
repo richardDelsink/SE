@@ -6,7 +6,6 @@ using System.Web.UI.WebControls;
 using Oracle.DataAccess;
 using Oracle.DataAccess.Client;
 using System.Text;
-using System.Threading;
 using System.Web;
 using System.Threading.Tasks;
 
@@ -15,9 +14,7 @@ namespace Datalayer
 {
     public class DatabaseConnection
     {
-
         private OracleConnection conn;
-
         public DatabaseConnection()
         {
             //Oude proftaak connection
@@ -46,7 +43,7 @@ namespace Datalayer
             //this.conn.Open();
             //this.conn.Close();
         }
-
+        ///METHODS OF ACCESS CONTROL///
         public void UpdatePresence(string barcode)
         {
             OracleCommand cmd = new OracleCommand("Aanwezigheid", conn);
@@ -55,8 +52,7 @@ namespace Datalayer
             cmd.Parameters.Add("rfiduser", "nvarchar2").Value = barcode;
             cmd.ExecuteNonQuery();
 
-        }
-
+        } 
         public void MaterialGrid(GridView gv)
         {
             try
@@ -85,7 +81,6 @@ namespace Datalayer
                 conn.Close();
             }
         }
-
         public void FillDataGrid(GridView d)
         {
 
@@ -123,8 +118,6 @@ namespace Datalayer
             }
 
         }
-
-
         public string GetAccountInfo(string barcode)
         {
             string result = " ";
@@ -160,7 +153,6 @@ namespace Datalayer
 
             return result;
         }
-
         public string CheckBarcode(string barcodevalue)
         {
             string result = " ";
@@ -201,9 +193,7 @@ namespace Datalayer
 
             return result;
         }
-
-        ///Methods of the Log-in/Registration page
-        ///
+        ///Methods of the Log-in/Registration page///
         public string getUserGroup(string username)
         {
             OracleCommand cmd = this.conn.CreateCommand();
@@ -226,7 +216,6 @@ namespace Datalayer
 
             return result;
         }
-
         public bool checkForReservation(string firstname, string lastname)
         {
             OracleCommand cmd = this.conn.CreateCommand();
@@ -306,10 +295,95 @@ namespace Datalayer
             }
             return false;
         }
+        ///FILESHARING///
+        public void addbijdrage(int accountid, DateTime thistime, string bijdragesoort)
+        {
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO BIJDRAGE VALUES(ACCOUNTID,DATUM,SOORT);";
+                cmd.Parameters.Add("ACCOUNTID", accountid);
+                cmd.Parameters.Add("DATUM", thistime);
+                cmd.Parameters.Add("SOORT", bijdragesoort);
+                try
+                {
+                    this.conn.Open();
+                    cmd.ExecuteScalar();
+                }
+                catch (OracleException exc)
+                {
+                    Console.WriteLine(exc);
+                }
+                finally
+                {
+                    this.conn.Close();
+                }
+            }
+        }
+        public string Getcategory(int id)
+        {
+            string category = string.Empty;
+            OracleCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select naam from Categorie where Categorie_ID='" + id + "';";
+            try
+            {
+                this.conn.Open();
+                category = Convert.ToString(cmd.ExecuteScalar());
+            }
+            catch (OracleException exception)
+            {
+                Console.WriteLine(exception);
 
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return category;
+        }
+        public void addbericht(int accountid, string titel, string inhoud)
+        {
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "INSERT INTO BERICHT VALUES(TITEL,INHOUD)";
+            cmd.Parameters.Add("TITEL", titel);
+            cmd.Parameters.Add("INHOUD", inhoud);
+        }
+        public int getbijdrageID(int accountid, DateTime thistime, string bijdragesoort)
+        {
+            throw new NotImplementedException();
+        }
+        public int getcategoryid(string categorie)
+        {
+            throw new NotImplementedException();
+        }
+        public void addFile(int dcategory, string bestandslocatie, int grootte)
+        {
+            throw new NotImplementedException();
+        }
+        public void addcategory(int idneeded, string naam)
+        {
+            throw new NotImplementedException();
+        }
+        public int getaccountID(string username)
+        {
+            int idnumber = 0;
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "SELECT \"ID\" from ACCOUNT  WHERE  GEBRUIKERSNAAM='" + username + "';";
+            try
+            {
+                this.conn.Open();
+                idnumber = Convert.ToInt32(cmd.ExecuteReader());
+            }
+            catch (OracleException e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return idnumber;
+        }
         /////EVENTS
-
-
         public List<string> Locations()
         {
             List<string> Locations = new List<string>();
@@ -342,7 +416,6 @@ namespace Datalayer
             }
             return Locations;
         }
-
         public void CreateEvent(string naam, DateTime start, DateTime eind, int max, string locatie)
         {
             try
@@ -367,7 +440,6 @@ namespace Datalayer
                 this.conn.Close();
             }
         }
-
         public int locatieID(string naam)
         {
             int locatieid = 0;
@@ -390,7 +462,6 @@ namespace Datalayer
             }
             return locatieid;
         }
-
         public DataSet GetEvents()
         {
             string queryString =
@@ -419,7 +490,6 @@ namespace Datalayer
             }
             return ds;
         }
-
         public List<string> Getplaces()
         {
             List<string> places = new List<string>();
@@ -445,7 +515,6 @@ namespace Datalayer
             }
             return places;
         }
-
         public void AddPerson(string voornaam, string tussenvoegsel, string achternaam, string straat, string huisnr, string woonplaats, string banknr)
         {
             try
@@ -472,8 +541,7 @@ namespace Datalayer
                 this.conn.Close();
             }
         }
-
-   public void AddReservering(string voornaam, string achternaam,DateTime startdate, DateTime enddate, int betaald, int plek)
+        public void AddReservering(string voornaam, string achternaam,DateTime startdate, DateTime enddate, int betaald, int plek)
    {
             try
             {
@@ -496,7 +564,7 @@ namespace Datalayer
                 this.conn.Close();
             }
         }
-                        public int GetpersonId(string voornaam, string achternaam, int plek)
+        public int GetpersonId(string voornaam, string achternaam, int plek)
         {
             int personid = 0;
             try
@@ -521,7 +589,6 @@ namespace Datalayer
             }
             return personid;
         }
-
         public int Getreservationid(int persoonid, string voornaam, string achternaam, int plek )
         {
             int reservationid = 0;
@@ -546,7 +613,6 @@ namespace Datalayer
             }
             return reservationid;
         }
-
         public void InsertplekReservation(int plek, int reservation)
         {
             try
@@ -569,96 +635,10 @@ namespace Datalayer
                 this.conn.Close();
             }
         }
-
-        public string Getcategory(int id)
-        {
-            string category = string.Empty;
-            OracleCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select naam from Categorie where Categorie_ID='" + id + "';";
-            try
-            {
-                this.conn.Open();
-                category = Convert.ToString(cmd.ExecuteScalar());
-            }
-            catch (OracleException exception)
-            {
-                Console.WriteLine(exception);
-
-            }
-            finally
-            {
-                this.conn.Close();
-            }
-            return category;
-        }
-
-        public void addbericht(int accountid, string titel, string inhoud)
-        {
-            OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "INSERT INTO BERICHT VALUES(TITEL,INHOUD)";
-            cmd.Parameters.Add("TITEL", titel);
-            cmd.Parameters.Add("INHOUD", inhoud);
-        }
-
-        public void addbijdrage(int accountid, DateTime now, string bijdragesoort)
-        {
-            OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "INSERT INTO BIJDRAGE VALUES(ACCOUNTID,DATUM,SOORT);";
-            cmd.Parameters.Add("ACCOUNTID", accountid);
-            cmd.Parameters.Add("DATUM", now);
-            cmd.Parameters.Add("SOORT", bijdragesoort);
-            try
-            {
-                this.conn.Open();
-                cmd.ExecuteScalar();
-            }
-            catch (OracleException exc)
-            {
-                Console.WriteLine(exc);
-            }
-            finally
-            {
-                this.conn.Close();
-            }
-        }
-
-        public int getaccountID(string username)
-        {
-            int idnumber = 0;
-            OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "SELECT \"ID\" from ACCOUNT  WHERE  GEBRUIKERSNAAM='" + username + "';";
-            try
-            {
-                this.conn.Open();
-                idnumber = Convert.ToInt32(cmd.ExecuteReader());
-            }
-            catch (OracleException e)
-            {
-                Console.WriteLine(e);
-            }
-            finally
-            {
-                this.conn.Close();
-            }
-            return idnumber;
-        }
-
-        public void addcategory(int idneeded, string naam)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int getbijdrageID(int accountid, DateTime thistime, string bijdragesoort)
-        {
-            throw new NotImplementedException();
-        }
-
-
         public List<string> GetUserInfo(string user)
         {
             throw new NotImplementedException();
         }
-
         public List<string> GetReservationInfo(string username)
         {
             List<string> reservationList = new List<string>();
@@ -722,13 +702,12 @@ namespace Datalayer
 
             return reservationList;
         }
-
-
         public List<int> CampReservationList(string username)
-        {
+{
             List<int> CampNumbers = new List<int>();
             OracleCommand cmd = this.conn.CreateCommand();
             OracleDataReader reader;
+            cmd.CommandText = "SELECT PR.\"plek_id\"  FROM PLEK_RESERVERING PR, RESERVERING R, RESERVERING_POLSBANDJE RP, ACCOUNT AC  WHERE PR.\"reservering_id\" = R.ID and R.ID = RP.ID AND RP.\"account_id\" = AC.ID AND AC.\"gebruikersnaam\" = :USERNAME'";
             cmd.CommandText = "SELECT PR.\"plek_id\"  FROM PLEK_RESERVERING PR, RESERVERING R, RESERVERING_POLSBANDJE RP, ACCOUNT AC  WHERE PR.\"reservering_id\" = R.ID and R.ID = RP.ID AND RP.\"account_id\" = AC.ID AND AC.\"gebruikersnaam\" = :USERNAME";
             cmd.Parameters.Add("USERNAME", username);
 
@@ -739,13 +718,11 @@ namespace Datalayer
 
                 while (reader.Read())
                 {
-                    if (!reader.IsDBNull(0))
-                    {
-                        CampNumbers.Add(reader.GetInt16(0));
 
-                    }
+                    CampNumbers.Add(reader.GetInt16(0));
                 }
             }
+
             catch(OracleException exc)
             {
                 Console.Write(exc);
@@ -757,46 +734,11 @@ namespace Datalayer
 
             return CampNumbers;
         }
-
-        public List<string> ReservedItemsList(string username)
-        {
-            
-            List<string> reserveditemStringList = new List<string>();
-            OracleCommand cmd = this.conn.CreateCommand();
-            OracleDataReader reader;
-            cmd.CommandText = "SELECT \"datumIn\", v.\"datumUit\", p.\"merk\", pc.\"naam\", v.\"prijs\" FROM VERHUUR v, productexemplaar pe, product p, productcat pc, reservering_polsbandje rp, account ac WHERE v.\"productexemplaar_id\" = pe.Id AND p.ID = pe.\"product_id\" AND pc.id = p.\"productcat_id\" AND rp.\"account_id\" = ac.ID AND ac.\"gebruikersnaam\" = :USERNAME";
-            cmd.Parameters.Add("USERNAME", username);
-
-            try
-            {
-                this.conn.Open();
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    if (!reader.IsDBNull(0) && !reader.IsDBNull(1) && !reader.IsDBNull(2) && !reader.IsDBNull(3) && !reader.IsDBNull(4))
-                    {
-
-                        reserveditemStringList.Add("@" + reader.GetDateTime(0).ToShortDateString() + "#" + reader.GetDateTime(1).ToShortDateString() + "$" + reader.GetString(2) + "%" + reader.GetString(3) + "|" + Convert.ToString(reader.GetValue(4) + "~"));
-
-                    }
-                }
-                
-
-
+        //public List<string> ReservedItemsList(string username)
+        //{
+          //  SELECT v.ID, v."productexemplaar_id", v."res_pb_id", v."datumIn", v."datumUit", p."merk", v."prijs", pc."naam" FROM VERHUUR v, productexemplaar pe, product p, productcat pc, reservering_polsbandje rp, account ac WHERE v."productexemplaar_id" = pe.Id AND p.ID = pe."product_id" AND pc.id = p."productcat_id" AND rp."account_id" = ac.ID AND ac."gebruikersnaam" = 'admin';
+        //}
             }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-            return reserveditemStringList;
-        } 
-        
-
     }
-}
+
+
