@@ -37,9 +37,9 @@ namespace Businesslayer
         {
             return _databaseConnection.CheckBarcode(barcode);
         }
-        public string Getcategory(int id)
+        public List<string> Getcategory()
         {
-            return this._databaseConnection.Getcategory(id);
+            return this._databaseConnection.Getcategory();
         }
 
         public List<string> UserInfo(string user)
@@ -59,7 +59,7 @@ namespace Businesslayer
 
        public List<string> ReserveditemsList(string username)
        {
-          return _databaseConnection.ReservedItemsList(username);
+        return _databaseConnection.ReservedItemsList(username);
        }
 
        public void LeasedItemViews(ListView LV)
