@@ -59,7 +59,10 @@ namespace Businesslayer
             return this._databaseConnection.getaccountID(username);
         }
 
-
+        public List<string> Getcategory()
+        {
+            return this._databaseConnection.Getcategory();
+        }
 
     }
 }

@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 
 namespace Datalayer
 {
+    using System.Xml.Linq;
+
     public class DatabaseConnection
     {
         private OracleConnection conn;
@@ -319,15 +321,23 @@ namespace Datalayer
                 }
             }
         }
-        public string Getcategory(int id)
+        public List<string> Getcategory()
         {
-            string category = string.Empty;
+            List<string> categorie = new List<string>();
             OracleCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select naam from Categorie where Categorie_ID='" + id + "';";
+            cmd.CommandText = "select naam from Categorie;";
             try
             {
                 this.conn.Open();
-                category = Convert.ToString(cmd.ExecuteScalar());
+                cmd.ExecuteReader();
+                using (OracleDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        categorie.Add(reader.GetString(0));
+                    }
+
+                }
             }
             catch (OracleException exception)
             {
@@ -338,7 +348,7 @@ namespace Datalayer
             {
                 this.conn.Close();
             }
-            return category;
+            return categorie;
         }
         public void addbericht(int accountid, string titel, string inhoud)
         {
