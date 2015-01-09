@@ -101,6 +101,12 @@ namespace Businesslayer
             return this._databaseConnection.Comments(file);
         }
 
+
+        public List<string> searchlist(string searchterm)
+        {
+            return this._databaseConnection.Searchfiles(searchterm);
+        }
+
         public List<string> GetfilesOnCategory(string category)
         {
             return this._databaseConnection.GetfilesOnCategory(category);

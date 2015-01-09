@@ -15,6 +15,11 @@
 <div class="col-md-4">
     <asp:Label ID="lblfile" runat="server" Text="Files" />
        <br />
+    <br />
+    <asp:TextBox ID="TextBox3" runat="server" Width="130px"></asp:TextBox>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Search" />
+       <br />
     <asp:ListBox ID="fileslist" runat="server" AutoPostBack="true" Height="254px" Width="311px" OnSelectedIndexChanged="fileslist_SelectedIndexChanged1"></asp:ListBox>
 
 </div>
@@ -32,7 +37,7 @@
          <div class="col-md-5">
              Comments :<br />
              <br />
-             <asp:GridView ID="GridView1" runat="server" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical" Height="218px" Width="427px">
+             <asp:GridView ID="GridView1" runat="server" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical" Height="218px" Width="702px">
                  <AlternatingRowStyle BackColor="White" />
                  <FooterStyle BackColor="#CCCC99" />
                  <HeaderStyle BackColor="#6B696B" Font-Bold="True" ForeColor="White" />
@@ -49,7 +54,7 @@
 
          <br />
          <br />
-         <div class="col-md-5">
+         <div class="col-md-4" style="float : right">
              Place a Comment :<br />
              <br />
              Titel :

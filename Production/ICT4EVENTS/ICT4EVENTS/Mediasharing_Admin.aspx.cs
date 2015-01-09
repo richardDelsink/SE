@@ -36,6 +36,11 @@ namespace ICT4EVENTS
         public string username = string.Empty;
 
         /// <summary>
+        /// TODO The username.
+        /// </summary>
+        public string searchterm = string.Empty;
+
+        /// <summary>
         /// TODO The cat list.
         /// </summary>
         private List<string> CatList = new List<string>();
@@ -80,7 +85,7 @@ namespace ICT4EVENTS
             //username = Session["Username"].ToString();
             username = "admin";
             Session["category"] = CategorieList.Text;
-
+            searchterm = (string)(Session["searchterm"]);
 
 
             CategorieList.Items.Clear();
@@ -104,6 +109,7 @@ namespace ICT4EVENTS
             foreach (string cat in CatList)
             {
                 CategorieList.Items.Add(cat);
+                categoriecb.Items.Add(cat);
             }
 
 
@@ -184,10 +190,10 @@ namespace ICT4EVENTS
             {
                 fileslist.Items.Add(fil);
             }
-            
-            
+
+
             GridView1.DataSource = null;
-                GridView1.DataBind();
+            GridView1.DataBind();
         }
 
         /// <summary>
@@ -235,11 +241,24 @@ namespace ICT4EVENTS
             }
             else
             {
-                files = Accountbijdrage.Getfiles();
-
-                foreach (string fil in files)
+                if (Session["searchterm"] != null)
                 {
-                    fileslist.Items.Add(fil);
+                    files = Accountbijdrage.searchlist(searchterm);
+
+                    foreach (string fil in files)
+                    {
+                        fileslist.Items.Add(fil);
+                    }
+                }
+                else
+                {
+
+                    files = Accountbijdrage.Getfiles();
+
+                    foreach (string fil in files)
+                    {
+                        fileslist.Items.Add(fil);
+                    }
                 }
 
             }
@@ -300,6 +319,17 @@ namespace ICT4EVENTS
                         this.ClearTextBoxes(ctrl);
                     }
                 }
+            }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Session["searchterm"] = TextBox3.Text;
+            files = Accountbijdrage.searchlist(TextBox3.Text);
+
+            foreach (string fil in files)
+            {
+                fileslist.Items.Add(fil);
             }
         }
     }
