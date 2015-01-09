@@ -8,6 +8,7 @@ using System.Net;
 using System.Web.UI.WebControls;
 using Datalayer;
 using ICT4EVENTS;
+using System.Data;
 
 namespace Businesslayer
 {
@@ -72,6 +73,15 @@ namespace Businesslayer
             return this._databaseConnection.Getcategory();
         }
 
+        public DataSet Getfiles()
+        {
+            return this._databaseConnection.Getfiles();
+        }
+
+        public DataSet GetfilesOnCategory(string category)
+        {
+            return this._databaseConnection.GetfilesOnCategory(category);
+        }
         public void AddFiletoFTP(string fileName, int contentLength, string categoriecb)
         {
             //FTP ZOOI

@@ -338,6 +338,37 @@ namespace Datalayer
             return ds;
         }
 
+        public DataSet GetfilesOnCategory(string category)
+        {
+            string queryString = "select \"bestandslocatie\" from bestand where \"categorie_id\" = (select \"categorie_id\" from categorie where \"naam\" = :cat)";
+
+            OracleCommand cmd = new OracleCommand(queryString, this.conn);
+            cmd.Parameters.Add("cat", category);
+            OracleDataAdapter adapter = new OracleDataAdapter(cmd);
+
+
+            this.conn.Open();
+
+            DataSet ds = new DataSet();
+
+            try
+            {
+                // Fill the DataSet.
+                adapter.Fill(ds);
+
+            }
+            catch (OracleException e)
+            {
+                // The connection failed. Display an error message            
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ds;
+        }
+
+
 
         public void addbijdrage(int accountid, DateTime thistime, string bijdragesoort)
         {
@@ -362,29 +393,7 @@ namespace Datalayer
                 }
             }
         }
-        public void addbijdrage(int accountid, DateTime thistime, string bijdragesoort)
-        {
-            {
-                OracleCommand cmd = this.conn.CreateCommand();
-                cmd.CommandText = "INSERT INTO BIJDRAGE (\"ACCOUNTID\",\"DATUM\",\"SOORT\")VALUES(:ACID,DATE,WAT);";
-                cmd.Parameters.Add("ACID", accountid);
-                cmd.Parameters.Add("DATE", thistime);
-                cmd.Parameters.Add("WAT", bijdragesoort);
-                try
-                {
-                    this.conn.Open();
-                    cmd.ExecuteReader();
-                }
-                catch (OracleException exc)
-                {
-                    Console.WriteLine(exc);
-                }
-                finally
-                {
-                    this.conn.Close();
-                }
-            }
-        }
+      
         public List<string> Getcategory()
         {
             List<string> category = new List<string>();

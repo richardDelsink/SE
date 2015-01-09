@@ -35,7 +35,7 @@ namespace ICT4EVENTS
                 CategorieList.Items.Add(cat);
             }
 
-            fileslist.DataSource = Accountbijdrage.Getfilelist();
+            fileslist.DataSource = Accountbijdrage.Getfiles();
             fileslist.DataBind();
         }
 
@@ -69,7 +69,7 @@ namespace ICT4EVENTS
         protected void CategorieList_TextChanged(object sender, EventArgs e)
         {
             category = (string)(Session["category"]);
-            fileslist.DataSource = Accountbijdrage.GetFilesOnCategory(category);
+            fileslist.DataSource = Accountbijdrage.GetfilesOnCategory(category);
             fileslist.DataBind();
         }
 
