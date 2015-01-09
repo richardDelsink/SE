@@ -14,8 +14,15 @@
          </div>
 <div class="col-md-4">
     <asp:Label ID="lblfile" runat="server" Text="Files" />
-       <br />
-    <asp:ListBox ID="fileslist" runat="server" Height="92px" Width="117px"></asp:ListBox>
+       <asp:GridView ID="fileslist" runat="server">
+           <Columns>
+                    <asp:TemplateField HeaderText="Select">
+                        <ItemTemplate>
+                            <asp:CheckBox runat="server" ID="chk"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+           </Columns>
+            </asp:GridView>
 
 </div>
 

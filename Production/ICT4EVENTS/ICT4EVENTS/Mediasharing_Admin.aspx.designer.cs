@@ -46,7 +46,7 @@ namespace ICT4EVENTS {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox fileslist;
+        protected global::System.Web.UI.WebControls.GridView fileslist;
         
         /// <summary>
         /// FileUpload1 control.
