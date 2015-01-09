@@ -9,7 +9,7 @@
              <asp:Label ID="lblcat" runat="server" Text="Categorie" />
 
              &nbsp;:<br />
-             <asp:DropDownList ID="CategorieList" runat="server" OnTextChanged="CategorieList_TextChanged">
+             <asp:DropDownList ID="CategorieList" runat="server"  OnTextChanged="CategorieList_TextChanged" AutoPostBack="true">
              </asp:DropDownList>
          </div>
 <div class="col-md-4">
@@ -18,7 +18,7 @@
            <Columns>
                     <asp:TemplateField HeaderText="Select">
                         <ItemTemplate>
-                            <asp:CheckBox runat="server" ID="chk" OnCheckedChanged="chk_CheckedChanged" AutoPostBack="true"/>
+                            <asp:CheckBox runat="server" ID="chk"/>
                         </ItemTemplate>
                     </asp:TemplateField>
            </Columns>

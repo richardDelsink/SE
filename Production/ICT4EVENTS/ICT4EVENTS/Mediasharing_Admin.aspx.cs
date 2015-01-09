@@ -12,14 +12,28 @@ namespace ICT4EVENTS
     {
         private Accountbijdrage Accountbijdrage = new Accountbijdrage();
         private List<string> CatList = new List<string>();
+        private string category;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+            Session["category"] = CategorieList.Text;
+            CategorieList.Items.Clear();
+            if (Session["category"] == null)
+            {
+                CategorieList.Items.Add(" ");
+            }
+            else
+            {
+                CategorieList.Items.Add((string)(Session["category"]));
+            }
+            
             CatList = Accountbijdrage.Getcategory();
             foreach (string cat in CatList)
             {
                 CategorieList.Items.Add(cat);
             }
+
             fileslist.DataSource = Accountbijdrage.Getfilelist();
             fileslist.DataBind();
         }
@@ -36,27 +50,17 @@ namespace ICT4EVENTS
 
         protected void CategorieList_TextChanged(object sender, EventArgs e)
         {
-
+            category = (string)(Session["category"]);
+            fileslist.DataSource = Accountbijdrage.GetFilesOnCategory(category);
+            fileslist.DataBind();
         }
 
 
         protected void rbtnSelect_CheckedChanged(object sender, EventArgs e)
         {
-            RadioButton selectButton = (RadioButton)sender;
-            GridViewRow row = (GridViewRow)selectButton.Parent.Parent;
-            int a = row.RowIndex;
-            foreach (GridViewRow rw in fileslist.Rows)
-            {
-                if (selectButton.Checked)
-                {
-                    if (rw.RowIndex != a)
-                    {
-                        RadioButton rd = rw.FindControl("rbtnSelect") as RadioButton;
-                        rd.Checked = false;
-                    }
-                }
-            }
+           
         }
+
 
 
 
