@@ -30,18 +30,19 @@ namespace Datalayer
             //this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
 
             //Locale connectie hieronder
-            conn = new OracleConnection();
-            String user = "SYSTEM";
-            String pw = "2438747";
-            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
+            //conn = new OracleConnection();
+           // String user = "SYSTEM";
+            //String pw = "2438747";
+            //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
-            
 
-            //dafuq is this shit
-            //this.conn = new OracleConnection();
-            //this.conn.ConnectionString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
-            //this.conn.Open();
-            //this.conn.Close();
+
+            //Mark z'n connectie afblijven pls
+            conn = new OracleConnection();
+            String user = "dbi304910";
+            String pw = "Y3cqxa8GS6";
+            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //fhictora01.fhict.local:1521/fhictora" + ";"; 
+
         }
         ///METHODS OF ACCESS CONTROL///
         public void UpdatePresence(string barcode)
@@ -319,15 +320,21 @@ namespace Datalayer
                 }
             }
         }
-        public string Getcategory(int id)
+        public List<string> Getcategory()
         {
-            string category = string.Empty;
+            List<string> category = new List<string>();
             OracleCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select naam from Categorie where Categorie_ID='" + id + "';";
+            cmd.CommandText = "select \"ID\" from Categorie;";
             try
             {
                 this.conn.Open();
-                category = Convert.ToString(cmd.ExecuteScalar());
+                using (OracleDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        category.Add(reader.GetString(0));
+                    }
+                }
             }
             catch (OracleException exception)
             {
