@@ -1,25 +1,65 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="LoginAD.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   TODO The login ad.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.DirectoryServices;
 using System.DirectoryServices.ActiveDirectory;
+using System.Linq;
+using System.Web;
+
 using Datalayer;
 
 namespace ICT4EVENTS
 {
+    /// <summary>
+    /// TODO The login ad.
+    /// </summary>
     public class LoginAD
     {
-        DatabaseConnection dbconn = new DatabaseConnection();
+        /// <summary>
+        /// TODO The dbconn.
+        /// </summary>
+        private DatabaseConnection dbconn = new DatabaseConnection();
 
+        /// <summary>
+        /// TODO The get user group db.
+        /// </summary>
+        /// <param name="username">
+        /// TODO The username.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
         public string getUserGroupDB(string username)
         {
             string result = dbconn.getUserGroup(username);
             return result;
         }
+
+        /// <summary>
+        /// TODO The create user account.
+        /// </summary>
+        /// <param name="userName">
+        /// TODO The user name.
+        /// </param>
+        /// <param name="passWord">
+        /// TODO The pass word.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
         public bool CreateUserAccount(string userName, string passWord)
         {
-            string oGUID = "";
+            string oGUID = string.Empty;
             string ldapPath = "DC=INFRA-S42, DC=local";
             try
             {
@@ -27,8 +67,7 @@ namespace ICT4EVENTS
                 oGUID = string.Empty;
                 string connectionPrefix = "LDAP://" + "CN=Users," + ldapPath;
                 DirectoryEntry dirEntry = new DirectoryEntry(connectionPrefix);
-                DirectoryEntry newUser = dirEntry.Children.Add
-                    ("CN=" + userName, "user");
+                DirectoryEntry newUser = dirEntry.Children.Add("CN=" + userName, "user");
                 newUser.Properties["samAccountName"].Value = userName;
                 newUser.CommitChanges();
                 oGUID = newUser.Guid.ToString();
@@ -42,17 +81,29 @@ namespace ICT4EVENTS
                 string groupDN = "CN=Testgroep,CN=Users,DC=INFRA-S42,DC=local";
                 AddToGroup(userDn, groupDN);
 
-                //MessageBox.Show("Succes");
+                // MessageBox.Show("Succes");
             }
-            catch (System.DirectoryServices.DirectoryServicesCOMException E)
+            catch (DirectoryServicesCOMException E)
             {
-                //DoSomethingwith --> E.Message.ToString();
-                //MessageBox.Show(E.ToString());
+                // DoSomethingwith --> E.Message.ToString();
+                // MessageBox.Show(E.ToString());
                 return false;
             }
+
             return true;
-           // return oGUID;
+
+            // return oGUID;
         }
+
+        /// <summary>
+        /// TODO The add to group.
+        /// </summary>
+        /// <param name="userDn">
+        /// TODO The user dn.
+        /// </param>
+        /// <param name="groupDn">
+        /// TODO The group dn.
+        /// </param>
         public void AddToGroup(string userDn, string groupDn)
         {
             try
@@ -62,12 +113,21 @@ namespace ICT4EVENTS
                 dirEntry.CommitChanges();
                 dirEntry.Close();
             }
-            catch (System.DirectoryServices.DirectoryServicesCOMException E)
+            catch (DirectoryServicesCOMException E)
             {
-                //doSomething with E.Message.ToString();
-
+                // doSomething with E.Message.ToString();
             }
         }
+
+        /// <summary>
+        /// TODO The create.
+        /// </summary>
+        /// <param name="ouPath">
+        /// TODO The ou path.
+        /// </param>
+        /// <param name="name">
+        /// TODO The name.
+        /// </param>
         public void Create(string ouPath, string name)
         {
             if (!DirectoryEntry.Exists("LDAP://CN=" + name + "," + ouPath))
@@ -78,15 +138,26 @@ namespace ICT4EVENTS
                     DirectoryEntry group = entry.Children.Add("CN=" + name, "group");
                     group.Properties["sAmAccountName"].Value = name;
                     group.CommitChanges();
-                    //MessageBox.Show("succes");
+
+                    // MessageBox.Show("succes");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message.ToString());
                 }
             }
-            else { Console.WriteLine(ouPath + " already exists"); }
+            else
+            {
+                Console.WriteLine(ouPath + " already exists");
+            }
         }
+
+        /// <summary>
+        /// TODO The enable.
+        /// </summary>
+        /// <param name="userDn">
+        /// TODO The user dn.
+        /// </param>
         public void Enable(string userDn)
         {
             try
@@ -94,33 +165,63 @@ namespace ICT4EVENTS
                 DirectoryEntry user = new DirectoryEntry(userDn);
                 int val = (int)user.Properties["userAccountControl"].Value;
                 user.Properties["userAccountControl"].Value = val & ~0x2;
-                //ADS_UF_NORMAL_ACCOUNT;
 
+                // ADS_UF_NORMAL_ACCOUNT;
                 user.CommitChanges();
                 user.Close();
             }
-            catch (System.DirectoryServices.DirectoryServicesCOMException E)
+            catch (DirectoryServicesCOMException E)
             {
-                //DoSomethingWith --> E.Message.ToString();
-
+                // DoSomethingWith --> E.Message.ToString();
             }
         }
+
+        /// <summary>
+        /// TODO The authenticate.
+        /// </summary>
+        /// <param name="userName">
+        /// TODO The user name.
+        /// </param>
+        /// <param name="password">
+        /// TODO The password.
+        /// </param>
+        /// <param name="domain">
+        /// TODO The domain.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
         public bool Authenticate(string userName, string password, string domain)
         {
             bool authentic = false;
             try
             {
-                DirectoryEntry entry = new DirectoryEntry("LDAP://" + domain,
-                    userName, password);
+                DirectoryEntry entry = new DirectoryEntry("LDAP://" + domain, userName, password);
                 object nativeObject = entry.NativeObject;
                 authentic = true;
             }
-            catch (DirectoryServicesCOMException) { }
+            catch (DirectoryServicesCOMException)
+            {
+            }
+
             return authentic;
         }
+
+        /// <summary>
+        /// TODO The confirm password.
+        /// </summary>
+        /// <param name="password">
+        /// TODO The password.
+        /// </param>
+        /// <param name="confirmPassword">
+        /// TODO The confirm password.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
         public bool confirmPassword(string password, string confirmPassword)
         {
-            if(password == confirmPassword)
+            if (password == confirmPassword)
             {
                 return true;
             }
@@ -129,14 +230,50 @@ namespace ICT4EVENTS
                 return false;
             }
         }
+
+        /// <summary>
+        /// TODO The account reservation check.
+        /// </summary>
+        /// <param name="firstname">
+        /// TODO The firstname.
+        /// </param>
+        /// <param name="lastname">
+        /// TODO The lastname.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
         public bool accountReservationCheck(string firstname, string lastname)
         {
             return dbconn.checkForReservation(firstname, lastname);
         }
+
+        /// <summary>
+        /// TODO The add account.
+        /// </summary>
+        /// <param name="email">
+        /// TODO The email.
+        /// </param>
+        /// <param name="username">
+        /// TODO The username.
+        /// </param>
+        /// <param name="password">
+        /// TODO The password.
+        /// </param>
         public void addAccount(string email, string username, string password)
         {
             dbconn.addAccount(email, username, password);
         }
+
+        /// <summary>
+        /// TODO The check username exist.
+        /// </summary>
+        /// <param name="username">
+        /// TODO The username.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
         public bool checkUsernameExist(string username)
         {
             return dbconn.usernameExistsCheck(username);
