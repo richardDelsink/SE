@@ -309,11 +309,12 @@ namespace Datalayer
         }
         ///FILESHARING///
         ///
-        public DataSet Getfiles()
+
+        public DataSet Comments(int file)
         {
-            string queryString = "select \"bestandslocatie\" as naam from Bestand";
-               
+            string queryString = "select c.\"gebruikersnaam\" as Username, a.\"titel\" as Titel, a.\"inhoud\" as Message from bericht a, bijdrage b, account c where c.ID = b.\"account_id\" and a.\"bijdrage_id\" = b.ID and a.\"bijdrage_id_over\" = :un";
             OracleCommand cmd = new OracleCommand(queryString, this.conn);
+            cmd.Parameters.Add("un", file);
             OracleDataAdapter adapter = new OracleDataAdapter(cmd);
 
 
@@ -338,23 +339,81 @@ namespace Datalayer
             return ds;
         }
 
-        public DataSet GetfilesOnCategory(string category)
+
+        public void addcomment(int account_id, DateTime datum, string soort)
         {
+
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "insert into bijdrage(\"account_id\", \"datum\", \"soort\") VALUES (:acc, :date, :soort)";
+                cmd.Parameters.Add("acc", account_id);
+                cmd.Parameters.Add("date", datum);
+                cmd.Parameters.Add("soort", soort);
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException exception)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+        }
+
+
+        public List<string> Getfiles()
+        {
+            List<string> files = new List<string>();
+            string queryString = "select \"bestandslocatie\" as naam from Bestand";
+
+            OracleCommand cmd = new OracleCommand(queryString, this.conn);
+
+            this.conn.Open();
+
+            try
+            {
+                using (OracleDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        files.Add(reader.GetString(0));
+                    }
+                }
+
+            }
+            catch (OracleException e)
+            {
+                // The connection failed. Display an error message            
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return files;
+        }
+
+        public List<string> GetfilesOnCategory(string category)
+        {
+            List<string> files = new List<string>();
             string queryString = "select \"bestandslocatie\" from bestand where \"categorie_id\" = (select \"categorie_id\" from categorie where \"naam\" = :cat)";
 
             OracleCommand cmd = new OracleCommand(queryString, this.conn);
             cmd.Parameters.Add("cat", category);
-            OracleDataAdapter adapter = new OracleDataAdapter(cmd);
-
 
             this.conn.Open();
 
-            DataSet ds = new DataSet();
-
             try
             {
-                // Fill the DataSet.
-                adapter.Fill(ds);
+                using (OracleDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        files.Add(reader.GetString(0));
+                    }
+                }
 
             }
             catch (OracleException e)
@@ -365,23 +424,24 @@ namespace Datalayer
             {
                 conn.Close();
             }
-            return ds;
+            return files;
         }
 
 
 
-        public void addbijdrage(int accountid, DateTime thistime, string bijdragesoort)
+        public void addbijdrage(int bijdrageid, int accountid, DateTime thistime, string bijdragesoort)
         {
             {
                 OracleCommand cmd = this.conn.CreateCommand();
-                cmd.CommandText = "INSERT INTO BIJDRAGE VALUES(:ACCOUNTID,DATUM,SOORT);";
-                cmd.Parameters.Add("ACCOUNTID", accountid);
-                cmd.Parameters.Add("DATUM", thistime);
-                cmd.Parameters.Add("SOORT", bijdragesoort);
+                cmd.CommandText = "INSERT INTO BIJDRAGE(\"ID\" ,\"account_id\",\"datum\",\"soort\") VALUES(:bidd, :accd,:datede,:soort)";
+                cmd.Parameters.Add("bidd", bijdrageid);
+                cmd.Parameters.Add("accd", accountid);
+                cmd.Parameters.Add("datede", thistime);
+                cmd.Parameters.Add("soort", bijdragesoort);
                 try
                 {
                     this.conn.Open();
-                    cmd.ExecuteScalar();
+                    cmd.ExecuteReader();
                 }
                 catch (OracleException exc)
                 {
@@ -393,7 +453,7 @@ namespace Datalayer
                 }
             }
         }
-      
+
         public List<string> Getcategory()
         {
             List<string> category = new List<string>();
@@ -421,15 +481,16 @@ namespace Datalayer
             }
             return category;
         }
-        public void addbericht(int bijdrageid, string titel, string inhoud)
+        public void addbericht(int bijdrageid, string titel, string inhoud, int fileid)
         {
             try
             {
                 OracleCommand cmd = this.conn.CreateCommand();
-                cmd.CommandText = "INSERT INTO BERICHT (\"bijdrage_id\",\"titel\",\"inhoud\") VALUES(:een,:twee,:drie)";
+                cmd.CommandText = "INSERT INTO BERICHT (\"bijdrage_id\", \"bijdrage_id_over\",\"titel\",\"inhoud\") VALUES(:een,:twee,:drie, :vier)";
                 cmd.Parameters.Add("een", bijdrageid);
-                cmd.Parameters.Add("twee", titel);
-                cmd.Parameters.Add("drie", inhoud);
+                cmd.Parameters.Add("twee", fileid);
+                cmd.Parameters.Add("drie", titel);
+                cmd.Parameters.Add("vier", inhoud);
                 this.conn.Open();
                 cmd.ExecuteReader();
             }
@@ -450,8 +511,11 @@ namespace Datalayer
                 OracleCommand cmd = this.conn.CreateCommand();
                 cmd.CommandText = "select MAX(\"ID\") from Bijdrage";
                 this.conn.Open();
-                cmd.ExecuteReader();
-                bijdrageid = Convert.ToInt32(cmd.ExecuteReader());
+                OracleDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    bijdrageid = reader.GetInt32(0);
+                }
             }
             catch (OracleException e)
             {
@@ -461,28 +525,33 @@ namespace Datalayer
             {
                 this.conn.Close();
             }
+            bijdrageid++;
             return bijdrageid;
 
         }
+
         public int getcategoryid(string categorie)
         {
             int catid = 0;
             OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "SELECT \"ID\" from CATEGORIE  WHERE NAAM='" + categorie + "'";
+            cmd.CommandText = "SELECT \"bijdrage_id\" from bestand WHERE \"bestandslocatie\"= :cat ";
+            cmd.Parameters.Add("cat", categorie);
             try
             {
                 this.conn.Open();
-                catid = Convert.ToInt32(cmd.ExecuteReader());
+                catid = Convert.ToInt32(cmd.ExecuteScalar());
             }
-            catch (OracleException e)
+            catch (OracleException exc)
             {
-                Console.WriteLine(e);
+                Console.Write(exc);
             }
             finally
             {
                 this.conn.Close();
             }
+
             return catid;
+
         }
         public void addFile(int idneeded, int dcategory, string bestandslocatie, int grootte)
         {
@@ -508,6 +577,7 @@ namespace Datalayer
             }
 
         }
+
         public void addcategory(int idneeded, string naam)
         {
 
@@ -529,26 +599,32 @@ namespace Datalayer
                 this.conn.Close();
             }
         }
+
         public int getaccountID(string username)
         {
-            int idnumber = 0;
+            int catid = 0;
             OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "SELECT \"ID\" from ACCOUNT  WHERE  GEBRUIKERSNAAM='" + username + "'";
+            cmd.CommandText = "SELECT \"ID\" from ACCOUNT  WHERE  \"gebruikersnaam\"= :cat";
+            cmd.Parameters.Add("cat", username);
             try
             {
                 this.conn.Open();
-                idnumber = Convert.ToInt32(cmd.ExecuteReader());
+                catid = Convert.ToInt32(cmd.ExecuteScalar());
             }
-            catch (OracleException e)
+            catch (OracleException exc)
             {
-                Console.WriteLine(e);
+                Console.Write(exc);
             }
             finally
             {
                 this.conn.Close();
             }
-            return idnumber;
+
+            return catid;
         }
+
+
+
 
         /////EVENTS
         public List<string> Locations()
