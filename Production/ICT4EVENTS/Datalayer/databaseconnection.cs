@@ -19,15 +19,15 @@ namespace Datalayer
         {
             //Oude proftaak connection
             //conn = new OracleConnection();
-            //string user = "SYSTEM";
-            //string pw = "proftaak";
+            //string user = "system";
+            //string pw = "infra-s38";
             //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.21.142:1521/" + ";";
             
             //vdi.fhict connection van iemand
-            //this.conn = new OracleConnection();
-            ///string user = "dbi306956"; // zie email voor logingegevens
-            //string pw = "kyqSZFxe7N";
-            //this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
+            this.conn = new OracleConnection();
+            string user = "dbi306956"; // zie email voor logingegevens
+            string pw = "kyqSZFxe7N";
+            this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
 
             //Locale connectie hieronder
             //conn = new OracleConnection();
@@ -38,7 +38,7 @@ namespace Datalayer
 
 
             //Mark z'n connectie afblijven pls
-           
+           /*
             try
             {
                 conn = new OracleConnection();
@@ -53,7 +53,7 @@ namespace Datalayer
             {
                 
             }
-           
+           */
         }
         ///METHODS OF ACCESS CONTROL///
         public void UpdatePresence(string barcode)
@@ -308,33 +308,37 @@ namespace Datalayer
             return false;
         }
         ///FILESHARING///
-       public List<string> Getfiles()
+        ///
+        public DataSet Getfiles()
         {
-           List<string> files = new List<string>();
-            OracleCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select \"bestandslocatie\" from Bestand";
+            string queryString = "select \"bestandslocatie\" as naam from Bestand";
+               
+            OracleCommand cmd = new OracleCommand(queryString, this.conn);
+            OracleDataAdapter adapter = new OracleDataAdapter(cmd);
+
+
+            this.conn.Open();
+
+            DataSet ds = new DataSet();
+
             try
             {
-                this.conn.Open();
-                using (OracleDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                       files.Add(reader.GetString(0));
-                    }
-                }
-            }
-            catch (OracleException exception)
-            {
-                Console.WriteLine(exception);
+                // Fill the DataSet.
+                adapter.Fill(ds);
 
+            }
+            catch (OracleException e)
+            {
+                // The connection failed. Display an error message            
             }
             finally
             {
-                this.conn.Close();
+                conn.Close();
             }
-            return files;
+            return ds;
         }
+
+
         public void addbijdrage(int accountid, DateTime thistime, string bijdragesoort)
         {
             {
@@ -363,9 +367,10 @@ namespace Datalayer
             List<string> category = new List<string>();
             OracleCommand cmd = conn.CreateCommand();
             cmd.CommandText = "select \"naam\" from Categorie";
+            this.conn.Open();
             try
             {
-                this.conn.Open();
+                
                 using (OracleDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -509,8 +514,7 @@ namespace Datalayer
         }
         public DataSet GetEvents()
         {
-            string queryString =
-                "Select l.\"naam\" as Locatie, e.\"naam\" as Naam, e.\"datumstart\" As BeginDatum, e.\"datumEinde\" as EindDatum, e.\"maxBezoekers\" as MaxBezoekers From Event e, Locatie l";
+            string queryString = "Select l.\"naam\" as Locatie, e.\"naam\" as Naam, e.\"datumstart\" As BeginDatum, e.\"datumEinde\" as EindDatum, e.\"maxBezoekers\" as MaxBezoekers From Event e, Locatie l";
             OracleCommand cmd = new OracleCommand(queryString, this.conn);
             OracleDataAdapter adapter = new OracleDataAdapter(cmd);
 
@@ -857,7 +861,7 @@ namespace Datalayer
         }
 
         
-        }
+        
     }
 }
 

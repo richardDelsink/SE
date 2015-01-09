@@ -8,11 +8,22 @@
          <div class="col-md-4">
              <asp:Label ID="lblcat" runat="server" Text="Categorie" />
 
-             <asp:GridView runat="server" ID="categorylist"></asp:GridView>
+             &nbsp;:<br />
+             <asp:DropDownList ID="CategorieList" runat="server" OnTextChanged="CategorieList_TextChanged">
+             </asp:DropDownList>
          </div>
 <div class="col-md-4">
     <asp:Label ID="lblfile" runat="server" Text="Files" />
-     <asp:GridView ID="fileslist" runat="server"></asp:GridView>
+       <asp:GridView ID="fileslist" runat="server">
+           <Columns>
+                    <asp:TemplateField HeaderText="Select">
+                        <ItemTemplate>
+                            <asp:CheckBox runat="server" ID="chk" OnCheckedChanged="chk_CheckedChanged" AutoPostBack="true"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+           </Columns>
+            </asp:GridView>
+
 </div>
 
 <div class="col-md-4">
