@@ -38,11 +38,22 @@ namespace Datalayer
 
 
             //Mark z'n connectie afblijven pls
-            conn = new OracleConnection();
-            String user = "dbi304910";
-            String pw = "Y3cqxa8GS6";
-            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //fhictora01.fhict.local:1521/fhictora" + ";"; 
+           
+            try
+            {
+                conn = new OracleConnection();
+                String user = "dbi304910";
+                String pw = "Y3cqxa8GS6";
+                conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //fhictora01.fhict.local:1521/fhictora" + ";"; 
 
+            }
+                catch(OracleException exception)
+            {}
+            finally
+            {
+                
+            }
+           
         }
         ///METHODS OF ACCESS CONTROL///
         public void UpdatePresence(string barcode)
