@@ -105,7 +105,7 @@ namespace ICT4EVENTS
 
             }
         }
-        private bool Authenticate(string userName, string password, string domain)
+        public bool Authenticate(string userName, string password, string domain)
         {
             bool authentic = false;
             try

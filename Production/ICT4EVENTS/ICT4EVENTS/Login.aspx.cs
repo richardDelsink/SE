@@ -29,11 +29,12 @@ namespace ICT4EVENTS
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             ///Basic Active directory login (if on server)
-            /*
+            
             if (loginAD.Authenticate(tbUsername.Text, tbPassword.Text, "DC=INFRA-S42,DC=local"))
             {
                 ///Succes
                 ///To-do after programm is on server - Redirect to new page + Add session in Authenticate method
+                Response.Redirect("Home.aspx");
             }
             else
             {
@@ -41,7 +42,7 @@ namespace ICT4EVENTS
                 ///To-do after programm is on server - make and show error message
                 Response.Write("succes");
                 lblLogin.Visible = true;
-            }*/
+            }
 
 
 
