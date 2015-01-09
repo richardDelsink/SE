@@ -39,12 +39,11 @@ namespace Datalayer
 
 
             //Mark z'n connectie afblijven pls
-<<<<<<< HEAD
             //conn = new OracleConnection();
            // String user = "dbi304910";
             //String pw = "Y3cqxa8GS6";
           //  conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //fhictora01.fhict.local:1521/fhictora" + ";"; 
-=======
+
            /*
             try
             {
@@ -52,7 +51,7 @@ namespace Datalayer
                 String user = "dbi304910";
                 String pw = "Y3cqxa8GS6";
                 conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //fhictora01.fhict.local:1521/fhictora" + ";"; 
->>>>>>> origin/master
+
 
             }
                 catch(OracleException exception)
@@ -1051,7 +1050,7 @@ namespace Datalayer
             return verhuurList;
         }
 
-<<<<<<< HEAD
+
         public void CompleteLease(int verhuurID)
         {
 
@@ -1102,15 +1101,7 @@ namespace Datalayer
             {
                 conn.Close();
             }
-
-          
-           
-          
         }
-=======
-        
-        
->>>>>>> origin/master
     }
 }
 
