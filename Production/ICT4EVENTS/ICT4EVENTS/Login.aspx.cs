@@ -99,16 +99,10 @@ using System.Web.UI.WebControls;
             else
             {
                 ///Show error message
-                ///To-do after programm is on server - make and show error message
-                Response.Write("succes");
+               
                 ///Show error message because we couldn't authenticate the account
                 lblLogin.Visible = true;
             }
-
-
-
-
-
         }
         private void localLogin()
         {
@@ -125,7 +119,7 @@ using System.Web.UI.WebControls;
             usergroup = Session["Usergroup"].ToString();
 
             //Create cookies for remember me
-            if(chkBox.Checked == true)
+            
             if (chkBox.Checked == true)
             {
                 Response.Cookies["UserName"].Expires = DateTime.Now.AddDays(30);
@@ -141,15 +135,13 @@ using System.Web.UI.WebControls;
                     Response.Cookies.Remove("Password");
                 }
             }
-            Response.Cookies["UserName"].Value = tbUsername.Text.Trim();
-            Response.Cookies["Password"].Value = tbPassword.Text.Trim();
+            
 
 
 
             Response.Redirect("Home.aspx", true);
         }
 
-        protected void btnSignup_Click(object sender, EventArgs e)
         private void activeDirectorySignUp()
         {
             //Check if username already exists
@@ -158,18 +150,12 @@ using System.Web.UI.WebControls;
                 //Check if password and confirm password match
                 if (loginAD.confirmPassword(tbPassword1.Text, tbPassword2.Text))
                 {
-                    //Add account to database
-                    loginAD.addAccount(tbEmail.Text, tbUsernameSU.Text, tbPassword1.Text);
+                    
 
                     //Create Useraccount, returns a bool. true if it worked, false if something went wrong
-                    // if (loginAD.CreateUserAccount(tbUsernameSU.Text, tbPassword1.Text))
-                    // {
-
-                    //Check if the person has made a reservation, for redirecting purposes
-                    if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
                     if (loginAD.CreateUserAccount(tbUsernameSU.Text, tbPassword1.Text))
                     {
-                        Response.Redirect("Home.aspx", true);
+                        
                         //Add account to database
                         loginAD.addAccount(tbEmail.Text, tbUsernameSU.Text, tbPassword1.Text);
 
@@ -186,14 +172,8 @@ using System.Web.UI.WebControls;
                     }
                     else
                     {
-                        Response.Redirect("Reservation.aspx?firstname=" + tbFirstName.Text + "&lastname=" + tbLastName.Text, true);
                         //Account creation failed, probably invalid information (example: Admin as username)
-                    }
-                    //    }
-                    //    else
-                    //    {
-                    //Username doesn't exist
-                    //    }
+                    }                     
                  }
              }
              else

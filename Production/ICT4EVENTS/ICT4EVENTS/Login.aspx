@@ -31,7 +31,6 @@
                 <div class="alibaba" style="float: left">
                     <asp:CheckBox ID="chkBox" runat="server" CssClass="checkbox" Width="20%" Text="Remember me?" ForeColor="Gray" />
                 </div>
-                <asp:Label ID="lblLogin" runat="server" Visible="false" Text="Wrong Username/Password" ForeColor="Red"></asp:Label>
                 <asp:Button ID="btnLogin" CssClass="button" Text="Submit" ValidationGroup="LoginGroup" runat="server" OnClick="btnLogin_Click"></asp:Button>
             </div>
             <div class="signup">
