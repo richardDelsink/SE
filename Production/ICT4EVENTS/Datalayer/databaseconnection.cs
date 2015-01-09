@@ -35,13 +35,14 @@ namespace Datalayer
             String pw = "2438747";
             conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
-            
 
-            //dafuq is this shit
-            //this.conn = new OracleConnection();
-            //this.conn.ConnectionString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
-            //this.conn.Open();
-            //this.conn.Close();
+
+            //Mark z'n connectie afblijven pls
+            //conn = new OracleConnection();
+            //String user = "dbi304910";
+            //String pw = "Y3cqxa8GS6";
+            //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //fhictora01.fhict.local:1521/fhictora" + ";"; 
+
         }
         ///METHODS OF ACCESS CONTROL///
         public void UpdatePresence(string barcode)
