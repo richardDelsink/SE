@@ -21,6 +21,14 @@
     <asp:Button ID="btnUp" runat="server" OnClick="btnUpload_OnClick" Text="Upload"/>
 
 </div>
+ <div class="row">
+<div class="col-md-4">     
+<h3>File</h3>     
+     
+     
+     
+    </div>
+ </div>
 
     </div>
 </asp:Content>
