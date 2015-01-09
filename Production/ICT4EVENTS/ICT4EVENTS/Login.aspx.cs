@@ -101,7 +101,7 @@ using System.Web.UI.WebControls;
                 ///Show error message
                
                 ///Show error message because we couldn't authenticate the account
-                lblLogin.Visible = true;
+                lblLoginError.Visible = true;
             }
         }
         private void localLogin()

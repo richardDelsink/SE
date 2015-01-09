@@ -36,7 +36,7 @@
             <div class="signup">
                 <h1>Register</h1>
                 <asp:TextBox ID="tbFirstName" runat="server" Class="input" placeholder="Firstname"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbFirstname" ErrorMessage="Please fill in username" InitialValue="">
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbFirstname" ErrorMessage="Please fill in firstname" InitialValue="">
                 </asp:RequiredFieldValidator>
                 <asp:TextBox ID="tbLastName" runat="server" Class="input" placeholder="Lastname"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbLastname" ErrorMessage="Please fill in lastname" InitialValue="">

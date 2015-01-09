@@ -16,9 +16,9 @@ namespace ICT4EVENTS
         DataSet ds = new DataSet();
         protected void Page_Load(object sender, EventArgs e)
         {
-           if (Session["Usergroup"] == null)
+           if (Session["Usergroup"] != null)
             {
-              if ((int)(Session["Usergroup"]) == 1)
+              if (Session["Usergroup"].ToString() == "1")
               {
                   actionmenu.Visible = true;
               }

@@ -20,15 +20,15 @@ namespace Datalayer
         {
             //Oude proftaak connection
             //conn = new OracleConnection();
-            //string user = "SYSTEM";
-            //string pw = "proftaak";
+            //string user = "system";
+            //string pw = "infra-s38";
             //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.21.142:1521/" + ";";
             
             //vdi.fhict connection van iemand
-            //this.conn = new OracleConnection();
-            ///string user = "dbi306956"; // zie email voor logingegevens
-            //string pw = "kyqSZFxe7N";
-            //this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
+            this.conn = new OracleConnection();
+            string user = "dbi306956"; // zie email voor logingegevens
+            string pw = "kyqSZFxe7N";
+            this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
 
             //Locale connectie hieronder
             conn = new OracleConnection();
@@ -39,11 +39,29 @@ namespace Datalayer
 
 
             //Mark z'n connectie afblijven pls
+<<<<<<< HEAD
             //conn = new OracleConnection();
            // String user = "dbi304910";
             //String pw = "Y3cqxa8GS6";
           //  conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //fhictora01.fhict.local:1521/fhictora" + ";"; 
+=======
+           /*
+            try
+            {
+                conn = new OracleConnection();
+                String user = "dbi304910";
+                String pw = "Y3cqxa8GS6";
+                conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //fhictora01.fhict.local:1521/fhictora" + ";"; 
+>>>>>>> origin/master
 
+            }
+                catch(OracleException exception)
+            {}
+            finally
+            {
+                
+            }
+           */
         }
         ///METHODS OF ACCESS CONTROL///
         public void UpdatePresence(string barcode)
@@ -298,11 +316,73 @@ namespace Datalayer
             return false;
         }
         ///FILESHARING///
+        ///
+        public DataSet Getfiles()
+        {
+            string queryString = "select \"bestandslocatie\" as naam from Bestand";
+               
+            OracleCommand cmd = new OracleCommand(queryString, this.conn);
+            OracleDataAdapter adapter = new OracleDataAdapter(cmd);
+
+
+            this.conn.Open();
+
+            DataSet ds = new DataSet();
+
+            try
+            {
+                // Fill the DataSet.
+                adapter.Fill(ds);
+
+            }
+            catch (OracleException e)
+            {
+                // The connection failed. Display an error message            
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ds;
+        }
+
+        public DataSet GetfilesOnCategory(string category)
+        {
+            string queryString = "select \"bestandslocatie\" from bestand where \"categorie_id\" = (select \"categorie_id\" from categorie where \"naam\" = :cat)";
+
+            OracleCommand cmd = new OracleCommand(queryString, this.conn);
+            cmd.Parameters.Add("cat", category);
+            OracleDataAdapter adapter = new OracleDataAdapter(cmd);
+
+
+            this.conn.Open();
+
+            DataSet ds = new DataSet();
+
+            try
+            {
+                // Fill the DataSet.
+                adapter.Fill(ds);
+
+            }
+            catch (OracleException e)
+            {
+                // The connection failed. Display an error message            
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ds;
+        }
+
+
+
         public void addbijdrage(int accountid, DateTime thistime, string bijdragesoort)
         {
             {
                 OracleCommand cmd = this.conn.CreateCommand();
-                cmd.CommandText = "INSERT INTO BIJDRAGE VALUES(ACCOUNTID,DATUM,SOORT);";
+                cmd.CommandText = "INSERT INTO BIJDRAGE VALUES(:ACCOUNTID,DATUM,SOORT);";
                 cmd.Parameters.Add("ACCOUNTID", accountid);
                 cmd.Parameters.Add("DATUM", thistime);
                 cmd.Parameters.Add("SOORT", bijdragesoort);
@@ -321,11 +401,12 @@ namespace Datalayer
                 }
             }
         }
+      
         public List<string> Getcategory()
         {
             List<string> category = new List<string>();
             OracleCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select \"ID\" from Categorie;";
+            cmd.CommandText = "select \"naam\" from Categorie";
             try
             {
                 this.conn.Open();
@@ -348,34 +429,119 @@ namespace Datalayer
             }
             return category;
         }
-        public void addbericht(int accountid, string titel, string inhoud)
+        public void addbericht(int bijdrageid, string titel, string inhoud)
         {
-            OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "INSERT INTO BERICHT VALUES(TITEL,INHOUD)";
-            cmd.Parameters.Add("TITEL", titel);
-            cmd.Parameters.Add("INHOUD", inhoud);
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO BERICHT (\"bijdrage_id\",\"titel\",\"inhoud\") VALUES(:een,:twee,:drie)";
+                cmd.Parameters.Add("een", bijdrageid);
+                cmd.Parameters.Add("twee", titel);
+                cmd.Parameters.Add("drie", inhoud);
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException exception)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
         }
-        public int getbijdrageID(int accountid, DateTime thistime, string bijdragesoort)
+        public int getbijdrageID()
         {
-            throw new NotImplementedException();
+            int bijdrageid = 0;
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "select MAX(\"ID\") from Bijdrage";
+                this.conn.Open();
+                cmd.ExecuteReader();
+                bijdrageid = Convert.ToInt32(cmd.ExecuteReader());
+            }
+            catch (OracleException e)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return bijdrageid;
+
         }
         public int getcategoryid(string categorie)
         {
-            throw new NotImplementedException();
+            int catid = 0;
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "SELECT \"ID\" from CATEGORIE  WHERE NAAM='" + categorie + "'";
+            try
+            {
+                this.conn.Open();
+                catid = Convert.ToInt32(cmd.ExecuteReader());
+            }
+            catch (OracleException e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return catid;
         }
-        public void addFile(int dcategory, string bestandslocatie, int grootte)
+        public void addFile(int idneeded, int dcategory, string bestandslocatie, int grootte)
         {
-            throw new NotImplementedException();
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText =
+             "INSERT INTO BESTAND (\"bijdrage_id\",\"categorieid\",\"bestandslocatie\",\"grootte\") VALUES (:idneed, :category,:loc,:size)";
+                cmd.Parameters.Add("idneed", idneeded);
+                cmd.Parameters.Add("category", dcategory);
+                cmd.Parameters.Add("loc", bestandslocatie);
+                cmd.Parameters.Add("size", grootte);
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException exception)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
         }
         public void addcategory(int idneeded, string naam)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO CATEGORIE (\"bijdrage_id\",\"naam\") VALUES (:idneed, :name)";
+                cmd.Parameters.Add("idneed", idneeded);
+                cmd.Parameters.Add("name", naam);
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException exception)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
         }
         public int getaccountID(string username)
         {
             int idnumber = 0;
             OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "SELECT \"ID\" from ACCOUNT  WHERE  GEBRUIKERSNAAM='" + username + "';";
+            cmd.CommandText = "SELECT \"ID\" from ACCOUNT  WHERE  GEBRUIKERSNAAM='" + username + "'";
             try
             {
                 this.conn.Open();
@@ -391,6 +557,7 @@ namespace Datalayer
             }
             return idnumber;
         }
+
         /////EVENTS
         public List<string> Locations()
         {
@@ -472,8 +639,7 @@ namespace Datalayer
         }
         public DataSet GetEvents()
         {
-            string queryString =
-                "Select l.\"naam\" as Locatie, e.\"naam\" as Naam, e.\"datumstart\" As BeginDatum, e.\"datumEinde\" as EindDatum, e.\"maxBezoekers\" as MaxBezoekers From Event e, Locatie l";
+            string queryString = "Select l.\"naam\" as Locatie, e.\"naam\" as Naam, e.\"datumstart\" As BeginDatum, e.\"datumEinde\" as EindDatum, e.\"maxBezoekers\" as MaxBezoekers From Event e, Locatie l";
             OracleCommand cmd = new OracleCommand(queryString, this.conn);
             OracleDataAdapter adapter = new OracleDataAdapter(cmd);
 
@@ -885,6 +1051,7 @@ namespace Datalayer
             return verhuurList;
         }
 
+<<<<<<< HEAD
         public void CompleteLease(int verhuurID)
         {
 
@@ -940,6 +1107,10 @@ namespace Datalayer
            
           
         }
+=======
+        
+        
+>>>>>>> origin/master
     }
 }
 
