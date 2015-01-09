@@ -53,11 +53,11 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="Home.aspx">Home</a></li>
-                        <li><a runat="server" href="Mediasharing.aspx">Mediasharing</a></li>
-                        <li><a runat="server" href="Events.aspx">Events</a></li>
-                        <li><a runat="server" href="Material.aspx">Materiaal</a></li>
-                        <li><a runat="server" href="Login.aspx">Logout</a></li>
+                        <li><asp:LinkButton ID="Home" runat="server" href="Home.aspx">Home</asp:LinkButton></li>
+                        <li><asp:LinkButton ID="Mediasharing" runat="server" href="Mediasharing.aspx">Mediasharing</asp:LinkButton></li>
+                        <li><asp:LinkButton ID="Events" runat="server" href="Events.aspx">Events</asp:LinkButton></li>
+                        <li><asp:LinkButton ID="Materiaal" runat="server" href="Material.aspx">Materiaal</asp:LinkButton></li>
+                        <li><asp:LinkButton ID="Logout" runat="server" href="Login.aspx">Logout</asp:LinkButton></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
