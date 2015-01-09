@@ -53,9 +53,10 @@
              
          <asp:Button CssClass="buttons btnreserveer" ID="BtnReserveer" runat="server" Height="40px" Text="Reserveer" Width="150px" OnClick="BtnReserveer_Click"/>
 
-            <asp:CustomValidator CssClass="text-danger" id="CustomValidator2" runat="server" Display="Dynamic" ErrorMessage="please select a place"  OnServerValidate="CustomValidator2_ServerValidate"></asp:CustomValidator>
+            <asp:CustomValidator CssClass="text-danger" id="CustomValidator2" runat="server" Display="Dynamic" ErrorMessage="Please select a place"  OnServerValidate="CustomValidator2_ServerValidate"></asp:CustomValidator>
+            <asp:CustomValidator CssClass="text-danger" id="CustomValidator3" runat="server" Display="Dynamic" ErrorMessage="Enddate must be after startdate"  OnServerValidate="CustomValidator3_ServerValidate"></asp:CustomValidator>
 
-            <asp:CustomValidator CssClass="text-danger" id="CustomValidator1" runat="server" Display="Dynamic" ErrorMessage="please select a start and enddate"  OnServerValidate="CustomValidator1_ServerValidate"></asp:CustomValidator>
+            <asp:CustomValidator CssClass="text-danger" id="CustomValidator1" runat="server" Display="Dynamic" ErrorMessage="Please select a start and enddate"  OnServerValidate="CustomValidator1_ServerValidate"></asp:CustomValidator>
 
          </div>
             </form>
