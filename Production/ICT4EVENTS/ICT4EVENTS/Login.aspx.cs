@@ -1,74 +1,122 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Login.aspx.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   TODO The login.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
- namespace ICT4EVENTS
- {
-     public partial class Login : System.Web.UI.Page
-     {
-         LoginAD loginAD;
-         protected void Page_Load(object sender, EventArgs e)
-         {
-             loginAD = new LoginAD();
- 
-             if (!IsPostBack)
-             {
- 
-                 if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
-                 {
-                     tbUsername.Text = Request.Cookies["UserName"].Value;
-                     tbPassword.Attributes["value"] = Request.Cookies["Password"].Value;
-                     chkBox.Checked = true;
-                 }
-             }
-         }
- 
-         protected void btnLogin_Click(object sender, EventArgs e)
-         {
-            //  on server enable
-            //  activeDirectoryLogin();
+namespace ICT4EVENTS
+{
+    /// <summary>
+    /// TODO The login.
+    /// </summary>
+    public partial class Login : System.Web.UI.Page
+    {
+        /// <summary>
+        /// TODO The login ad.
+        /// </summary>
+        private LoginAD loginAD;
 
-            //Use when you are not on the server
-            localLogin();
+        /// <summary>
+        /// TODO The page_ load.
+        /// </summary>
+        /// <param name="sender">
+        /// TODO The sender.
+        /// </param>
+        /// <param name="e">
+        /// TODO The e.
+        /// </param>
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            loginAD = new LoginAD();
 
+            if (!IsPostBack)
+            {
+                if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
+                {
+                    tbUsername.Text = Request.Cookies["UserName"].Value;
+                    tbPassword.Attributes["value"] = Request.Cookies["Password"].Value;
+                    chkBox.Checked = true;
+                }
+            }
         }
 
+        /// <summary>
+        /// TODO The btn login_ click.
+        /// </summary>
+        /// <param name="sender">
+        /// TODO The sender.
+        /// </param>
+        /// <param name="e">
+        /// TODO The e.
+        /// </param>
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+            // on server enable
+            // activeDirectoryLogin();
+
+            // Use when you are not on the server
+            localLogin();
+        }
+
+        /// <summary>
+        /// TODO The btn signup_ click.
+        /// </summary>
+        /// <param name="sender">
+        /// TODO The sender.
+        /// </param>
+        /// <param name="e">
+        /// TODO The e.
+        /// </param>
         protected void btnSignup_Click(object sender, EventArgs e)
         {
             if (loginAD.checkUsernameExist(tbUsernameSU.Text) == false)
             {
-                //Check if password and confirm password match
+                // Check if password and confirm password match
                 if (loginAD.confirmPassword(tbPassword1.Text, tbPassword2.Text))
                 {
-                    //Add account to database
+                    // Add account to database
                     loginAD.addAccount(tbEmail.Text, tbUsernameSU.Text, tbPassword1.Text);
 
-                    //Check if the person has made a reservation, for redirecting purposes
+                    // Check if the person has made a reservation, for redirecting purposes
                     if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
                     {
                         Response.Redirect("Home.aspx", true);
                     }
                     else
                     {
-                        Response.Redirect("Reservation.aspx?firstname=" + tbFirstName.Text + "&lastname=" + tbLastName.Text, true);
+                        Response.Redirect(
+                            "Reservation.aspx?firstname=" + tbFirstName.Text + "&lastname=" + tbLastName.Text, 
+                            true);
                     }
                 }
             }
             else
             {
-                //Username already exists
+                // Username already exists
             }
 
-            //Activate on server
-            //activeDirectorySignUp();
+            // Activate on server
+            // activeDirectorySignUp();
         }
+
+        /// <summary>
+        /// TODO The active directory login.
+        /// </summary>
         private void activeDirectoryLogin()
         {
-            ///Basic Active directory login (if on server)
-            
+            // Basic Active directory login (if on server)
             if (loginAD.Authenticate(tbUsername.Text, tbPassword.Text, "DC=INFRA-S42,DC=local"))
             {
                 ///Succes
@@ -99,27 +147,31 @@ using System.Web.UI.WebControls;
             else
             {
                 ///Show error message
-               
+
                 ///Show error message because we couldn't authenticate the account
                 lblLoginError.Visible = true;
             }
         }
+
+        /// <summary>
+        /// TODO The local login.
+        /// </summary>
         private void localLogin()
         {
             string username;
             string usergroup;
 
-            //Basic replacement for login mechanism while programm is not running on the server
+            // Basic replacement for login mechanism while programm is not running on the server
             Session["Username"] = tbUsername.Text;
-            //Check if user is Admin or regular user
+
+            // Check if user is Admin or regular user
             Session["Usergroup"] = loginAD.getUserGroupDB(tbUsername.Text);
 
-            //Debugging, check values of the sessions
+            // Debugging, check values of the sessions
             username = Session["Username"].ToString();
             usergroup = Session["Usergroup"].ToString();
 
-            //Create cookies for remember me
-            
+            // Create cookies for remember me
             if (chkBox.Checked == true)
             {
                 Response.Cookies["UserName"].Expires = DateTime.Now.AddDays(30);
@@ -135,51 +187,50 @@ using System.Web.UI.WebControls;
                     Response.Cookies.Remove("Password");
                 }
             }
-            
-
-
 
             Response.Redirect("Home.aspx", true);
         }
 
+        /// <summary>
+        /// TODO The active directory sign up.
+        /// </summary>
         private void activeDirectorySignUp()
         {
-            //Check if username already exists
+            // Check if username already exists
             if (loginAD.checkUsernameExist(tbUsernameSU.Text) == false)
             {
-                //Check if password and confirm password match
+                // Check if password and confirm password match
                 if (loginAD.confirmPassword(tbPassword1.Text, tbPassword2.Text))
                 {
-                    
-
-                    //Create Useraccount, returns a bool. true if it worked, false if something went wrong
+                    // Create Useraccount, returns a bool. true if it worked, false if something went wrong
                     if (loginAD.CreateUserAccount(tbUsernameSU.Text, tbPassword1.Text))
                     {
-                        
-                        //Add account to database
+                        // Add account to database
                         loginAD.addAccount(tbEmail.Text, tbUsernameSU.Text, tbPassword1.Text);
 
-                        //Check if the person has made a reservation, for redirecting purposes
+                        // Check if the person has made a reservation, for redirecting purposes
                         if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
                         {
                             Response.Redirect("Home.aspx", true);
                         }
                         else
                         {
-                            //redirect with querystring, for use in the reservationpage
-                            Response.Redirect("Reservation.aspx?firstname=" + tbFirstName.Text + "&lastname=" + tbLastName.Text, true);
+                            // redirect with querystring, for use in the reservationpage
+                            Response.Redirect(
+                                "Reservation.aspx?firstname=" + tbFirstName.Text + "&lastname=" + tbLastName.Text, 
+                                true);
                         }
                     }
                     else
                     {
-                        //Account creation failed, probably invalid information (example: Admin as username)
-                    }                     
-                 }
-             }
-             else
-             {
-                 //Username already exists
-             }
-         }
-     }
- }
+                        // Account creation failed, probably invalid information (example: Admin as username)
+                    }
+                }
+            }
+            else
+            {
+                // Username already exists
+            }
+        }
+    }
+}

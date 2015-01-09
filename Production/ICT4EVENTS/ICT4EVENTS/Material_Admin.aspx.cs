@@ -1,73 +1,48 @@
-﻿namespace ICT4EVENTS
-{
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Material_Admin.aspx.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   TODO The material_ admin.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+
+
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Windows.Input;
+
 using Businesslayer;
 
+namespace ICT4EVENTS
+{
+    /// <summary>
+    /// TODO The material_ admin.
+    /// </summary>
     public partial class Material_Admin : System.Web.UI.Page
     {
         /// <summary>
-        /// Necessary to perform actions from the Database.
+        /// TODO The b.
         /// </summary>
-        private Business b = new Business();
+        private Business B = new Business();
 
         /// <summary>
-        /// Occurs when the page loads.
+        /// TODO The page_ load.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-         protected void Page_Load(object sender, EventArgs e)
+        /// <param name="sender">
+        /// TODO The sender.
+        /// </param>
+        /// <param name="e">
+        /// TODO The e.
+        /// </param>
+        protected void Page_Load(object sender, EventArgs e)
         {
-            this.ItemGridView.DataSource = this.b.LeasedItemViews(this.ItemGridView);
-            this.ItemGridView.DataBind();
-
-            Calendar1.VisibleDate = Convert.ToDateTime("27-12-2013");
-        }
-
-        protected void Button2_Click(object sender, EventArgs e)
-        {
-            if (ItemGridView.SelectedRow != null)
-            {
-                this.b.CompleteReservation(Convert.ToInt16(ItemGridView.SelectedRow.Cells[1].Text), Calendar1.SelectedDate);
-                ItemGridView.DataSource = this.b.LeasedItemViews(this.ItemGridView);
-                    ItemGridView.DataBind();      
-            }
-            else
-            {
-                Label2.Visible = true;
-                Label2.Text = "Klik eerst op een item!";
-            }
-        }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            if (ItemGridView.SelectedRow != null)
-            {
-                if (ItemGridView.SelectedRow.Cells[5].Text == "&nbsp;")
-                {
-                    Label2.Visible = true;
-                    Label2.Text = "Deze reservering is nog niet af!";
-                }
-                else
-                {
-                    Label2.Visible = false;
-                    this.b.CompletedLease(Convert.ToInt16(this.ItemGridView.SelectedRow.Cells[1].Text));
-                    this.ItemGridView.DataSource = this.b.LeasedItemViews(this.ItemGridView);
-                    this.ItemGridView.DataBind();
-                }
-            }
-            else
-            {
-                Label2.Visible = true;
-                Label2.Text = "Klik eerst op een item!";
-            }
-           
+            ItemGridView.DataSource = B.LeasedItemViews(ItemGridView);
+            ItemGridView.DataBind();
         }
     }
 }
