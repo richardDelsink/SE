@@ -6919,3 +6919,18 @@ td.visible-print {
     font-weight:bold;
 
 }
+
+}
+
+.ChangeLease button {
+
+    margin-right: 10px;
+
+}
+
+.ChangeLease {
+
+    position: absolute;
+    margin-left: 690px;
+    margin-top: -200px;
+}

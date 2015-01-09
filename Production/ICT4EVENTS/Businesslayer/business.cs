@@ -135,20 +135,31 @@ namespace Businesslayer
            return DT;
        }
 
+       public void CompletedLease(int huur_id)
+       {
+           _databaseConnection.CompleteLease(huur_id);
+       }
+
+       public void CompleteReservation(int huur_id, DateTime datum)
+       {
+           _databaseConnection.AddEndDateLease(huur_id, datum);
+       }
+
        public void naamReturn(string naam)
        {
-           _databaseConnection.naamReturn(naam);
+          // _databaseConnection.naamReturn(naam);
        }
 
 
        public void MaterialReservation(int productexemplaar_id, int res_pb_id, int betaald, int prijs)
        {
-           _databaseConnection.MateriaalReservation(productexemplaar_id, res_pb_id, betaald, prijs);
+     //      _databaseConnection.MateriaalReservation(productexemplaar_id, res_pb_id, betaald, prijs);
        }
 
        public int Id()
        {
-           return _databaseConnection.ReturnId;
+           return 0;
+           //   return _databaseConnection.ReturnId;
        }
 
 
