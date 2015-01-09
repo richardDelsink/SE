@@ -26,23 +26,65 @@ namespace ICT4EVENTS
     public partial class Material_Admin : System.Web.UI.Page
     {
         /// <summary>
-        /// TODO The b.
+        /// Necessary to perform actions from the Database.
         /// </summary>
-        private Business B = new Business();
+        private Business b = new Business();
 
         /// <summary>
-        /// TODO The page_ load.
+        /// Occurs when the page loads.
         /// </summary>
-        /// <param name="sender">
-        /// TODO The sender.
-        /// </param>
-        /// <param name="e">
-        /// TODO The e.
-        /// </param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            ItemGridView.DataSource = B.LeasedItemViews(ItemGridView);
-            ItemGridView.DataBind();
+            this.ItemGridView.DataSource = this.b.LeasedItemViews(this.ItemGridView);
+            this.ItemGridView.DataBind();
+
+            Calendar1.VisibleDate = Convert.ToDateTime("27-12-2013");
+           
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            if (ItemGridView.SelectedRow != null)
+            {
+                this.b.CompleteReservation(Convert.ToInt16(ItemGridView.SelectedRow.Cells[1].Text), Calendar1.SelectedDate);
+                ItemGridView.DataSource = this.b.LeasedItemViews(this.ItemGridView);
+                ItemGridView.DataBind();
+            }
+            else
+            {
+                Label2.Visible = true;
+                Label2.Text = "Klik eerst op een item!";
+            }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            if (ItemGridView.SelectedRow != null)
+            {
+                if (ItemGridView.SelectedRow.Cells[5].Text == "&nbsp;")
+                {
+                    Label2.Visible = true;
+                    Label2.Text = "Deze reservering is nog niet af!";
+                }
+                else
+                {
+                    Label2.Visible = false;
+                    this.b.CompletedLease(Convert.ToInt16(this.ItemGridView.SelectedRow.Cells[1].Text));
+                    this.ItemGridView.DataSource = this.b.LeasedItemViews(this.ItemGridView);
+                    this.ItemGridView.DataBind();
+                }
+            }
+            else
+            {
+                Label2.Visible = true;
+                Label2.Text = "Klik eerst op een item!";
+            }
+
         }
     }
+   
+        
+    
 }
