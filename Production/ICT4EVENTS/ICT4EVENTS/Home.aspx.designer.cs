@@ -13,6 +13,24 @@ namespace ICT4EVENTS {
     public partial class _Default {
         
         /// <summary>
+        /// ReservationGridView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView ReservationGridView;
+        
+        /// <summary>
+        /// reservedItemgrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView reservedItemgrid;
+        
+        /// <summary>
         /// ReserverationInfoListBox control.
         /// </summary>
         /// <remarks>

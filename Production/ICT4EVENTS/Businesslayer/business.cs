@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using System.Data; 
 using Datalayer;
 
 namespace Businesslayer
@@ -62,9 +63,76 @@ namespace Businesslayer
           return _databaseConnection.ReservedItemsList(username);
        }
 
-       public void LeasedItemViews(ListView LV)
+       public DataTable LeasedItemViews(GridView gridViewV)
        {
-           _databaseConnection.LeasedItemView(LV);
+           List<string> ValuesToTranslate = new List<string>();
+           ValuesToTranslate = _databaseConnection.FillMaterialAdmin();
+
+           DataTable DT = new DataTable();
+           DT.Columns.Add("VerhuurID");
+           DT.Columns.Add("Product-exemplaarID");
+           DT.Columns.Add("Reserving_Polsbandje_ID");
+           DT.Columns.Add("Uitleendatum");
+           DT.Columns.Add("Terugbrengdatum");
+           DT.Columns.Add("Prijs");
+           DT.Columns.Add("Betaalstatus");
+           DT.Columns.Add("Gebruikersnaam");
+
+           for (int i = 0; i < ValuesToTranslate.Count; i++)
+           {
+               DataRow dr2 = DT.NewRow();
+
+               string subbedString = ValuesToTranslate.ElementAt(i);
+               int index;
+               int endIndex;
+               string finalSubString;
+               if (subbedString != " ")
+               {
+                   index = subbedString.IndexOf('@') + 1;
+                   endIndex = subbedString.IndexOf('#');
+                   finalSubString = subbedString.Substring(index, endIndex - index);
+                   dr2["VerhuurID"] = finalSubString;
+
+                   index = subbedString.IndexOf('#') + 1;
+                   endIndex = subbedString.IndexOf('$');
+                   finalSubString = subbedString.Substring(index, endIndex - index);
+                   dr2["Product-exemplaarID"] = finalSubString;
+
+                   index = subbedString.IndexOf('$') + 1;
+                   endIndex = subbedString.IndexOf('%');
+                   finalSubString = subbedString.Substring(index, endIndex - index);
+                   dr2["Reserving_Polsbandje_ID"] = finalSubString;
+
+                   index = subbedString.IndexOf('%') + 1;
+                   endIndex = subbedString.IndexOf('^');
+                   finalSubString = subbedString.Substring(index, endIndex - index);
+                   dr2["Uitleendatum"] = finalSubString;
+
+                   index = subbedString.IndexOf('^') + 1;
+                   endIndex = subbedString.IndexOf('&');
+                   finalSubString = subbedString.Substring(index, endIndex - index);
+                   dr2["Terugbrengdatum"] = finalSubString;
+
+                   index = subbedString.IndexOf('&') + 1;
+                   endIndex = subbedString.IndexOf('*');
+                   finalSubString = subbedString.Substring(index, endIndex - index);
+                   dr2["Prijs"] = finalSubString;
+
+                   index = subbedString.IndexOf('*') + 1;
+                   endIndex = subbedString.IndexOf('~');
+                   finalSubString = subbedString.Substring(index, endIndex - index);
+                   dr2["Betaalstatus"] = finalSubString;
+
+                   index = subbedString.IndexOf('~') + 1;
+                   endIndex = subbedString.IndexOf('€');
+                   finalSubString = subbedString.Substring(index, endIndex - index);
+                   dr2["Gebruikersnaam"] = finalSubString;
+
+                   DT.Rows.Add(dr2);
+               }
+           }
+
+           return DT;
        }
 
 

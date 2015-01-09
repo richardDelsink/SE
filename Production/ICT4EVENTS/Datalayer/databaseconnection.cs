@@ -734,11 +734,85 @@ namespace Datalayer
 
             return CampNumbers;
         }
-        //public List<string> ReservedItemsList(string username)
-        //{
-          //  SELECT v.ID, v."productexemplaar_id", v."res_pb_id", v."datumIn", v."datumUit", p."merk", v."prijs", pc."naam" FROM VERHUUR v, productexemplaar pe, product p, productcat pc, reservering_polsbandje rp, account ac WHERE v."productexemplaar_id" = pe.Id AND p.ID = pe."product_id" AND pc.id = p."productcat_id" AND rp."account_id" = ac.ID AND ac."gebruikersnaam" = 'admin';
-        //}
+        
+        public List<string> ReservedItemsList(string username)
+        {
+            
+            List<string> reserveditemStringList = new List<string>();
+            OracleCommand cmd = this.conn.CreateCommand();
+            OracleDataReader reader;
+            cmd.CommandText = "SELECT \"datumIn\", v.\"datumUit\", p.\"merk\", pc.\"naam\", v.\"prijs\" FROM VERHUUR v, productexemplaar pe, product p, productcat pc, reservering_polsbandje rp, account ac WHERE v.\"productexemplaar_id\" = pe.Id AND p.ID = pe.\"product_id\" AND pc.id = p.\"productcat_id\" AND rp.\"account_id\" = ac.ID AND ac.\"gebruikersnaam\" = :USERNAME";
+            cmd.Parameters.Add("USERNAME", username);
+
+            try
+            {
+                this.conn.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0) && !reader.IsDBNull(1) && !reader.IsDBNull(2) && !reader.IsDBNull(3) && !reader.IsDBNull(4))
+                    {
+
+                        reserveditemStringList.Add("@" + reader.GetDateTime(0).ToShortDateString() + "#" + reader.GetDateTime(1).ToShortDateString() + "$" + reader.GetString(2) + "%" + reader.GetString(3) + "|" + Convert.ToString(reader.GetValue(4) + "~"));
+
+                    }
+                }
+                
+
+
             }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return reserveditemStringList;
+        }
+
+        public List<string> FillMaterialAdmin()
+        {
+
+            List<string> verhuurList = new List<string>();
+            OracleCommand cmd = this.conn.CreateCommand();
+            OracleDataReader reader;
+            cmd.CommandText = "SELECT V.*, AC.\"gebruikersnaam\" FROM VERHUUR V, ACCOUNT AC, RESERVERING_POLSBANDJE RP WHERE V.\"res_pb_id\" = RP.ID AND RP.\"account_id\" = AC.ID";
+
+            try
+            {
+                this.conn.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0) && !reader.IsDBNull(1) && !reader.IsDBNull(2) && !reader.IsDBNull(3) && !reader.IsDBNull(4) && !reader.IsDBNull(5) && !reader.IsDBNull(6) && !reader.IsDBNull(7))
+                    {
+                        verhuurList.Add("@" + Convert.ToString(reader.GetValue(0)) + "#" + Convert.ToString(reader.GetValue(1)) + "$" + Convert.ToString(reader.GetValue(2)) + "%" + reader.GetDateTime(3).ToShortDateString() + "^" +  reader.GetDateTime(4).ToShortDateString() + "&" + Convert.ToString(reader.GetValue(5)) + "*" + Convert.ToString(reader.GetValue(6)) + "~" + reader.GetString(7) + '€');
+
+                    }
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return verhuurList;
+        }
     }
+}
+
+    
 
 
