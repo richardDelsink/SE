@@ -49,13 +49,13 @@ namespace ICT4EVENTS {
         protected global::System.Web.UI.WebControls.LinkButton Materiaal;
         
         /// <summary>
-        /// Logout control.
+        /// Control control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Logout;
+        protected global::System.Web.UI.WebControls.LinkButton Control;
         
         /// <summary>
         /// linklogout control.

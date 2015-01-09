@@ -11,8 +11,6 @@ namespace ICT4EVENTS
     public partial class ReservationRegister : System.Web.UI.Page
     {
         Reservering db = new Reservering();
-        //private string firstname;
-        //private string lastname;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["ToRegister"] != null)
@@ -22,8 +20,6 @@ namespace ICT4EVENTS
                     
                 }
                 LblRegister.Text = Session["ToRegister"].ToString();
-                //firstname = Request.QueryString["firstname"];
-                //lastname = Request.QueryString["lastname"];
 
             }
         }
@@ -37,15 +33,17 @@ namespace ICT4EVENTS
         {
             if (Page.IsValid)
             {
-                if ((int)Session["ToRegister"] != 0)
+                if ((int)Session["ToRegister"] != 1)
                 {
-                    Session["ToRegister"] = (int) (Session["ToRegister"]) - 1;
-                    db.AddPerson(tbVoornaam.Text, tbtussenvoegsel.Text, tbachternaam.Text, tbstraat.Text, tbhuisnr.Text, tbwoonplaats.Text, tbbanknr.Text);
+                    Session["ToRegister"] = (int)Session["ToRegister"] - 1;
+                    this.db.AddPerson(tbVoornaam.Text, tbtussenvoegsel.Text, tbachternaam.Text, tbstraat.Text, tbhuisnr.Text, tbwoonplaats.Text, tbbanknr.Text);
                     Refresh();
                 }
                 else
                 {
-                    db.AddReservering((string)Session["voornaam"], (string)Session["achternaam"],(DateTime)Session["starttime"],(DateTime)Session["endtime"],1,(int)Session["Getplaces"]);
+                    this.db.AddPerson(tbVoornaam.Text, tbtussenvoegsel.Text, tbachternaam.Text, tbstraat.Text, tbhuisnr.Text, tbwoonplaats.Text, tbbanknr.Text);
+                    this.db.AddReservering(Session["Voornaam"].ToString(), Session["Achternaam"].ToString(), (DateTime)Session["starttime"], (DateTime)Session["endtime"], 1, (int)Session["places"]);
+                    Response.Redirect("Home.aspx", true);
                 }
             }
         }
@@ -60,7 +58,7 @@ namespace ICT4EVENTS
                 }
                 LblRegister.Text = Session["ToRegister"].ToString();
             }
-            ClearTextBoxes(Page);
+            this.ClearTextBoxes(Page);
         }
 
         protected void ClearTextBoxes(Control p1)
@@ -73,26 +71,24 @@ namespace ICT4EVENTS
 
                     if (t != null)
                     {
-                        t.Text = String.Empty;
+                        t.Text = string.Empty;
                     }
                 }
                 else
                 {
                     if (ctrl.Controls.Count > 0)
                     {
-                        ClearTextBoxes(ctrl);
+                        this.ClearTextBoxes(ctrl);
                     }
                 }
             }
         }
 
-        public void GetReservation(int places, DateTime start, DateTime end, string voornaam, string achternaam)
+        public void GetReservation(int places, DateTime start, DateTime end)
         {
             Session["places"] = places;
             Session["starttime"] = start;
             Session["endtime"] = end;
-            Session["voornaam"] = voornaam;
-            Session["achternaam"] = achternaam;
         }
     }
 }
