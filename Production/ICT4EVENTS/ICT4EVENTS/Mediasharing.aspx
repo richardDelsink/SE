@@ -2,16 +2,12 @@
 
 <asp:Content ID="mediasharingContent" ContentPlaceHolderID="MainContent" runat="server">
    <div class="home_container" style="height: 542px">
-        <%--<div class="jumbotron">--%>
-   
-            <ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a href="#">Personal Info</a></li>
-  <li role="presentation"><a href="#">Media</a></li>
-            </ul>
        <div class="container">
-            <div class="row">
+       <div class="col-md-4">     
 
-<%--  <div class="col-md-4">.col-md-4</div>--%>
+<div class="col-md-4">.col-md-4</div>
+<div class="col-md-4">.col-md-4</div>
+<div class="col-md-4">.col-md-4</div>
 
 <div class="col-md-4"><asp:DataGrid CssClass="list-group" id="ownmedialist" OnSelectedIndexChanged="ownmedialist_OnSelectedIndexChanged" runat="server"></asp:DataGrid></div>        
 <div class="col-md-4">
