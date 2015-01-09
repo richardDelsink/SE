@@ -19,7 +19,7 @@ namespace Datalayer
         public DatabaseConnection()
         {
             //Oude proftaak connection
-<<<<<<< HEAD
+
             conn = new OracleConnection();
             string user = "system";
             string pw = "infra-s38";
@@ -32,7 +32,7 @@ namespace Datalayer
            // string user = "dbi306956"; // zie email voor logingegevens
           //  string pw = "kyqSZFxe7N";
            // this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
-=======
+
             //conn = new OracleConnection();
             //string user = "system";
             //string pw = "infra-s38";
@@ -44,13 +44,13 @@ namespace Datalayer
             //string pw = "kyqSZFxe7N";
             //this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" +
               //                           " //192.168.15.50:1521/fhictora" + ";";
->>>>>>> 1b1e2b66b32f8f2ed0caee92d29531c2de136bfa
+
 
             //Locale connectie hieronder
-            conn = new OracleConnection();
-            String user = "SYSTEM";
-            String pw = "2438747";
-            conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
+           //conn = new OracleConnection();
+           //String user = "SYSTEM";
+           //String pw = "2438747";
+           //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //localhost:1521/xe" + ";"; 
             //orcl is de servicename (kan anders zijn, is afhankelijk van de Oracle server die geinstalleerd is. Mogelijk is ook Oracle Express: xe
 
 
@@ -66,10 +66,7 @@ namespace Datalayer
                 String user = "dbi304910";
                 String pw = "Y3cqxa8GS6";
                 conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //fhictora01.fhict.local:1521/fhictora" + ";"; 
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
 
             }
                 catch(OracleException exception)
@@ -976,8 +973,7 @@ namespace Datalayer
             List<string> reserveditemStringList = new List<string>();
             OracleCommand cmd = this.conn.CreateCommand();
             OracleDataReader reader;
-            cmd.CommandText =
-                "SELECT \"datumIn\", v.\"datumUit\", p.\"merk\", pc.\"naam\", v.\"prijs\" FROM VERHUUR v, productexemplaar pe, product p, productcat pc, reservering_polsbandje rp, account ac WHERE v.\"productexemplaar_id\" = pe.Id AND p.ID = pe.\"product_id\" AND pc.id = p.\"productcat_id\" AND rp.\"account_id\" = ac.ID AND ac.\"gebruikersnaam\" = :USERNAME";
+            cmd.CommandText = "SELECT \"datumIn\", v.\"datumUit\", p.\"merk\", pc.\"naam\", v.\"prijs\" FROM VERHUUR v, productexemplaar pe, product p, productcat pc, reservering_polsbandje rp, account ac WHERE v.\"productexemplaar_id\" = pe.Id AND p.ID = pe.\"product_id\" AND pc.id = p.\"productcat_id\" AND rp.\"account_id\" = ac.ID AND v.\"res_pb_id\" = ac.ID AND AC.\"gebruikersnaam\" = :naam";
             cmd.Parameters.Add("USERNAME", username);
 
             try
@@ -987,14 +983,10 @@ namespace Datalayer
 
                 while (reader.Read())
                 {
-                    if (!reader.IsDBNull(0) && !reader.IsDBNull(1) && !reader.IsDBNull(2) && !reader.IsDBNull(3) &&
-                        !reader.IsDBNull(4))
+                    if (!reader.IsDBNull(0) && !reader.IsDBNull(1) && !reader.IsDBNull(2) && !reader.IsDBNull(3) && !reader.IsDBNull(4))
                     {
 
-                        reserveditemStringList.Add("@" + reader.GetDateTime(0).ToShortDateString() + "#" +
-                                                   reader.GetDateTime(1).ToShortDateString() + "$" + reader.GetString(2) +
-                                                   "%" + reader.GetString(3) + "|" +
-                                                   Convert.ToString(reader.GetValue(4) + "~"));
+                        reserveditemStringList.Add("@" + reader.GetDateTime(0).ToShortDateString() + "#" + reader.GetDateTime(1).ToShortDateString() + "$" + reader.GetString(2) + "%" + reader.GetString(3) + "|" + Convert.ToString(reader.GetValue(4) + "~"));
 
                     }
                 }
