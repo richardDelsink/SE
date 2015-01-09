@@ -62,7 +62,8 @@
         protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (Calendar1.SelectedDate == null || Calendar1.SelectedDate == new DateTime(0001, 1, 1, 0, 0, 0) ||
-                Calendar2.SelectedDate == null || Calendar2.SelectedDate == new DateTime(0001, 1, 1, 0, 0, 0))
+                Calendar2.SelectedDate == null || Calendar2.SelectedDate == new DateTime(0001, 1, 1, 0, 0, 0) ||
+                Calendar1.SelectedDate < Calendar2.SelectedDate)
             {
                 args.IsValid = false;
             }
