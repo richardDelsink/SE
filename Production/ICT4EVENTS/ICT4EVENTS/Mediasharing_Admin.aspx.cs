@@ -14,7 +14,9 @@ namespace ICT4EVENTS
         protected void Page_Load(object sender, EventArgs e)
         {
             
-            fileslist.DataSource = Accountbijdrage.Getcategory();
+            categorylist.DataSource = Accountbijdrage.Getcategory();
+            categorylist.DataBind();
+            fileslist.DataSource = Accountbijdrage.Getfilelist();
             fileslist.DataBind();
         }
 

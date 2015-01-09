@@ -312,7 +312,7 @@ namespace Datalayer
         {
             {
                 OracleCommand cmd = this.conn.CreateCommand();
-                cmd.CommandText = "INSERT INTO BIJDRAGE VALUES(ACCOUNTID,DATUM,SOORT);";
+                cmd.CommandText = "INSERT INTO BIJDRAGE VALUES(:ACCOUNTID,DATUM,SOORT);";
                 cmd.Parameters.Add("ACCOUNTID", accountid);
                 cmd.Parameters.Add("DATUM", thistime);
                 cmd.Parameters.Add("SOORT", bijdragesoort);
@@ -335,7 +335,7 @@ namespace Datalayer
         {
             List<string> category = new List<string>();
             OracleCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select \"ID\" from Categorie;";
+            cmd.CommandText = "select \"naam\" from Categorie";
             try
             {
                 this.conn.Open();
@@ -361,7 +361,7 @@ namespace Datalayer
         public void addbericht(int accountid, string titel, string inhoud)
         {
             OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "INSERT INTO BERICHT VALUES(TITEL,INHOUD)";
+            cmd.CommandText = "INSERT INTO BERICHT VALUES(:TITEL,:INHOUD)";
             cmd.Parameters.Add("TITEL", titel);
             cmd.Parameters.Add("INHOUD", inhoud);
         }
@@ -827,6 +827,35 @@ namespace Datalayer
             }
 
             return verhuurList;
+        }
+
+        public List<string> Getfiles()
+        {
+           List<string> files = new List<string>();
+            OracleCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select \"bestandslocatie\" from Bestand";
+            try
+            {
+                this.conn.Open();
+                using (OracleDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                       files.Add(reader.GetString(0));
+                    }
+                }
+            }
+            catch (OracleException exception)
+            {
+                Console.WriteLine(exception);
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return files;
+        }
         }
     }
 }
