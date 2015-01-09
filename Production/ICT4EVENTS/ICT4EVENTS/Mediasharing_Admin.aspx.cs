@@ -19,7 +19,7 @@ namespace ICT4EVENTS
             username = Session["Username"].ToString();
             categorylist.DataSource = Accountbijdrage.Getcategory();
             categorylist.DataBind();
-            fileslist.DataSource = Accountbijdrage.Getfilelist();
+          //  fileslist.DataSource = Accountbijdrage.Getfilelist();
             fileslist.DataBind();
         }
 

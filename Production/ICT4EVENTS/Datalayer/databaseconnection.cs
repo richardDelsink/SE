@@ -853,14 +853,6 @@ namespace Datalayer
             return CampNumbers;
         }
 
-    <<<<<<<
-        private HEAD 
-
-    =======
-    >>>>>>>
-        private origin 
-    /
-        private master 
 
         public List<string> ReservedItemsList(string username)
         {
