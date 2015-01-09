@@ -41,6 +41,7 @@ namespace ICT4EVENTS
                 string userDn = "CN=" + userName + ",CN=Users,DC=INFRA-S42,DC=local";
                 string groupDN = "CN=Testgroep,CN=Users,DC=INFRA-S42,DC=local";
                 AddToGroup(userDn, groupDN);
+                Enable("LDAP://CN=" + userName + ", CN=Users,DC=INFRA-S42,DC=local");
 
                 //MessageBox.Show("Succes");
             }
