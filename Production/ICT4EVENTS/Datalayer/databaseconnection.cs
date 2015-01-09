@@ -398,9 +398,25 @@ namespace Datalayer
         }
         public int getcategoryid(string categorie)
         {
-            throw new NotImplementedException();
-        }
-        public void addFile(int dcategory, string bestandslocatie, int grootte)
+         int catid = 0;
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "SELECT \"ID\" from CATEGORIE  WHERE NAAM='" + categorie + "'";
+            try
+            {
+                this.conn.Open();
+                catid = Convert.ToInt32(cmd.ExecuteReader());
+            }
+            catch (OracleException e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return catid;
+        }   
+        public void addFile(int idneeded, int dcategory, string bestandslocatie, int grootte)
         {
             throw new NotImplementedException();
         }
@@ -779,7 +795,6 @@ namespace Datalayer
 
             return CampNumbers;
         }
-        
         public List<string> ReservedItemsList(string username)
         {
             
@@ -818,7 +833,6 @@ namespace Datalayer
 
             return reserveditemStringList;
         }
-
         public List<string> FillMaterialAdmin()
         {
 
@@ -855,12 +869,8 @@ namespace Datalayer
 
             return verhuurList;
         }
-
-        
         }
     }
-}
-
-    
+ 
 
 
