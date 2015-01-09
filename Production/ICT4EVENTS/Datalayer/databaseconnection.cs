@@ -18,16 +18,18 @@ namespace Datalayer
         public DatabaseConnection()
         {
             //Oude proftaak connection
-            //conn = new OracleConnection();
-            //string user = "system";
-            //string pw = "infra-s38";
-            //conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.21.142:1521/" + ";";
+            conn = new OracleConnection();
+            string user = "system";
+            string pw = "infra-s38";
+           // conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.21.142:1521/" + ";";
+             conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //172.21.142.1:1521/" + ";";
+
             
             //vdi.fhict connection van iemand
-            this.conn = new OracleConnection();
-            string user = "dbi306956"; // zie email voor logingegevens
-            string pw = "kyqSZFxe7N";
-            this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
+           // this.conn = new OracleConnection();
+           // string user = "dbi306956"; // zie email voor logingegevens
+          //  string pw = "kyqSZFxe7N";
+           // this.conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source=" + " //192.168.15.50:1521/fhictora" + ";";
 
             //Locale connectie hieronder
             //conn = new OracleConnection();
