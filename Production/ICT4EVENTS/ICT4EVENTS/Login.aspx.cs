@@ -5,30 +5,29 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace ICT4EVENTS
-{
-    public partial class Login : System.Web.UI.Page
-    {
-        LoginAD loginAD;
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            loginAD = new LoginAD();
-
-            if (!IsPostBack)
-            {
-
-                if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
-                {
-                    tbUsername.Text = Request.Cookies["UserName"].Value;
-                    tbPassword.Attributes["value"] = Request.Cookies["Password"].Value;
-                    chkBox.Checked = true;
-                }
-            }
-        }
-
-        protected void btnLogin_Click(object sender, EventArgs e)
-        {
-<<<<<<< HEAD
+ namespace ICT4EVENTS
+ {
+     public partial class Login : System.Web.UI.Page
+     {
+         LoginAD loginAD;
+         protected void Page_Load(object sender, EventArgs e)
+         {
+             loginAD = new LoginAD();
+ 
+             if (!IsPostBack)
+             {
+ 
+                 if (Request.Cookies["UserName"] != null && Request.Cookies["Password"] != null)
+                 {
+                     tbUsername.Text = Request.Cookies["UserName"].Value;
+                     tbPassword.Attributes["value"] = Request.Cookies["Password"].Value;
+                     chkBox.Checked = true;
+                 }
+             }
+         }
+ 
+         protected void btnLogin_Click(object sender, EventArgs e)
+         {
             //  on server enable
             //  activeDirectoryLogin();
 
@@ -61,7 +60,6 @@ namespace ICT4EVENTS
             else
             {
                 //Username already exists
-                lblUsernameError.Visible = true;
             }
 
             //Activate on server
@@ -69,36 +67,51 @@ namespace ICT4EVENTS
         }
         private void activeDirectoryLogin()
         {
-=======
->>>>>>> origin/master
             ///Basic Active directory login (if on server)
-            /*
+            
             if (loginAD.Authenticate(tbUsername.Text, tbPassword.Text, "DC=INFRA-S42,DC=local"))
             {
                 ///Succes
                 ///To-do after programm is on server - Redirect to new page + Add session in Authenticate method
+                ///Create sessions to enable the rest of the pages to check who is logged in, and what his/hers usertype is
+                Session["Username"] = tbUsername.Text;
+                Session["Usergroup"] = loginAD.getUserGroupDB(tbUsername.Text);
+
+                ///Check if remember me is checked, if so create cookies if not delete cookies
+                if (chkBox.Checked == true)
+                {
+                    Response.Cookies["UserName"].Expires = DateTime.Now.AddDays(30);
+                    Response.Cookies["Password"].Expires = DateTime.Now.AddDays(30);
+                    Response.Cookies["UserName"].Value = tbUsername.Text.Trim();
+                    Response.Cookies["Password"].Value = tbPassword.Text.Trim();
+                }
+                else
+                {
+                    if (Request.Cookies["UserName"] != null || Request.Cookies["Password"] != null)
+                    {
+                        Response.Cookies.Remove("Username");
+                        Response.Cookies.Remove("Password");
+                    }
+                }
+
+                Response.Redirect("Home.aspx");
             }
             else
             {
-<<<<<<< HEAD
-                ///Show error message because we couldn't authenticate the account
-                lblLoginError.Visible = true;
-            }
-        }
-        private void localLogin()
-        {
-=======
                 ///Show error message
                 ///To-do after programm is on server - make and show error message
                 Response.Write("succes");
+                ///Show error message because we couldn't authenticate the account
                 lblLogin.Visible = true;
-            }*/
+            }
 
 
 
 
 
->>>>>>> origin/master
+        }
+        private void localLogin()
+        {
             string username;
             string usergroup;
 
@@ -113,19 +126,33 @@ namespace ICT4EVENTS
 
             //Create cookies for remember me
             if(chkBox.Checked == true)
+            if (chkBox.Checked == true)
             {
                 Response.Cookies["UserName"].Expires = DateTime.Now.AddDays(30);
                 Response.Cookies["Password"].Expires = DateTime.Now.AddDays(30);
+                Response.Cookies["UserName"].Value = tbUsername.Text.Trim();
+                Response.Cookies["Password"].Value = tbPassword.Text.Trim();
+            }
+            else
+            {
+                if (Request.Cookies["UserName"] != null || Request.Cookies["Password"] != null)
+                {
+                    Response.Cookies.Remove("Username");
+                    Response.Cookies.Remove("Password");
+                }
             }
             Response.Cookies["UserName"].Value = tbUsername.Text.Trim();
             Response.Cookies["Password"].Value = tbPassword.Text.Trim();
+
 
 
             Response.Redirect("Home.aspx", true);
         }
 
         protected void btnSignup_Click(object sender, EventArgs e)
+        private void activeDirectorySignUp()
         {
+            //Check if username already exists
             if (loginAD.checkUsernameExist(tbUsernameSU.Text) == false)
             {
                 //Check if password and confirm password match
@@ -140,24 +167,39 @@ namespace ICT4EVENTS
 
                     //Check if the person has made a reservation, for redirecting purposes
                     if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
+                    if (loginAD.CreateUserAccount(tbUsernameSU.Text, tbPassword1.Text))
                     {
                         Response.Redirect("Home.aspx", true);
+                        //Add account to database
+                        loginAD.addAccount(tbEmail.Text, tbUsernameSU.Text, tbPassword1.Text);
+
+                        //Check if the person has made a reservation, for redirecting purposes
+                        if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
+                        {
+                            Response.Redirect("Home.aspx", true);
+                        }
+                        else
+                        {
+                            //redirect with querystring, for use in the reservationpage
+                            Response.Redirect("Reservation.aspx?firstname=" + tbFirstName.Text + "&lastname=" + tbLastName.Text, true);
+                        }
                     }
                     else
                     {
                         Response.Redirect("Reservation.aspx?firstname=" + tbFirstName.Text + "&lastname=" + tbLastName.Text, true);
+                        //Account creation failed, probably invalid information (example: Admin as username)
                     }
                     //    }
                     //    else
                     //    {
                     //Username doesn't exist
                     //    }
-                }
-            }
-            else
-            {
-                //Username already exists
-            }
-        }
-    }
-}
+                 }
+             }
+             else
+             {
+                 //Username already exists
+             }
+         }
+     }
+ }
