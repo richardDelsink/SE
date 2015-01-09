@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 using Datalayer;
 
 namespace Businesslayer
@@ -59,8 +60,12 @@ namespace Businesslayer
        public List<string> ReserveditemsList(string username)
        {
           return _databaseConnection.ReservedItemsList(username);
-       } 
+       }
 
+       public void LeasedItemViews(ListView LV)
+       {
+           _databaseConnection.LeasedItemView(LV);
+       }
 
 
 
