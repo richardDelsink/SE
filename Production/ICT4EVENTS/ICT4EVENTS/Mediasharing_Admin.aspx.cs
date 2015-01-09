@@ -83,6 +83,7 @@ namespace ICT4EVENTS
             }
             fileslist.Items.Clear();
             username = Session["Username"].ToString();
+            
             Session["category"] = CategorieList.Text;
             searchterm = (string)(Session["searchterm"]);
 
