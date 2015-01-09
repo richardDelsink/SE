@@ -70,7 +70,7 @@ namespace ICT4EVENTS
                     break;
                 case "Green":
                     btn.BackColor = Color.Blue;
-                    Session["selected"] = btn.Text;
+                    Session["selected"] = Convert.ToInt32(btn.Text);
                     color = "Test";
                     break;
             }
