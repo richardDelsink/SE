@@ -64,10 +64,10 @@ namespace ICT4EVENTS
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             // on server enable
-            // activeDirectoryLogin();
+             activeDirectoryLogin();
 
             // Use when you are not on the server
-            localLogin();
+           // localLogin();
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace ICT4EVENTS
         /// </param>
         protected void btnSignup_Click(object sender, EventArgs e)
         {
-            if (loginAD.checkUsernameExist(tbUsernameSU.Text) == false)
+           /* if (loginAD.checkUsernameExist(tbUsernameSU.Text) == false)
             {
                 // Check if password and confirm password match
                 if (loginAD.confirmPassword(tbPassword1.Text, tbPassword2.Text))
@@ -105,10 +105,10 @@ namespace ICT4EVENTS
             else
             {
                 // Username already exists
-            }
+            } */
 
             // Activate on server
-            // activeDirectorySignUp();
+             activeDirectorySignUp();
         }
 
         /// <summary>
@@ -211,10 +211,16 @@ namespace ICT4EVENTS
                         // Check if the person has made a reservation, for redirecting purposes
                         if (loginAD.accountReservationCheck(tbFirstName.Text, tbLastName.Text))
                         {
+                            Session["Username"] = tbUsername.Text;
+                            Session["Usergroup"] = loginAD.getUserGroupDB(tbUsername.Text);
+
                             Response.Redirect("Home.aspx", true);
                         }
                         else
                         {
+                            Session["Username"] = tbUsername.Text;
+                            Session["Usergroup"] = loginAD.getUserGroupDB(tbUsername.Text);
+
                             // redirect with querystring, for use in the reservationpage
                             Response.Redirect(
                                 "Reservation.aspx?firstname=" + tbFirstName.Text + "&lastname=" + tbLastName.Text, 
@@ -223,7 +229,7 @@ namespace ICT4EVENTS
                     }
                     else
                     {
-                        // Account creation failed, probably invalid information (example: Admin as username)
+                        // Account creation failed, probably invalid information (example: Admin as username) or existing username
                     }
                 }
             }
