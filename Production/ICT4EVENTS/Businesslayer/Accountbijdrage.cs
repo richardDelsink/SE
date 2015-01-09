@@ -12,7 +12,7 @@ using ICT4EVENTS;
 namespace Businesslayer
 {
 
-   
+
     public class Accountbijdrage
     {
         private DatabaseConnection _databaseConnection;
@@ -44,7 +44,7 @@ namespace Businesslayer
             this._databaseConnection.addcategory(idneeded, naam);
         }
 
-        public void AddFiletoDb(int accountid,string bestandslocatie,int bestandsgrootte,string category)
+        public void AddFiletoDb(int accountid, string bestandslocatie, int bestandsgrootte, string category)
         {
             bijdragesoort = "bestand";
             int idneeded = 0;
@@ -79,7 +79,7 @@ namespace Businesslayer
             request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
             request.Credentials = new NetworkCredential("Administrator", "Fontysict!");
             StreamReader sourceStream = new StreamReader(fileName);
-            byte [] fileContents = Encoding.UTF8.GetBytes(sourceStream.ReadToEnd());
+            byte[] fileContents = Encoding.UTF8.GetBytes(sourceStream.ReadToEnd());
             sourceStream.Close();
             request.ContentLength = fileContents.Length;
             Stream requestStream = request.GetRequestStream();
@@ -90,6 +90,6 @@ namespace Businesslayer
             response.Close();
         }
 
-        }
     }
+}
 

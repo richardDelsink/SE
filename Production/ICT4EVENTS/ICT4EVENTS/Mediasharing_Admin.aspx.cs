@@ -11,12 +11,13 @@ namespace ICT4EVENTS
     public partial class Mediasharing_Admin : System.Web.UI.Page
     {
         private Accountbijdrage Accountbijdrage = new Accountbijdrage();
+        public string username = string.Empty;
         private List<string> CatList = new List<string>();
         private string category;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            username = Session["Username"].ToString();
             Session["category"] = CategorieList.Text;
             CategorieList.Items.Clear();
             if (Session["category"] == null)
@@ -40,8 +41,25 @@ namespace ICT4EVENTS
 
         protected void btnUpload_OnClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (FileUpload1.HasFile)
+            {
+                int accountid = 0;
+                accountid = Accountbijdrage.Getaccountid(username);
+                Accountbijdrage.AddFiletoFTP(this.FileUpload1.FileName, this.FileUpload1.PostedFile.ContentLength, this.categoriecb.SelectedItem.ToString());
+                Accountbijdrage.AddFiletoDb(
+                    accountid,
+                    this.FileUpload1.FileName,
+                    this.FileUpload1.PostedFile.ContentLength,
+                    categoriecb.SelectedItem.ToString());
+            }
+            else
+            {
+                           Response.Write("get a file"); 
+            }
+
         }
+    
+
 
         protected void fileslist_SelectedIndexChanged(object sender, EventArgs e)
         {

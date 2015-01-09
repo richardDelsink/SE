@@ -362,15 +362,37 @@ namespace Datalayer
                 }
             }
         }
+        public void addbijdrage(int accountid, DateTime thistime, string bijdragesoort)
+        {
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO BIJDRAGE (\"ACCOUNTID\",\"DATUM\",\"SOORT\")VALUES(:ACID,DATE,WAT);";
+                cmd.Parameters.Add("ACID", accountid);
+                cmd.Parameters.Add("DATE", thistime);
+                cmd.Parameters.Add("WAT", bijdragesoort);
+                try
+                {
+                    this.conn.Open();
+                    cmd.ExecuteReader();
+                }
+                catch (OracleException exc)
+                {
+                    Console.WriteLine(exc);
+                }
+                finally
+                {
+                    this.conn.Close();
+                }
+            }
+        }
         public List<string> Getcategory()
         {
             List<string> category = new List<string>();
             OracleCommand cmd = conn.CreateCommand();
             cmd.CommandText = "select \"naam\" from Categorie";
-            this.conn.Open();
             try
             {
-                
+                this.conn.Open();
                 using (OracleDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -390,34 +412,119 @@ namespace Datalayer
             }
             return category;
         }
-        public void addbericht(int accountid, string titel, string inhoud)
+        public void addbericht(int bijdrageid, string titel, string inhoud)
         {
-            OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "INSERT INTO BERICHT VALUES(:TITEL,:INHOUD)";
-            cmd.Parameters.Add("TITEL", titel);
-            cmd.Parameters.Add("INHOUD", inhoud);
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO BERICHT (\"bijdrage_id\",\"titel\",\"inhoud\") VALUES(:een,:twee,:drie)";
+                cmd.Parameters.Add("een", bijdrageid);
+                cmd.Parameters.Add("twee", titel);
+                cmd.Parameters.Add("drie", inhoud);
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException exception)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
         }
-        public int getbijdrageID(int accountid, DateTime thistime, string bijdragesoort)
+        public int getbijdrageID()
         {
-            throw new NotImplementedException();
+            int bijdrageid = 0;
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "select MAX(\"ID\") from Bijdrage";
+                this.conn.Open();
+                cmd.ExecuteReader();
+                bijdrageid = Convert.ToInt32(cmd.ExecuteReader());
+            }
+            catch (OracleException e)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return bijdrageid;
+
         }
         public int getcategoryid(string categorie)
         {
-            throw new NotImplementedException();
+            int catid = 0;
+            OracleCommand cmd = this.conn.CreateCommand();
+            cmd.CommandText = "SELECT \"ID\" from CATEGORIE  WHERE NAAM='" + categorie + "'";
+            try
+            {
+                this.conn.Open();
+                catid = Convert.ToInt32(cmd.ExecuteReader());
+            }
+            catch (OracleException e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return catid;
         }
-        public void addFile(int dcategory, string bestandslocatie, int grootte)
+        public void addFile(int idneeded, int dcategory, string bestandslocatie, int grootte)
         {
-            throw new NotImplementedException();
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText =
+             "INSERT INTO BESTAND (\"bijdrage_id\",\"categorieid\",\"bestandslocatie\",\"grootte\") VALUES (:idneed, :category,:loc,:size)";
+                cmd.Parameters.Add("idneed", idneeded);
+                cmd.Parameters.Add("category", dcategory);
+                cmd.Parameters.Add("loc", bestandslocatie);
+                cmd.Parameters.Add("size", grootte);
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException exception)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
         }
         public void addcategory(int idneeded, string naam)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                OracleCommand cmd = this.conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO CATEGORIE (\"bijdrage_id\",\"naam\") VALUES (:idneed, :name)";
+                cmd.Parameters.Add("idneed", idneeded);
+                cmd.Parameters.Add("name", naam);
+                this.conn.Open();
+                cmd.ExecuteReader();
+            }
+            catch (OracleException exception)
+            {
+
+            }
+            finally
+            {
+                this.conn.Close();
+            }
         }
         public int getaccountID(string username)
         {
             int idnumber = 0;
             OracleCommand cmd = this.conn.CreateCommand();
-            cmd.CommandText = "SELECT \"ID\" from ACCOUNT  WHERE  GEBRUIKERSNAAM='" + username + "';";
+            cmd.CommandText = "SELECT \"ID\" from ACCOUNT  WHERE  GEBRUIKERSNAAM='" + username + "'";
             try
             {
                 this.conn.Open();
@@ -433,6 +540,7 @@ namespace Datalayer
             }
             return idnumber;
         }
+
         /////EVENTS
         public List<string> Locations()
         {
