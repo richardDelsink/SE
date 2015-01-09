@@ -25,19 +25,14 @@ namespace Businesslayer
             this._databaseConnection = new Datalayer.DatabaseConnection();
         }
 
-        public int accountid(string username)
-        {
-            return this._databaseConnection.getaccountID(username);
-        }
-
-        public void Addbericht(int accountid, string titel, string inhoud, int fileid)
+        public void Addbericht(int accountid, string titel, string inhoud)
         {
             bijdragesoort = "bericht";
             int idneeded = 0;
             DateTime thistime = DateTime.Now;
+            this._databaseConnection.addbijdrage(accountid, thistime, bijdragesoort);
             idneeded = this._databaseConnection.getbijdrageID();
-            this._databaseConnection.addbijdrage(idneeded, accountid, thistime, bijdragesoort); 
-            this._databaseConnection.addbericht(idneeded, titel, inhoud, fileid);
+            this._databaseConnection.addbericht(idneeded, titel, inhoud);
         }
 
         public void Addcategory(int accountid, string naam)
@@ -45,8 +40,8 @@ namespace Businesslayer
             bijdragesoort = "categorie";
             int idneeded = 0;
             DateTime thistime = DateTime.Now;
+            this._databaseConnection.addbijdrage(accountid, thistime, bijdragesoort);
             idneeded = this._databaseConnection.getbijdrageID();
-            this._databaseConnection.addbijdrage(idneeded ,accountid, thistime, bijdragesoort);  
             this._databaseConnection.addcategory(idneeded, naam);
         }
 
@@ -56,9 +51,8 @@ namespace Businesslayer
             int idneeded = 0;
             int categoryid = 0;
             DateTime thistime = DateTime.Now;
+            this._databaseConnection.addbijdrage(accountid, thistime, bijdragesoort);
             idneeded = this._databaseConnection.getbijdrageID();
-            this._databaseConnection.addbijdrage(idneeded, accountid, thistime, bijdragesoort);
-            
             categoryid = this._databaseConnection.getcategoryid(category);
             this._databaseConnection.addFile(idneeded, categoryid, bestandslocatie, bestandsgrootte);
 
@@ -68,13 +62,6 @@ namespace Businesslayer
         {
             return this._databaseConnection.getcategoryid(category);
         }
-
-        public void AddCommentBijdrage(int account_id, DateTime datum, string soort)
-        {
-            this._databaseConnection.addcomment(account_id, datum, soort);
-        }
-
-
 
         public int Getaccountid(string username)
         {
@@ -86,22 +73,12 @@ namespace Businesslayer
             return this._databaseConnection.Getcategory();
         }
 
-        public int categoryId(string category)
-        {
-            return this._databaseConnection.getcategoryid(category);
-        }
-
-        public List<string> Getfiles()
+        public DataSet Getfiles()
         {
             return this._databaseConnection.Getfiles();
         }
 
-        public DataSet Comments(int file)
-        {
-            return this._databaseConnection.Comments(file);
-        }
-
-        public List<string> GetfilesOnCategory(string category)
+        public DataSet GetfilesOnCategory(string category)
         {
             return this._databaseConnection.GetfilesOnCategory(category);
         }

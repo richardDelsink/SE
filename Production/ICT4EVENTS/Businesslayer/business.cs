@@ -137,19 +137,18 @@ namespace Businesslayer
 
        public void naamReturn(string naam)
        {
-           //_databaseConnection.naamReturn(naam);
+           _databaseConnection.naamReturn(naam);
        }
 
 
        public void MaterialReservation(int productexemplaar_id, int res_pb_id, int betaald, int prijs)
        {
-           // _databaseConnection.MateriaalReservation(productexemplaar_id, res_pb_id, betaald, prijs);
+           _databaseConnection.MateriaalReservation(productexemplaar_id, res_pb_id, betaald, prijs);
        }
 
        public int Id()
        {
-           return 1;
-           //  return _databaseConnection.ReturnId;
+           return _databaseConnection.ReturnId;
        }
 
 
