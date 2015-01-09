@@ -324,7 +324,7 @@ namespace Datalayer
         {
             List<string> category = new List<string>();
             OracleCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select naam from Categorie;";
+            cmd.CommandText = "select \"ID\" from Categorie;";
             try
             {
                 this.conn.Open();
