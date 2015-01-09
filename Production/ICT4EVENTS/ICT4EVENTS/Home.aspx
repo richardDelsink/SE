@@ -1,15 +1,19 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="ICT4EVENTS._Default" %>
 
+
 <asp:Content ID="homeContent" ContentPlaceHolderID="MainContent" runat="server">
-<div class="home_container">
+    <div class="home_container">
+    
     <div class="jumbotron">
-        <h1>ASPNET.</h1>
-        
-        
+    
         
         <div id ="homepagecontent">
+            
+            
              <div class="Reservering" align="center"> 
-            <h3><b>Informatie Reservering</b></h3>
+                 <h1><b>Homepage</b></h1>
+                 <br/>
+                 <h3><b>Informatie Reservering</b></h3>
             <asp:GridView ID="ReservationGridView" runat="server" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" CellPadding="3" ForeColor="Black" GridLines="Vertical" Font-Names="Calibri" Font-Size="16px">
                 <AlternatingRowStyle BackColor="#CCCCCC" />
                 <FooterStyle BackColor="#CCCCCC" />
@@ -21,10 +25,10 @@
                 <SortedDescendingCellStyle BackColor="#CAC9C9" />
                 <SortedDescendingHeaderStyle BackColor="#383838" />
             </asp:GridView>
-                  </div>
+                  </div>    
             <br />
          
-              <div class="Materialen">   <h3><b>Gereserveerde materialen</b> </h3>
+              <div class="Materialen" align="center">   <h3><b>Gereserveerde materialen</b> </h3>
             <asp:GridView ID="reservedItemgrid" runat="server" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" CellPadding="3" ForeColor="Black" GridLines="Vertical" Font-Names="Calibri" Font-Size="16px">
                 <AlternatingRowStyle BackColor="White" />
                 <FooterStyle BackColor="#808080" />
@@ -40,6 +44,7 @@
                   </div>
               
       </div>
+            
     </div>
 </div>
 </asp:Content>

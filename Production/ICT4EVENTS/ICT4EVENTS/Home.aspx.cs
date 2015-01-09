@@ -1,95 +1,115 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Businesslayer;
-
-namespace ICT4EVENTS
+﻿namespace ICT4EVENTS
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
+    using System.Web;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
+    using Businesslayer;
+
+    /// <summary>
+    /// Also known as the Homepage.
+    /// </summary>
     public partial class _Default : Page
     {
-         Business B = new Business();
-        private string username = "admin";
+        /// <summary>
+        /// References to the Business class for database use.
+        /// </summary>
+        private Business b = new Business();
+
+        /// <summary>
+        /// Used in several methods.
+        /// </summary>
+        private string username;
+        
+        /// <summary>
+        /// DataTable for the first GridView
+        /// </summary>
         private DataTable dtReservation;
+
+        /// <summary>
+        /// DataTable for the second GridView
+        /// </summary>
         private DataTable dtItemReservation;
+
+        /// <summary>
+        /// Occurs when the page loads.
+        /// </summary>
+        /// <param name="sender">mandatory </param>
+        /// <param name="e">mandatory as well </param>
         protected void Page_Load(object sender, EventArgs e)
-        {
-            /*
+        {  
             if (Session["Usergroup"].ToString() == "1")
             {
-
             }
             else
-            {*/
-<<<<<<< HEAD
-                 dtReservation = new DataTable();
-                 dtItemReservation = new DataTable();
-                 MakeDataTable();
-                 AddToDataTable();
-                 BindGrids();
-
-            // }
-
+            {
+                 this.username = Session["Username"].ToString();
+                 this.dtReservation = new DataTable();
+                 this.dtItemReservation = new DataTable();
+                 this.MakeDataTable();
+                 this.AddToDataTable();
+                 this.BindGrids();
+            }
         }
 
+        /// <summary>
+        /// Creates the columns which we will use to fill in later. 
+        /// </summary>
         private void MakeDataTable()
         {
-            dtReservation.Columns.Add("ReservationID");
-            dtReservation.Columns.Add("PersoonsID");
-            dtReservation.Columns.Add("Startdatum reservering");
-            dtReservation.Columns.Add("Einddatum reservering");
-            dtReservation.Columns.Add("Betaalstatus");
-            dtReservation.Columns.Add("Kampeerplaatsen");
+            this.dtReservation.Columns.Add("ReservationID");
+            this.dtReservation.Columns.Add("PersoonsID");
+            this.dtReservation.Columns.Add("Startdatum reservering");
+            this.dtReservation.Columns.Add("Einddatum reservering");
+            this.dtReservation.Columns.Add("Betaalstatus");
+            this.dtReservation.Columns.Add("Kampeerplaatsen");
 
-            //"datumIn" as UITLEENDATUM, v."datumUit" as TERUGBRENGDATUM , p."merk" as MERK, pc."naam" as NAAM, v."prijs" as PRIJS 
-            dtItemReservation.Columns.Add("Uitleendatum");
-            dtItemReservation.Columns.Add("Terugbrengdatum");
-            dtItemReservation.Columns.Add("Merk");
-            dtItemReservation.Columns.Add("Naam");
-            dtItemReservation.Columns.Add("Prijs");
+            this.dtItemReservation.Columns.Add("Uitleendatum");
+            this.dtItemReservation.Columns.Add("Terugbrengdatum");
+            this.dtItemReservation.Columns.Add("Merk");
+            this.dtItemReservation.Columns.Add("Naam");
+            this.dtItemReservation.Columns.Add("Prijs");
         }
 
+        /// <summary>
+        /// Adds the data from the business layer to the correct column, while creating a row for the GridView
+        /// </summary>
         private void AddToDataTable()
      {
-            DataRow dr = dtReservation.NewRow();
-           
+         DataRow dr = this.dtReservation.NewRow();
+         List<string> inhoud = new List<string>();
+            inhoud = this.b.ReservationInfo(this.username);
 
-            List<string> Inhoud = new List<string>();
-            Inhoud = B.ReservationInfo(username);
-
-            dr["ReservationID"] = Inhoud.ElementAt(0);
-            dr["PersoonsID"] = Inhoud.ElementAt(1);
-            dr["Startdatum Reservering"] = Inhoud.ElementAt(2);
-            dr["Einddatum Reservering"] = Inhoud.ElementAt(3); ;
-            dr["Betaalstatus"] = Inhoud.ElementAt(4);
+            dr["ReservationID"] = inhoud.ElementAt(0);
+            dr["PersoonsID"] = inhoud.ElementAt(1);
+            dr["Startdatum Reservering"] = inhoud.ElementAt(2);
+            dr["Einddatum Reservering"] = inhoud.ElementAt(3); 
+            dr["Betaalstatus"] = inhoud.ElementAt(4);
 
             string campspots = string.Empty;
-            for (int i = 0; i < B.CampNumbersInfo(username).Count; i++)
+            for (int i = 0; i < this.b.CampNumbersInfo(this.username).Count; i++)
             {
                 if (i >= 1)
                 {
-                    campspots = campspots + "," + B.CampNumbersInfo(username).ElementAt(i);
+                    campspots = campspots + "," + this.b.CampNumbersInfo(this.username).ElementAt(i);
                 }
                 else
                 {
-                    campspots = campspots + B.CampNumbersInfo(username).ElementAt(i);
-                }
-               
+                    campspots = campspots + this.b.CampNumbersInfo(this.username).ElementAt(i);
+                }   
             }
 
             dr["Kampeerplaatsen"] = campspots;
-            dtReservation.Rows.Add(dr);
+            this.dtReservation.Rows.Add(dr);
 
-
-            for (int i = 0; i < B.ReserveditemsList(username).Count; i++)
+            for (int i = 0; i < this.b.ReserveditemsList(this.username).Count; i++)
             {
+                DataRow dr2 = this.dtItemReservation.NewRow();
 
-                DataRow dr2 = dtItemReservation.NewRow();
-
-                string subbedString = B.ReserveditemsList(username).ElementAt(i);
+                string subbedString = this.b.ReserveditemsList(this.username).ElementAt(i);
                 int index;
                 int endIndex;
                 string finalSubString;
@@ -120,101 +140,20 @@ namespace ICT4EVENTS
                     finalSubString = subbedString.Substring(index, endIndex - index);
                     dr2["Prijs"] = finalSubString;
 
-                    dtItemReservation.Rows.Add(dr2);
-                 
+                    this.dtItemReservation.Rows.Add(dr2);           
                 }
-
-               
             }
-
      }
 
+      /// <summary>
+      /// Binds the data from the AddToDataTable method to the correct GridView
+      /// </summary>
     private void BindGrids()
     {
-        ReservationGridView.DataSource = dtReservation;
+        ReservationGridView.DataSource = this.dtReservation;
         ReservationGridView.DataBind();
-
-        reservedItemgrid.DataSource = dtItemReservation;
+        reservedItemgrid.DataSource = this.dtItemReservation;
         reservedItemgrid.DataBind();
     }
-
-        /*
-        public void FillListBoxes()
-        {
-            string username = "admin";
-            B.ReserveditemsList(reservedItemgrid, username);
-
-            GridViewRow Row = new GridViewRow();
-        
-            
-            ReservationGridView.add
-            ReserverationInfoListBox.Items.Clear();
-
-            List<string> reservationList = new List<string>();
-            List<string> reservationitemList = new List<string>();
-            reservationList = B.ReservationInfo(username);
-       
-
-                string ResID = "ReserveringsID:      " + reservationList.ElementAt(0);
-                string Personen = "AccountID:       " +  reservationList.ElementAt(1);
-                string start = "Aankomstdatum reservering:        " + reservationList.ElementAt(2);
-                string stop = "Einddatum reservering:        " + reservationList.ElementAt(3);
-                string bestaald = reservationList.ElementAt(4); 
-
-                ReserverationInfoListBox.Items.Add(ResID);
-                ReserverationInfoListBox.Items.Add(Personen);
-                ReserverationInfoListBox.Items.Add(start);
-                ReserverationInfoListBox.Items.Add(stop);
-                ReserverationInfoListBox.Items.Add(bestaald);
-
-            string Kampeer = "Kampeerplaatsen:  ";
-            for (int i = 0; i < B.CampNumbersInfo(username).Count; i++)
-            {
-                Kampeer += B.CampNumbersInfo(username).ElementAt(i) + ",";
-            }
-
-            ReserverationInfoListBox.Items.Add(Kampeer);
-           
-        } */
-
-        
-=======
-                //FillListBoxes();
-           // }
-       
-        }
-
-        //public void FillListBoxes()
-        //{
-        //    string username = "admin";
-
-        //    ReserverationInfoListBox.Items.Clear();
-
-        //    List<string> reservationList = new List<string>();
-
-        //    reservationList = B.ReservationInfo(username);
-
-        //    string ResID = "ReserveringsID:      " + reservationList.ElementAt(0);
-        //    string Personen = "AccountID:       " + reservationList.ElementAt(1);
-        //    string start = "Aankomstdatum reservering:        " + reservationList.ElementAt(2);
-        //    string stop = "Einddatum reservering:        " + reservationList.ElementAt(3);
-        //    string bestaald = reservationList.ElementAt(4);
-
-        //    ReserverationInfoListBox.Items.Add(ResID);
-        //    ReserverationInfoListBox.Items.Add(Personen);
-        //    ReserverationInfoListBox.Items.Add(start);
-        //    ReserverationInfoListBox.Items.Add(stop);
-        //    ReserverationInfoListBox.Items.Add(bestaald);
-
-        //    string Kampeer = "Kampeerplaatsen:  ";
-        //    for (int i = 0; i < B.CampNumbersInfo(username).Count; i++)
-        //    {
-        //        Kampeer += B.CampNumbersInfo(username).ElementAt(i) + ",";
-        //    }
-
-        //    ReserverationInfoListBox.Items.Add(Kampeer);
-
-        //}
->>>>>>> origin/master
     }
 }
