@@ -55,8 +55,10 @@
                     <ul class="nav navbar-nav">
                         <li><asp:LinkButton ID="Home" runat="server" OnClick="onclick_home">Home</asp:LinkButton></li>
                         <li><asp:LinkButton ID="Mediasharing" runat="server" OnClick="onclick_mediasharing">Mediasharing</asp:LinkButton></li>
-                        <li><asp:LinkButton ID="Events" runat="server" NavigateUrl="~/Events.aspx" >Events</asp:LinkButton></li>
-                        <li><asp:LinkButton ID="Materiaal" runat="server" OnClick="onclick_materiaal">Materiaal</asp:LinkButton></li>                      
+                        <li><asp:LinkButton ID="Events" runat="server" OnClick="onclick_events" >Events</asp:LinkButton></li>
+                        <li><asp:LinkButton ID="Materiaal" runat="server" OnClick="onclick_materiaal">Materiaal</asp:LinkButton></li> 
+                        <li><asp:LinkButton ID="Control" runat="server" OnClick="onclick_control" Visible="false">Control</asp:LinkButton></li>                      
+                     
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
