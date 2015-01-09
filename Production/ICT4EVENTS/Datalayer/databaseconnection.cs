@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 using Oracle.DataAccess;
 using Oracle.DataAccess.Client;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Threading.Tasks;
 
@@ -721,8 +722,7 @@ namespace Datalayer
 
             return reservationList;
         }
-<<<<<<< HEAD
-=======
+
 
         public List<int> CampReservationList(string username)
         {
@@ -739,7 +739,11 @@ namespace Datalayer
 
                 while (reader.Read())
                 {
-                    CampNumbers.Add(reader.GetInt16(0));
+                    if (!reader.IsDBNull(0))
+                    {
+                        CampNumbers.Add(reader.GetInt16(0));
+
+                    }
                 }
             }
             catch(OracleException exc)
@@ -756,9 +760,43 @@ namespace Datalayer
 
         public List<string> ReservedItemsList(string username)
         {
-            //SELECT v.ID, v."productexemplaar_id", v."res_pb_id", v."datumIn", v."datumUit", p."merk", v."prijs", pc."naam" FROM VERHUUR v, productexemplaar pe, product p, productcat pc, reservering_polsbandje rp, account ac WHERE v."productexemplaar_id" = pe.Id AND p.ID = pe."product_id" AND pc.id = p."productcat_id" AND rp."account_id" = ac.ID AND ac."gebruikersnaam" = 'admin';
+            
+            List<string> reserveditemStringList = new List<string>();
+            OracleCommand cmd = this.conn.CreateCommand();
+            OracleDataReader reader;
+            cmd.CommandText = "SELECT \"datumIn\", v.\"datumUit\", p.\"merk\", pc.\"naam\", v.\"prijs\" FROM VERHUUR v, productexemplaar pe, product p, productcat pc, reservering_polsbandje rp, account ac WHERE v.\"productexemplaar_id\" = pe.Id AND p.ID = pe.\"product_id\" AND pc.id = p.\"productcat_id\" AND rp.\"account_id\" = ac.ID AND ac.\"gebruikersnaam\" = :USERNAME";
+            cmd.Parameters.Add("USERNAME", username);
+
+            try
+            {
+                this.conn.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0) && !reader.IsDBNull(1) && !reader.IsDBNull(2) && !reader.IsDBNull(3) && !reader.IsDBNull(4))
+                    {
+
+                        reserveditemStringList.Add("@" + reader.GetDateTime(0).ToShortDateString() + "#" + reader.GetDateTime(1).ToShortDateString() + "$" + reader.GetString(2) + "%" + reader.GetString(3) + "|" + Convert.ToString(reader.GetValue(4) + "~"));
+
+                    }
+                }
+                
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return reserveditemStringList;
         } 
         
->>>>>>> 94549c2f9408518ddefd8b77ab6bc8a2800d47d6
+
     }
 }
