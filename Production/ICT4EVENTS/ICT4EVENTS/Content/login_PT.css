@@ -14,8 +14,8 @@ h1{
 .validator
 {
     font-family: "Trebuchet MS",Arial;
-    font-size: 30px;
-    color: blue !important;
+    font-size: 12px;
+    color: red !important;
 }
 .checkbox {
     display:block;

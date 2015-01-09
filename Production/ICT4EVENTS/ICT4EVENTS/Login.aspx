@@ -27,10 +27,10 @@
                 <asp:TextBox ID="tbPassword" runat="server" Class="input" placeholder="Password"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" CssClass="validator" ForeColor="Red" runat="server" ValidationGroup="LoginGroup" ControlToValidate="tbPassword" ErrorMessage="Please fill in password" InitialValue="">
                 </asp:RequiredFieldValidator>
-                <asp:Label ID="lblLogin" runat="server" Visible="false" Text="Wrong Username/Password" ForeColor="Red"></asp:Label>
-                <div class="alibaba" style="float:left">
-                <asp:CheckBox ID="chkBox" runat="server" CssClass="checkbox" Width="20%" Text="Remember me?" ForeColor="Gray" />
-                    </div>
+                <asp:Label ID="lblLoginError" runat="server" Visible="false" CssClass="validator" Text="Wrong Username/Password" ForeColor="Red"></asp:Label>
+                <div class="alibaba" style="float: left">
+                    <asp:CheckBox ID="chkBox" runat="server" CssClass="checkbox" Width="20%" Text="Remember me?" ForeColor="Gray" />
+                </div>
                 <asp:Button ID="btnLogin" CssClass="button" Text="Submit" ValidationGroup="LoginGroup" runat="server" OnClick="btnLogin_Click"></asp:Button>
             </div>
             <div class="signup">
@@ -42,16 +42,17 @@
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbLastname" ErrorMessage="Please fill in lastname" InitialValue="">
                 </asp:RequiredFieldValidator>
                 <asp:TextBox ID="tbEmail" runat="server" Class="input" placeholder="Email"></asp:TextBox>
-                 <asp:RequiredFieldValidator ID="RequiredFieldValidator4" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbEmail" ErrorMessage="Please fill in email" InitialValue="">
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbEmail" ErrorMessage="Please fill in email" InitialValue="">
                 </asp:RequiredFieldValidator>
                 <asp:TextBox ID="tbUsernameSU" runat="server" Class="input" placeholder="Username"></asp:TextBox>
-                 <asp:RequiredFieldValidator ID="RequiredFieldValidator5" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbUsernameSU" ErrorMessage="Please fill in username" InitialValue="">
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbUsernameSU" ErrorMessage="Please fill in username" InitialValue="">
                 </asp:RequiredFieldValidator>
+                <asp:Label ID="lblUsernameError" runat="server" Visible="false" CssClass="validator" Text="Username already exists" ForeColor="Red"></asp:Label>
                 <asp:TextBox ID="tbPassword1" runat="server" Class="input" placeholder="Password"></asp:TextBox>
-                 <asp:RequiredFieldValidator ID="RequiredFieldValidator6" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbPassword1" ErrorMessage="Please fill in password" InitialValue="">
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbPassword1" ErrorMessage="Please fill in password" InitialValue="">
                 </asp:RequiredFieldValidator>
                 <asp:TextBox ID="tbPassword2" runat="server" Class="input" placeholder="Confirm Password"></asp:TextBox>
-                 <asp:RequiredFieldValidator ID="RequiredFieldValidator7" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbPassword2" ErrorMessage="Please fill in password" InitialValue="">
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator7" ForeColor="Red" CssClass="validator" runat="server" ValidationGroup="SignupGroup" ControlToValidate="tbPassword2" ErrorMessage="Please fill in password" InitialValue="">
                 </asp:RequiredFieldValidator>
                 <asp:Button ID="btnSignup" runat="server" Class="button" ValidationGroup="SignupGroup" Text="Sign up" OnClick="btnSignup_Click" />
             </div>

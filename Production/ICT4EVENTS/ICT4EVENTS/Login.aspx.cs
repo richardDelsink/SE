@@ -60,6 +60,7 @@ namespace ICT4EVENTS
             else
             {
                 //Username already exists
+                lblUsernameError.Visible = true;
             }
 
             //Activate on server
@@ -97,7 +98,7 @@ namespace ICT4EVENTS
             else
             {
                 ///Show error message because we couldn't authenticate the account
-                lblLogin.Visible = true;
+                lblLoginError.Visible = true;
             }
         }
         private void localLogin()
