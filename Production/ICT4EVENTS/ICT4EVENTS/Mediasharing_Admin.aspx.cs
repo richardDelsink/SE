@@ -13,11 +13,13 @@ namespace ICT4EVENTS
         private Accountbijdrage Accountbijdrage = new Accountbijdrage();
         public string username = string.Empty;
         private List<string> CatList = new List<string>();
+        private List<string> files = new List<string>();
         private string category;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            username = Session["Username"].ToString();
+            fileslist.Items.Clear();
+            //username = Session["Username"].ToString();
             Session["category"] = CategorieList.Text;
             CategorieList.Items.Clear();
             if (Session["category"] == null)
@@ -28,6 +30,7 @@ namespace ICT4EVENTS
             {
                 CategorieList.Items.Add((string)(Session["category"]));
             }
+
             
             CatList = Accountbijdrage.Getcategory();
             foreach (string cat in CatList)
@@ -35,8 +38,16 @@ namespace ICT4EVENTS
                 CategorieList.Items.Add(cat);
             }
 
-            fileslist.DataSource = Accountbijdrage.Getfiles();
-            fileslist.DataBind();
+            if (!IsPostBack)
+            {
+                files = Accountbijdrage.Getfiles();
+
+                foreach (string fil in files)
+                {
+                    fileslist.Items.Add(fil);
+                }
+            }
+
         }
 
         protected void btnUpload_OnClick(object sender, EventArgs e)
@@ -69,8 +80,12 @@ namespace ICT4EVENTS
         protected void CategorieList_TextChanged(object sender, EventArgs e)
         {
             category = (string)(Session["category"]);
-            fileslist.DataSource = Accountbijdrage.GetfilesOnCategory(category);
-            fileslist.DataBind();
+            files = Accountbijdrage.GetfilesOnCategory(category);
+            
+            foreach(string fil in files)
+            {
+                fileslist.Items.Add(fil);
+            }
         }
 
 
